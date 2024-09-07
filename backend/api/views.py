@@ -2,10 +2,10 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
-
+from typing import List
 from main.models import Glue, Color, Stamp, Format, Country, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item
 
-def is_int(obj):
+def is_int(obj)->bool:
     if obj is None:
         return False
     try:
@@ -14,7 +14,7 @@ def is_int(obj):
     except:
         return False
 
-def is_float(obj):
+def is_float(obj)->bool:
     if obj is None:
         return False
     try:
@@ -22,6 +22,14 @@ def is_float(obj):
         return True
     except:
         return False
+
+def validate_model_ids(model, ids)->List:
+    if ids is None:
+        return model.objects.all()
+    if not isinstance(ids, list):
+        return []
+    return model.objects.filter(id__in=ids)
+
 
 @api_view(['GET'])
 def get_items(request:HttpRequest)->Response:
@@ -38,3 +46,6 @@ def get_items(request:HttpRequest)->Response:
         offset = 0
     else:
         offset = int(offset)
+    
+    glue_id = request.GET.get('glue_id')
+    
