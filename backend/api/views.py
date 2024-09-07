@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from typing import List
+from django.db.models import Q
 from main.models import Glue, Color, Stamp, Format, Country, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item
 
 def is_int(obj)->bool:
@@ -46,6 +47,67 @@ def get_items(request:HttpRequest)->Response:
         offset = 0
     else:
         offset = int(offset)
+
+    items = Item.objects.all()
+
+    # Получение + валидация фильтров
+    glues_id = request.GET.getlist('glues')
+    if glues_id is not None:
+        glues = validate_model_ids(Glue, glues_id)
+        items = items.filter(glue__in=glues)
     
-    glue_id = request.GET.get('glue_id')
+    colors_id = request.GET.getlist('colors')
+    if colors_id is not None:
+        colors = validate_model_ids(Color, colors_id)
+        items = items.filter(color__in=colors)
+
+    stamps_id = request.GET.getlist('stamps')
+    if stamps_id is not None:
+        stamps = validate_model_ids(Stamp, stamps_id)
+        items = items.filter(stamp__in=stamps)
+
+    formats_id = request.GET.getlist('formats')
+    if formats_id is not None:
+        formats = validate_model_ids(Format, formats_id)
+        items = items.filter(format__in=formats)
+
+    countries_id = request.GET.getlist('countries')
+    if countries_id is not None:
+        countries = validate_model_ids(Country, countries_id)
+        items = items.filter(country__in=countries)
+    
+    themes_id = request.GET.getlist('themes')
+    if themes_id is not None:
+        themes = validate_model_ids(Theme, themes_id)
+        items = items.filter(theme__in=themes)
+
+    presses_id = request.GET.getlist('presses')
+    if presses_id is not None:
+        presses = validate_model_ids(Press, presses_id)
+        items = items.filter(press__in=presses)
+
+    emissions_id = request.GET.getlist('emissions')
+    if emissions_id is not None:
+        emissions = validate_model_ids(Emission, emissions_id)
+        items = items.filter(emission__in=emissions)
+
+    designers_id = request.GET.getlist('designers')
+    if designers_id is not None:
+        designers = validate_model_ids(Designer, designers_id)
+        items = items.filter(designer__in=designers)
+
+    catalogs_id = request.GET.getlist('catalogs')
+    if catalogs_id is not None:
+        catalogs = validate_model_ids(Catalog, catalogs_id)
+        items = items.filter(catalog__in=catalogs)
+
+    currencies_id = request.GET.getlist('currencies')
+    if currencies_id is not None:
+        currencies = validate_model_ids(Currency, currencies_id)
+        items = items.filter(currency__in=currencies)
+    
+    watermarks_id = request.GET.getlist('watermarks')
+    if watermarks_id is not None:
+        watermarks = validate_model_ids(Watermark, watermarks_id)
+        items = items.filter(watermark__in=watermarks)
     
