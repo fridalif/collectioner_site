@@ -30,6 +30,18 @@ class HistroryMoment(models.Model):
         verbose_name_plural = 'Исторические моменты'
         table_name = 'histrory_moment'
 
+class Emisson(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Эмиссия'
+        verbose_name_plural = 'Эмиссии'
+        table_name = 'emisson'
+        
+
 class Item(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
     description = models.TextField(verbose_name='Описание', verbose_name_plural='Описания', null=True, blank=True)
@@ -39,3 +51,8 @@ class Item(models.Model):
 
     def __str__(self):
         return f'{self.name}({self.start_year}-{self.end_year})'
+    
+    class Meta:
+        verbose_name = 'Предмет'
+        verbose_name_plural = 'Предметы'
+        table_name = 'item'
