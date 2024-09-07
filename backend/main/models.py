@@ -173,7 +173,7 @@ class Item(models.Model):
     nominal = models.FloatField(verbose_name='Номинал', verbose_name_plural='Номиналы', null=True, blank=True)
     height = models.FloatField(verbose_name='Высота', verbose_name_plural='Высота', null=True, blank=True)
     width = models.FloatField(verbose_name='Ширина', verbose_name_plural='Ширина', null=True, blank=True)
-    
+
     def __str__(self):
         return f'{self.name}({self.year})'
     
@@ -181,3 +181,29 @@ class Item(models.Model):
         verbose_name = 'Предмет'
         verbose_name_plural = 'Предметы'
         table_name = 'item'
+
+class ItemImage(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет', verbose_name_plural='Предметы')
+    image = models.ImageField(upload_to='images/', verbose_name='Изображение', verbose_name_plural='Изображения')
+
+    def __str__(self):
+        return f'{self.item.name}({self.item.year})'
+    
+    class Meta:
+        verbose_name = 'Изображение предмета'
+        verbose_name_plural = 'Изображения предметов'
+        table_name = 'item_image'
+
+class UserItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', verbose_name_plural='Пользователи')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет', verbose_name_plural='Предметы')
+    quality = models.CharField(max_length=100, verbose_name='Качество', verbose_name_plural='Качества', choices=[('good', 'Хорошее'), ('bad', 'Плохое')])
+    count = models.IntegerField(verbose_name='Количество', verbose_name_plural='Количество')
+
+    def __str__(self):
+        return f'{self.user.username}({self.item.name})'
+    
+    class Meta:
+        verbose_name = 'Пользовательский предмет'
+        verbose_name_plural = 'Пользовательские предметы'
+        table_name = 'user_item'
