@@ -50,7 +50,7 @@ def get_items(request:HttpRequest)->Response:
 
     items = Item.objects.all()
 
-    # Получение + валидация фильтров
+    # Получение + валидация фильтров в которых может быть много выборов
     glues_id = request.GET.getlist('glues')
     if glues_id is not None:
         glues = validate_model_ids(Glue, glues_id)
@@ -70,11 +70,6 @@ def get_items(request:HttpRequest)->Response:
     if formats_id is not None:
         formats = validate_model_ids(Format, formats_id)
         items = items.filter(format__in=formats)
-
-    countries_id = request.GET.getlist('countries')
-    if countries_id is not None:
-        countries = validate_model_ids(Country, countries_id)
-        items = items.filter(country__in=countries)
     
     themes_id = request.GET.getlist('themes')
     if themes_id is not None:
@@ -111,3 +106,17 @@ def get_items(request:HttpRequest)->Response:
         watermarks = validate_model_ids(Watermark, watermarks_id)
         items = items.filter(watermark__in=watermarks)
     
+    # Получение + валидация фильтров в которых есть только 1 выбор
+    history = request.GET.get('history_moment')
+    if history is not None and is_int(history):
+        items = items.filter(history_moment__id=int(history))
+    
+    nominal_ge = request.GET.get('nominal_ge')
+    if nominal_ge is not None and is_float(nominal_ge):
+        items = items.filter(nominal__ge=float(nominal_ge))
+
+    nominal_le = request.GET.get('nominal_le')
+    if nominal_le is not None and is_float(nominal_le):
+        items = items.filter(nominal__le=float(nominal_le))
+
+    return Response(items[offset:offset+limit])
