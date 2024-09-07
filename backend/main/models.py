@@ -30,7 +30,8 @@ class HistroryMoment(models.Model):
         verbose_name_plural = 'Исторические моменты'
         table_name = 'histrory_moment'
 
-class Emisson(models.Model):
+
+class Emission(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
 
     def __str__(self):
@@ -39,8 +40,30 @@ class Emisson(models.Model):
     class Meta:
         verbose_name = 'Эмиссия'
         verbose_name_plural = 'Эмиссии'
-        table_name = 'emisson'
-        
+        table_name = 'emission'
+
+class Format(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Формат'
+        verbose_name_plural = 'Форматы'
+        table_name = 'format'
+
+class Stamp(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Печать'
+        verbose_name_plural = 'Печати'
+        table_name = 'stamp'
+
 
 class Item(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
