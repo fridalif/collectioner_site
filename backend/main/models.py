@@ -159,8 +159,23 @@ class Item(models.Model):
     histrory_moment = models.ForeignKey(HistroryMoment, on_delete=models.CASCADE, verbose_name='Исторический момент', verbose_name_plural='Исторические моменты')
     category = models.CharField(max_length=100, verbose_name='Категория', verbose_name_plural='Категории', choices=[('mark', 'Марка'), ('philatel', 'Филателистический продукт')])
 
+    emission = models.ForeignKey(Emission, on_delete=models.CASCADE, verbose_name='Эмиссия', verbose_name_plural='Эмиссии', null=True, blank=True)
+    format = models.ForeignKey(Format, on_delete=models.CASCADE, verbose_name='Формат', verbose_name_plural='Форматы', null=True, blank=True)
+    stamp = models.ForeignKey(Stamp, on_delete=models.CASCADE, verbose_name='Печать', verbose_name_plural='Печати', null=True, blank=True)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, verbose_name='Цвет', verbose_name_plural='Цвета', null=True, blank=True)
+    glue = models.ForeignKey(Glue, on_delete=models.CASCADE, verbose_name='Клей', verbose_name_plural='Клей', null=True, blank=True)
+    designer = models.ForeignKey(Designer, on_delete=models.CASCADE, verbose_name='Дизайнер', verbose_name_plural='Дизайнеры', null=True, blank=True)
+    press = models.ForeignKey(Press, on_delete=models.CASCADE, verbose_name='Типография', verbose_name_plural='Типографии', null=True, blank=True)
+    watermark = models.ForeignKey(Watermark, on_delete=models.CASCADE, verbose_name='Водяной знак', verbose_name_plural='Водяные знаки', null=True, blank=True)
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE, verbose_name='Валюта', verbose_name_plural='Валюты', null=True, blank=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, verbose_name='Тема', verbose_name_plural='Темы', null=True, blank=True)
+    catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, verbose_name='Каталог', verbose_name_plural='Каталоги', null=True, blank=True)
+    nominal = models.FloatField(verbose_name='Номинал', verbose_name_plural='Номиналы', null=True, blank=True)
+    height = models.FloatField(verbose_name='Высота', verbose_name_plural='Высота', null=True, blank=True)
+    width = models.FloatField(verbose_name='Ширина', verbose_name_plural='Ширина', null=True, blank=True)
+    
     def __str__(self):
-        return f'{self.name}({self.start_year}-{self.end_year})'
+        return f'{self.name}({self.year})'
     
     class Meta:
         verbose_name = 'Предмет'
