@@ -64,6 +64,93 @@ class Stamp(models.Model):
         verbose_name_plural = 'Печати'
         table_name = 'stamp'
 
+class Color(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Цвет'
+        verbose_name_plural = 'Цвета'
+        table_name = 'color'
+
+class Glue(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Клей'
+        verbose_name_plural = 'Клей'
+        table_name = 'glue'
+
+class Designer(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Полное Имя', verbose_name_plural='Полные Имена')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Дизайнер'
+        verbose_name_plural = 'Дизайнеры'
+        table_name = 'designer'
+
+class Press(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Типография'
+        verbose_name_plural = 'Типографии'
+        table_name = 'press'
+
+class Watermark(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Водяной знак'
+        verbose_name_plural = 'Водяные знаки'
+        table_name = 'watermark'
+
+class Currency(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Валюта'
+        verbose_name_plural = 'Валюты'
+        table_name = 'currency'
+
+class Theme(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Тема'
+        verbose_name_plural = 'Темы'
+        table_name = 'theme'
+
+class Catalog(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Каталог'
+        verbose_name_plural = 'Каталоги'
+        table_name = 'catalog'
 
 class Item(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
