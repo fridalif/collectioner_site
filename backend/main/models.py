@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Country(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
@@ -29,3 +30,12 @@ class HistroryMoment(models.Model):
         verbose_name_plural = 'Исторические моменты'
         table_name = 'histrory_moment'
 
+class Item(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    description = models.TextField(verbose_name='Описание', verbose_name_plural='Описания', null=True, blank=True)
+    year = models.IntegerField(verbose_name='Год', verbose_name_plural='Год', null=True, blank=True)
+    histrory_moment = models.ForeignKey(HistroryMoment, on_delete=models.CASCADE, verbose_name='Исторический момент', verbose_name_plural='Исторические моменты')
+    category = models.CharField(max_length=100, verbose_name='Категория', verbose_name_plural='Категории', choices=[('mark', 'Марка'), ('philatel', 'Филателистический продукт')])
+
+    def __str__(self):
+        return f'{self.name}({self.start_year}-{self.end_year})'
