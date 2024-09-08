@@ -174,6 +174,7 @@ class Item(models.Model):
     height = models.FloatField(verbose_name='Высота', verbose_name_plural='Высота', null=True, blank=True)
     width = models.FloatField(verbose_name='Ширина', verbose_name_plural='Ширина', null=True, blank=True)
 
+    user_counter = models.IntegerField(default=0,auto_created=True)
     def __str__(self):
         return f'{self.name}({self.year})'
     

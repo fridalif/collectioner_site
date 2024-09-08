@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from typing import List
-from django.db.models import Q
-from main.models import Glue, Color, Stamp, Format, Country, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item
+from api.serializers import ItemSerializer
 
 def is_int(obj)->bool:
     if obj is None:
@@ -119,4 +119,18 @@ def get_items(request:HttpRequest)->Response:
     if nominal_le is not None and is_float(nominal_le):
         items = items.filter(nominal__le=float(nominal_le))
 
-    return Response(items[offset:offset+limit])
+    year_ge = request.GET.get('year_ge')
+    if year_ge is not None and is_int(year_ge):
+        items = items.filter(year__ge=int(year_ge))
+
+    year_le = request.GET.get('year_le')
+    if year_le is not None and is_int(year_le):
+        items = items.filter(year__le=int(year_le))
+
+    # Сортировка
+    items = items.order_by('user_counter')
+
+    # Пагинация
+    items = items[offset:offset+limit]
+
+    return Response(ItemSerializer(items[offset:offset+limit]))
