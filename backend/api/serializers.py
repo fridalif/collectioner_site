@@ -32,3 +32,43 @@ class StampSerializer(ModelSerializer):
     class Meta:
         model = Stamp
         fields = '__all__'
+
+class FormatSerializer(ModelSerializer):
+    class Meta:
+        model = Format
+        fields = '__all__'
+
+class ThemeSerializer(ModelSerializer):
+    class Meta:
+        model = Theme
+        fields = '__all__'
+
+class PressSerialzier(ModelSerializer):
+    class Meta:
+        model = Press
+        fields = '__all__'
+
+class EmissionSerializer(ModelSerializer):
+    class Meta:
+        model = Emission
+        fields = '__all__'
+
+class DesignerSerializer(ModelSerializer):
+    class Meta:
+        model = Designer
+        fields = '__all__'
+
+class CatalogSerializer(ModelSerializer):
+    class Meta:
+        model = Catalog
+        fields = '__all__'
+
+class CurrencySerializer(ModelSerializer):
+    class Meta:
+        model = Currency
+        fields = '__all__'
+        
+class WatermarkSerializer(ModelSerializer):
+    class Meta:
+        model = Watermark
+        fields = '__all__'
