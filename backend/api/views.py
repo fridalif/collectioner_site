@@ -233,3 +233,10 @@ def get_other_filters_except_designers(request:HttpRequest)->Response:
         })
     except:
         return Response({'status':'error','message':'Ошибка при получении фильтров'})
+
+
+def get_designers(request:HttpRequest)->Response:
+    try:
+        query = 
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})

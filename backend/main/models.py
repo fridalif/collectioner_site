@@ -87,8 +87,8 @@ class Glue(models.Model):
         table_name = 'glue'
 
 class Designer(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Полное Имя', verbose_name_plural='Полные Имена')
-
+    name = models.CharField(max_length=100, verbose_name='Имя', verbose_name_plural='Имена')
+    surname = models.CharField(max_length=100, verbose_name='Фамилия',verbose_name_plural='Фамилии')
     def __str__(self):
         return self.name
     
