@@ -145,7 +145,7 @@ def get_items(request:HttpRequest)->Response:
     # Пагинация
     items = items[offset:offset+limit]
 
-    return Response(ItemSerializer(items[offset:offset+limit],many=True))
+    return Response({'status':'ok','data':ItemSerializer(items[offset:offset+limit],many=True)})
 
 @api_view(['GET'])
 def get_countries(request:HttpRequest)->Response:
