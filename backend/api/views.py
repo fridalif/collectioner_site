@@ -201,3 +201,11 @@ def get_history_moments(request:HttpRequest,id=None)->Response:
             return Response({'status':'error','message':'Ошибка получения исторических моментов'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+
+@api_view(['GET'])
+def get_other_filters_except_designers(request:HttpRequest)->Response:
+    try:
+        pass
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
