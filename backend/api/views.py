@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from typing import List
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country
-from api.serializers import ItemSerializer
+from api.serializers import ItemSerializer, CountrySerializer
 
 def is_int(obj)->bool:
     if obj is None:
@@ -153,5 +153,24 @@ def get_items(request:HttpRequest)->Response:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
 @api_view(['GET'])
-def get_countries(request:HttpRequest)->Response:
-    pass
+def get_countries(request:HttpRequest,id=None)->Response:
+    try:
+        if id is not None:
+            try:
+                country = Country.objects.get(id=id)
+                return Response({'status':'ok','data':CountrySerializer(country)})
+            except Country.DoesNotExist:
+                return Response({'status':'error','message':'Нет страны с таким id'})
+            except:
+                return Response({'status':'error','message':'Неизвестная ошибка'})
+            
+        world_part = request.GET.get('world_part')
+        if world_part is not None:
+            try:
+                countries = Country.objects.filter(world_part=world_part)
+                return Response({'status':'ok','data':CountrySerializer(countries,many=True)})
+            except: 
+                return Response({'status':'error','message':'Ошибка получения стран'})
+        return Response({'status':'error','message':'Не указана часть света'})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
