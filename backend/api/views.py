@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from typing import List
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer
 
 def is_int(obj)->bool:
     if obj is None:
@@ -206,6 +206,30 @@ def get_history_moments(request:HttpRequest,id=None)->Response:
 @api_view(['GET'])
 def get_other_filters_except_designers(request:HttpRequest)->Response:
     try:
-        pass
+        glues = Glue.objects.all()
+        colors = Color.objects.all()
+        stamps = Stamp.objects.all()
+        formats = Format.objects.all()
+        themes = Theme.objects.all()
+        press = Press.objects.all()
+        emissions = Emission.objects.all()
+        catalogs = Catalog.objects.all()
+        currencies = Currency.objects.all()
+        watermarks = Watermark.objects.all()
+        return Response({
+            'status':'ok',
+            'data':{
+                'glues':GlueSerializer(glues,many=True),
+                'colors':ColorSerialzier(colors,many=True),
+                'stamps':StampSerializer(stamps,many=True),
+                'formats':FormatSerializer(formats,many=True),
+                'themes':ThemeSerializer(themes,many=True),
+                'press':PressSerialzier(press,many=True),
+                'emissions': EmissionSerializer(emissions,many=True),
+                'catalogs':CatalogSerializer(catalogs,many=True),
+                'currencies':CurrencySerializer(currencies,many=True),
+                'watermarks':WatermarkSerializer(watermarks,many=True)
+            }
+        })
     except:
-        return Response({'status':'error','message':'Неизвестная ошибка'})
+        return Response({'status':'error','message':'Ошибка при получении фильтров'})
