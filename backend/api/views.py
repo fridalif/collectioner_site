@@ -54,6 +54,10 @@ def get_items(request:HttpRequest)->Response:
         except:
             return Response({'status':'error', 'message':'Не удалось получить предметы'})
         # Получение + валидация фильтров в которых может быть много выборов
+        item_type = request.GET.get('item_type')
+        if item_type is None:
+            return Response({'status':'error', 'message':'Не указан тип предмета'})
+        items = items.filter(item_type=item_type)
         glues_id = request.GET.getlist('glues')
         if glues_id is not None:
             glues = validate_model_ids(Glue, glues_id)
