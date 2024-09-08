@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from typing import List
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment
 from api.serializers import ItemSerializer, CountrySerializer
 
 def is_int(obj)->bool:
@@ -176,5 +176,13 @@ def get_countries(request:HttpRequest,id=None)->Response:
             except: 
                 return Response({'status':'error','message':'Ошибка получения стран'})
         return Response({'status':'error','message':'Не указана часть света'})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+
+@api_view(['GET'])
+def get_history_moments(request:HttpRequest)->Response:
+    try:
+        pass
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
