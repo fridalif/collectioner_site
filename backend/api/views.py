@@ -181,8 +181,23 @@ def get_countries(request:HttpRequest,id=None)->Response:
     
 
 @api_view(['GET'])
-def get_history_moments(request:HttpRequest)->Response:
+def get_history_moments(request:HttpRequest,id=None)->Response:
     try:
-        pass
+        if id is not None:
+            try:
+                history_moment = HistroryMoment.objects.get(id=id)
+                return Response({'status':'ok','data':HistoryMomentSerializer(history_moment)})
+            except HistroryMoment.DoesNotExist:
+                return Response({'status':'error','message':'Нет исторического момента с таким id'})
+            except:
+                return Response({'status':'error','message':'Неизвестная ошибка'})
+        country_id = request.GET.get('country_id')
+        if not is_int(country_id):
+            return Response({'status':'error','message':'Не указана страна'})
+        try:
+            history_moment = HistroryMoment.objects.filter(country__id=int(country_id))
+            return Response({'status':'ok','data':HistoryMomentSerializer(history_moment,many=True)})
+        except:
+            return Response({'status':'error','message':'Ошибка получения исторических моментов'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
