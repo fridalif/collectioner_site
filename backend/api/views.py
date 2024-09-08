@@ -149,3 +149,4 @@ def get_items(request:HttpRequest)->Response:
 
 @api_view(['GET'])
 def get_countries(request:HttpRequest)->Response:
+    pass
