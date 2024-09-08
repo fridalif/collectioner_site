@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from typing import List
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country
 from api.serializers import ItemSerializer
 
 def is_int(obj)->bool:
@@ -107,10 +107,22 @@ def get_items(request:HttpRequest)->Response:
         items = items.filter(watermark__in=watermarks)
     
     # Получение + валидация фильтров в которых есть только 1 выбор
+
+    # Фильтрация по историческим моментам, странам и частям света
     history = request.GET.get('history_moment')
     if history is not None and is_int(history):
         items = items.filter(history_moment__id=int(history))
-    
+    else:
+        country = request.GET.get('country')
+        if country is not None and is_int(country):
+            items = items.filter(history_moment__country__id=int(country))
+        else:
+            world_part = request.GET.get('world_part')
+            if world_part is not None:
+                countries = Country.objects.filter(world_part)
+                items = items.filter(history_moment__country__in=countries)
+
+
     nominal_ge = request.GET.get('nominal_ge')
     if nominal_ge is not None and is_float(nominal_ge):
         items = items.filter(nominal__ge=float(nominal_ge))
@@ -135,4 +147,5 @@ def get_items(request:HttpRequest)->Response:
 
     return Response(ItemSerializer(items[offset:offset+limit],many=True))
 
-def get_
+@api_view(['GET'])
+def get_countries(request:HttpRequest)->Response:
