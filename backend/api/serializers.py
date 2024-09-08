@@ -1,4 +1,4 @@
-from main.models import Item, Country
+from main.models import Item, Country, HistroryMoment
 from rest_framework.serializers import ModelSerializer, CharField
 
 class ItemSerializer(ModelSerializer):
@@ -12,3 +12,8 @@ class CountrySerializer(ModelSerializer):
     class Meta:
         model = Country
         fields = ['id', 'name']
+
+class HistoryMomentSerializer(ModelSerializer):
+    class Meta:
+        model = HistroryMoment
+        fields = '__all__'
