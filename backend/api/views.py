@@ -133,4 +133,6 @@ def get_items(request:HttpRequest)->Response:
     # Пагинация
     items = items[offset:offset+limit]
 
-    return Response(ItemSerializer(items[offset:offset+limit]))
+    return Response(ItemSerializer(items[offset:offset+limit],many=True))
+
+def get_
