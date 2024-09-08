@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from django.http import HttpRequest
+from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment
@@ -237,6 +238,21 @@ def get_other_filters_except_designers(request:HttpRequest)->Response:
 
 def get_designers(request:HttpRequest)->Response:
     try:
-        query = 
+        query = request.GET.get('query')
+        if query is None or len(query)==0:
+            return Response({'status':'error','message':'Фильтраия пуста'})
+        try:
+            designers = Designer.objects.filter(Q(name__istartswith=query)|Q(surname__istartswith=query))
+            fullnamed_designers = []
+            if ' ' in query:
+                name = ' '.join(query.strip(' ')[1::])
+                surname = query.strip(' ')[0]
+                fullnamed_designers = Designer.objects.filter(Q(Q(name__icontains=name)&Q(surname__icontains=surname)|(Q(name__icontains=surname)&Q(surname__icontains=name))))
+                return Response({
+                    'status':'ok',
+                    'data':DesignerSerializer(designers,many=True).extend(DesignerSerializer(fullnamed_designers,many=True))[1:10:]
+                })
+        except:
+            return Response({'status':'error','message':'Ошибка при получении дизайнеров'})    
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
