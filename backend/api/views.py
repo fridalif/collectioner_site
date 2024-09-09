@@ -5,7 +5,7 @@ from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer
 
 """
     Валидаторы
@@ -310,5 +310,32 @@ def add_new_item(request:HttpRequest) -> Response:
                 return Response({'status':'ok','data':serializer.data})
         except:
             return Response({'status':'error','message':'Не удалось добавить предмет'})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+@api_view(['POST'])
+def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
+    try:
+        if not request.user.is_authenticated:
+            return Response({'status':'error','message':'Необходима авторизация'})
+        data = request.data
+        data['user'] = request.user
+        try:
+            item = Item.objects.get(id=data['item_id'])
+        except Item.DoesNotExist:
+            return Response({'status':'error','message':'Нет предмета с таким id'})
+        except:
+            return Response({'status':'error','message':'Неизвестная ошибка'})
+        data['item'] = item    
+        records = UserItem.objects.filter(user=request.user, item=item, quality=data['quality'])
+        if len(records) != 0:
+            record = record[0]
+        try:
+            serializer = UserItemSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'status':'ok','data':serializer.data})
+        except:
+            return Response({'status':'error','message':'Не удалось добавить предмет в коллекцию'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})

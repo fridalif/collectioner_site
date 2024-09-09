@@ -1,4 +1,4 @@
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
 from rest_framework.serializers import ModelSerializer, CharField
 
 class ItemSerializer(ModelSerializer):
@@ -72,3 +72,8 @@ class WatermarkSerializer(ModelSerializer):
     class Meta:
         model = Watermark
         fields = '__all__'
+
+class UserItemSerializer(ModelSerializer):
+    class Meta:
+        model = UserItem
+        fields = ['id', 'user', 'item','quality']

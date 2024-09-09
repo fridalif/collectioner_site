@@ -199,7 +199,7 @@ class UserItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', verbose_name_plural='Пользователи')
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет', verbose_name_plural='Предметы')
     quality = models.CharField(max_length=100, verbose_name='Качество', verbose_name_plural='Качества', choices=[('good', 'Хорошее'), ('bad', 'Плохое')])
-    count = models.IntegerField(verbose_name='Количество', verbose_name_plural='Количество')
+    count = models.IntegerField(verbose_name='Количество', verbose_name_plural='Количество',default=0)
 
     def __str__(self):
         return f'{self.user.username}({self.item.name})'
