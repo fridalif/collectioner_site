@@ -235,7 +235,7 @@ def get_other_filters_except_designers(request:HttpRequest)->Response:
     except:
         return Response({'status':'error','message':'Ошибка при получении фильтров'})
 
-
+@api_view(['GET'])
 def get_designers(request:HttpRequest)->Response:
     try:
         query = request.GET.get('query')
