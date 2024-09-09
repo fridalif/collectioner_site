@@ -87,8 +87,8 @@ class Glue(models.Model):
         table_name = 'glue'
 
 class Designer(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Полное Имя', verbose_name_plural='Полные Имена')
-
+    name = models.CharField(max_length=100, verbose_name='Имя', verbose_name_plural='Имена')
+    surname = models.CharField(max_length=100, verbose_name='Фамилия',verbose_name_plural='Фамилии')
     def __str__(self):
         return self.name
     
@@ -174,6 +174,7 @@ class Item(models.Model):
     height = models.FloatField(verbose_name='Высота', verbose_name_plural='Высота', null=True, blank=True)
     width = models.FloatField(verbose_name='Ширина', verbose_name_plural='Ширина', null=True, blank=True)
 
+    user_counter = models.IntegerField(default=0,auto_created=True)
     def __str__(self):
         return f'{self.name}({self.year})'
     
@@ -198,7 +199,7 @@ class UserItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', verbose_name_plural='Пользователи')
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет', verbose_name_plural='Предметы')
     quality = models.CharField(max_length=100, verbose_name='Качество', verbose_name_plural='Качества', choices=[('good', 'Хорошее'), ('bad', 'Плохое')])
-    count = models.IntegerField(verbose_name='Количество', verbose_name_plural='Количество')
+    count = models.IntegerField(verbose_name='Количество', verbose_name_plural='Количество',default=0)
 
     def __str__(self):
         return f'{self.user.username}({self.item.name})'
