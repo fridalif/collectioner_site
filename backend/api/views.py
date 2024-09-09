@@ -7,6 +7,9 @@ from typing import List
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
 from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer
 
+"""
+    Валидаторы
+"""
 def is_int(obj)->bool:
     if obj is None:
         return False
@@ -33,6 +36,10 @@ def validate_model_ids(model, ids)->List:
     return model.objects.filter(id__in=ids)
 
 
+
+"""
+    GET
+"""
 @api_view(['GET'])
 def get_items(request:HttpRequest)->Response:
 
@@ -285,3 +292,7 @@ def get_my_collection_counters(request:HttpRequest)->Response:
             return Response({'status':'error','message':'Ошибка получения счётчиков предметов'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+"""
+    POST
+"""
