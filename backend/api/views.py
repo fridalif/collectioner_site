@@ -320,6 +320,10 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
             return Response({'status':'error','message':'Необходима авторизация'})
         data = request.data
         data['user'] = request.user
+        is_add = data.get('is_add')
+        if is_add is None:
+            return Response({'status':'error','message':'Не указано действие'})
+        data.pop('is_add',None)
         try:
             item = Item.objects.get(id=data['item_id'])
         except Item.DoesNotExist:
@@ -330,7 +334,19 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
         records = UserItem.objects.filter(user=request.user, item=item, quality=data['quality'])
         if len(records) != 0:
             record = record[0]
+            if is_add:
+                record.count += 1
+                record.save()
+                return Response({'status':'ok','data':UserItemSerializer(record).data})
+            if record.count <= 0:
+                return Response({'status':'error','message':'Коллекция пуста'})
+            record.count -= 1
+            record.save()
+            return Response({'status':'ok','data':UserItemSerializer(record).data})
         try:
+            if not is_add:
+                return Response({'status':'error','message':'Коллекция пуста'})
+            data['count'] = 1
             serializer = UserItemSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -339,3 +355,5 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
             return Response({'status':'error','message':'Не удалось добавить предмет в коллекцию'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+
