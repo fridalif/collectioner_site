@@ -160,7 +160,7 @@ def get_items(request:HttpRequest)->Response:
         # Пагинация
         items = items[offset:offset+limit]
 
-        return Response({'status':'ok','data':ItemSerializer(items[offset:offset+limit],many=True)})
+        return Response({'status':'ok','data':ItemSerializer(items[offset:offset+limit].data,many=True)})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
@@ -170,7 +170,7 @@ def get_countries(request:HttpRequest,id=None)->Response:
         if id is not None:
             try:
                 country = Country.objects.get(id=id)
-                return Response({'status':'ok','data':CountrySerializer(country)})
+                return Response({'status':'ok','data':CountrySerializer(country).data})
             except Country.DoesNotExist:
                 return Response({'status':'error','message':'Нет страны с таким id'})
             except:
@@ -180,7 +180,7 @@ def get_countries(request:HttpRequest,id=None)->Response:
         if world_part is not None:
             try:
                 countries = Country.objects.filter(world_part=world_part)
-                return Response({'status':'ok','data':CountrySerializer(countries,many=True)})
+                return Response({'status':'ok','data':CountrySerializer(countries,many=True).data})
             except: 
                 return Response({'status':'error','message':'Ошибка получения стран'})
         return Response({'status':'error','message':'Не указана часть света'})
@@ -194,7 +194,7 @@ def get_history_moments(request:HttpRequest,id=None)->Response:
         if id is not None:
             try:
                 history_moment = HistroryMoment.objects.get(id=id)
-                return Response({'status':'ok','data':HistoryMomentSerializer(history_moment)})
+                return Response({'status':'ok','data':HistoryMomentSerializer(history_moment).data})
             except HistroryMoment.DoesNotExist:
                 return Response({'status':'error','message':'Нет исторического момента с таким id'})
             except:
@@ -204,7 +204,7 @@ def get_history_moments(request:HttpRequest,id=None)->Response:
             return Response({'status':'error','message':'Не указана страна'})
         try:
             history_moment = HistroryMoment.objects.filter(country__id=int(country_id))
-            return Response({'status':'ok','data':HistoryMomentSerializer(history_moment,many=True)})
+            return Response({'status':'ok','data':HistoryMomentSerializer(history_moment,many=True).data})
         except:
             return Response({'status':'error','message':'Ошибка получения исторических моментов'})
     except:
@@ -227,16 +227,16 @@ def get_other_filters_except_designers(request:HttpRequest)->Response:
         return Response({
             'status':'ok',
             'data':{
-                'glues':GlueSerializer(glues,many=True),
-                'colors':ColorSerialzier(colors,many=True),
-                'stamps':StampSerializer(stamps,many=True),
-                'formats':FormatSerializer(formats,many=True),
-                'themes':ThemeSerializer(themes,many=True),
-                'press':PressSerialzier(press,many=True),
-                'emissions': EmissionSerializer(emissions,many=True),
-                'catalogs':CatalogSerializer(catalogs,many=True),
-                'currencies':CurrencySerializer(currencies,many=True),
-                'watermarks':WatermarkSerializer(watermarks,many=True)
+                'glues':GlueSerializer(glues,many=True).data,
+                'colors':ColorSerialzier(colors,many=True).data,
+                'stamps':StampSerializer(stamps,many=True).data,
+                'formats':FormatSerializer(formats,many=True).data,
+                'themes':ThemeSerializer(themes,many=True).data,
+                'press':PressSerialzier(press,many=True).data,
+                'emissions': EmissionSerializer(emissions,many=True).data,
+                'catalogs':CatalogSerializer(catalogs,many=True).data,
+                'currencies':CurrencySerializer(currencies,many=True).data,
+                'watermarks':WatermarkSerializer(watermarks,many=True).data
             }
         })
     except:
@@ -257,7 +257,7 @@ def get_designers(request:HttpRequest)->Response:
                 fullnamed_designers = Designer.objects.filter(Q(Q(name__icontains=name)&Q(surname__icontains=surname)|(Q(name__icontains=surname)&Q(surname__icontains=name))))
                 return Response({
                     'status':'ok',
-                    'data':DesignerSerializer(designers,many=True).extend(DesignerSerializer(fullnamed_designers,many=True))[1:10:]
+                    'data':DesignerSerializer(designers,many=True).extend(DesignerSerializer(fullnamed_designers,many=True)).data[1:10:]
                 })
         except:
             return Response({'status':'error','message':'Ошибка при получении дизайнеров'})    
@@ -296,3 +296,19 @@ def get_my_collection_counters(request:HttpRequest)->Response:
 """
     POST
 """
+
+@api_view(['POST'])
+def add_new_item(request:HttpRequest) -> Response:
+    try:
+        if not request.user.is_superuser:
+            return Response({'status':'error','message':'Доступ запрещён'})
+        data = request.data
+        try:
+            serializer = ItemSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'status':'ok','data':serializer.data})
+        except:
+            return Response({'status':'error','message':'Не удалось добавить предмет'})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
