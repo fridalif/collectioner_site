@@ -313,7 +313,7 @@ def add_new_item(request:HttpRequest) -> Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
-@api_view(['POST'])
+@api_view(['POST','DELETE'])
 def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
     try:
         if not request.user.is_authenticated:
