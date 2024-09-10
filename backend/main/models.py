@@ -13,7 +13,7 @@ class Country(models.Model):
     class Meta:
         verbose_name = 'Страна'
         verbose_name_plural = 'Страны'
-        table_name = 'country'
+        db_table = 'country'
 
 
 class HistroryMoment(models.Model):
@@ -28,7 +28,7 @@ class HistroryMoment(models.Model):
     class Meta:
         verbose_name = 'Исторический момент'
         verbose_name_plural = 'Исторические моменты'
-        table_name = 'histrory_moment'
+        db_table = 'histrory_moment'
 
 
 class Emission(models.Model):
@@ -40,7 +40,7 @@ class Emission(models.Model):
     class Meta:
         verbose_name = 'Эмиссия'
         verbose_name_plural = 'Эмиссии'
-        table_name = 'emission'
+        db_table = 'emission'
 
 class Format(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -51,7 +51,7 @@ class Format(models.Model):
     class Meta:
         verbose_name = 'Формат'
         verbose_name_plural = 'Форматы'
-        table_name = 'format'
+        db_table = 'format'
 
 class Stamp(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -62,7 +62,7 @@ class Stamp(models.Model):
     class Meta:
         verbose_name = 'Печать'
         verbose_name_plural = 'Печати'
-        table_name = 'stamp'
+        db_table = 'stamp'
 
 class Color(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -73,7 +73,7 @@ class Color(models.Model):
     class Meta:
         verbose_name = 'Цвет'
         verbose_name_plural = 'Цвета'
-        table_name = 'color'
+        db_table = 'color'
 
 class Glue(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -84,7 +84,7 @@ class Glue(models.Model):
     class Meta:
         verbose_name = 'Клей'
         verbose_name_plural = 'Клей'
-        table_name = 'glue'
+        db_table = 'glue'
 
 class Designer(models.Model):
     name = models.CharField(max_length=100, verbose_name='Имя')
@@ -95,7 +95,7 @@ class Designer(models.Model):
     class Meta:
         verbose_name = 'Дизайнер'
         verbose_name_plural = 'Дизайнеры'
-        table_name = 'designer'
+        db_table = 'designer'
 
 class Press(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -106,7 +106,7 @@ class Press(models.Model):
     class Meta:
         verbose_name = 'Типография'
         verbose_name_plural = 'Типографии'
-        table_name = 'press'
+        db_table = 'press'
 
 class Watermark(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -117,7 +117,7 @@ class Watermark(models.Model):
     class Meta:
         verbose_name = 'Водяной знак'
         verbose_name_plural = 'Водяные знаки'
-        table_name = 'watermark'
+        db_table = 'watermark'
 
 class Currency(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -128,7 +128,7 @@ class Currency(models.Model):
     class Meta:
         verbose_name = 'Валюта'
         verbose_name_plural = 'Валюты'
-        table_name = 'currency'
+        db_table = 'currency'
 
 class Theme(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -139,7 +139,7 @@ class Theme(models.Model):
     class Meta:
         verbose_name = 'Тема'
         verbose_name_plural = 'Темы'
-        table_name = 'theme'
+        db_table = 'theme'
 
 class Catalog(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -150,7 +150,7 @@ class Catalog(models.Model):
     class Meta:
         verbose_name = 'Каталог'
         verbose_name_plural = 'Каталоги'
-        table_name = 'catalog'
+        db_table = 'catalog'
 
 class Item(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -181,7 +181,7 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'Предмет'
         verbose_name_plural = 'Предметы'
-        table_name = 'item'
+        db_table = 'item'
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет')
@@ -193,7 +193,7 @@ class ItemImage(models.Model):
     class Meta:
         verbose_name = 'Изображение предмета'
         verbose_name_plural = 'Изображения предметов'
-        table_name = 'item_image'
+        db_table = 'item_image'
 
 class UserItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
@@ -207,4 +207,4 @@ class UserItem(models.Model):
     class Meta:
         verbose_name = 'Пользовательский предмет'
         verbose_name_plural = 'Пользовательские предметы'
-        table_name = 'user_item'
+        db_table = 'user_item'
