@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Country(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
-    flag = models.ImageField(verbose_name='Флаг', null=True, blank=True, upload_to='media/flags')
+    flag = models.ImageField(verbose_name='Флаг', null=True, blank=True, upload_to='flags')
     world_part = models.CharField(max_length=100, verbose_name='Часть света', 
                                   choices=[('eu', 'Европа'), ('as', 'Азия'), ('af', 'Африка'), ('am', 'Америка'), ('oc', 'Океания')])
 
@@ -185,7 +185,7 @@ class Item(models.Model):
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет')
-    image = models.ImageField(upload_to='media/images/', verbose_name='Изображение')
+    image = models.ImageField(upload_to='images/', verbose_name='Изображение')
 
     def __str__(self):
         return f'{self.item.name}({self.item.year})'
