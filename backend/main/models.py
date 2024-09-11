@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Country(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
-    flag = models.ImageField(verbose_name='Флаг', null=True, blank=True, upload_to='flags', verbose_name_plural='Флаги')
+    name = models.CharField(max_length=100, verbose_name='Название')
+    flag = models.ImageField(verbose_name='Флаг', null=True, blank=True, upload_to='flags')
     world_part = models.CharField(max_length=100, verbose_name='Часть света', 
                                   choices=[('eu', 'Европа'), ('as', 'Азия'), ('af', 'Африка'), ('am', 'Америка'), ('oc', 'Океания')])
 
@@ -13,14 +13,14 @@ class Country(models.Model):
     class Meta:
         verbose_name = 'Страна'
         verbose_name_plural = 'Страны'
-        table_name = 'country'
+        db_table = 'country'
 
 
 class HistroryMoment(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name='Страна', verbose_name_plural='Страны')
-    start_year = models.IntegerField(verbose_name='Начало', verbose_name_plural='Начало', null=True, blank=True)
-    end_year = models.IntegerField(verbose_name='Конец', verbose_name_plural='Конец', null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name='Название')
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name='Страна')
+    start_year = models.IntegerField(verbose_name='Начало', null=True, blank=True)
+    end_year = models.IntegerField(verbose_name='Конец', null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}({self.start_year}-{self.end_year})' 
@@ -28,11 +28,11 @@ class HistroryMoment(models.Model):
     class Meta:
         verbose_name = 'Исторический момент'
         verbose_name_plural = 'Исторические моменты'
-        table_name = 'histrory_moment'
+        db_table = 'histrory_moment'
 
 
 class Emission(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -40,10 +40,10 @@ class Emission(models.Model):
     class Meta:
         verbose_name = 'Эмиссия'
         verbose_name_plural = 'Эмиссии'
-        table_name = 'emission'
+        db_table = 'emission'
 
 class Format(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -51,10 +51,10 @@ class Format(models.Model):
     class Meta:
         verbose_name = 'Формат'
         verbose_name_plural = 'Форматы'
-        table_name = 'format'
+        db_table = 'format'
 
 class Stamp(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -62,10 +62,10 @@ class Stamp(models.Model):
     class Meta:
         verbose_name = 'Печать'
         verbose_name_plural = 'Печати'
-        table_name = 'stamp'
+        db_table = 'stamp'
 
 class Color(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -73,10 +73,10 @@ class Color(models.Model):
     class Meta:
         verbose_name = 'Цвет'
         verbose_name_plural = 'Цвета'
-        table_name = 'color'
+        db_table = 'color'
 
 class Glue(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -84,21 +84,21 @@ class Glue(models.Model):
     class Meta:
         verbose_name = 'Клей'
         verbose_name_plural = 'Клей'
-        table_name = 'glue'
+        db_table = 'glue'
 
 class Designer(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Имя', verbose_name_plural='Имена')
-    surname = models.CharField(max_length=100, verbose_name='Фамилия',verbose_name_plural='Фамилии')
+    name = models.CharField(max_length=100, verbose_name='Имя')
+    surname = models.CharField(max_length=100, verbose_name='Фамилия')
     def __str__(self):
         return self.name
     
     class Meta:
         verbose_name = 'Дизайнер'
         verbose_name_plural = 'Дизайнеры'
-        table_name = 'designer'
+        db_table = 'designer'
 
 class Press(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -106,10 +106,10 @@ class Press(models.Model):
     class Meta:
         verbose_name = 'Типография'
         verbose_name_plural = 'Типографии'
-        table_name = 'press'
+        db_table = 'press'
 
 class Watermark(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -117,10 +117,10 @@ class Watermark(models.Model):
     class Meta:
         verbose_name = 'Водяной знак'
         verbose_name_plural = 'Водяные знаки'
-        table_name = 'watermark'
+        db_table = 'watermark'
 
 class Currency(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -128,10 +128,10 @@ class Currency(models.Model):
     class Meta:
         verbose_name = 'Валюта'
         verbose_name_plural = 'Валюты'
-        table_name = 'currency'
+        db_table = 'currency'
 
 class Theme(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -139,10 +139,10 @@ class Theme(models.Model):
     class Meta:
         verbose_name = 'Тема'
         verbose_name_plural = 'Темы'
-        table_name = 'theme'
+        db_table = 'theme'
 
 class Catalog(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
+    name = models.CharField(max_length=100, verbose_name='Название')
 
     def __str__(self):
         return self.name
@@ -150,42 +150,42 @@ class Catalog(models.Model):
     class Meta:
         verbose_name = 'Каталог'
         verbose_name_plural = 'Каталоги'
-        table_name = 'catalog'
+        db_table = 'catalog'
 
 class Item(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', verbose_name_plural='Названия')
-    description = models.TextField(verbose_name='Описание', verbose_name_plural='Описания', null=True, blank=True)
-    year = models.IntegerField(verbose_name='Год', verbose_name_plural='Год', null=True, blank=True)
-    histrory_moment = models.ForeignKey(HistroryMoment, on_delete=models.CASCADE, verbose_name='Исторический момент', verbose_name_plural='Исторические моменты')
-    category = models.CharField(max_length=100, verbose_name='Категория', verbose_name_plural='Категории', choices=[('mark', 'Марка'), ('philatel', 'Филателистический продукт')])
+    name = models.CharField(max_length=100, verbose_name='Название')
+    description = models.TextField(verbose_name='Описание', null=True, blank=True)
+    year = models.IntegerField(verbose_name='Год', null=True, blank=True)
+    histrory_moment = models.ForeignKey(HistroryMoment, on_delete=models.CASCADE, verbose_name='Исторический момент')
+    category = models.CharField(max_length=100, verbose_name='Категория', choices=[('mark', 'Марка'), ('philatel', 'Филателистический продукт')])
 
-    emission = models.ForeignKey(Emission, on_delete=models.CASCADE, verbose_name='Эмиссия', verbose_name_plural='Эмиссии', null=True, blank=True)
-    format = models.ForeignKey(Format, on_delete=models.CASCADE, verbose_name='Формат', verbose_name_plural='Форматы', null=True, blank=True)
-    stamp = models.ForeignKey(Stamp, on_delete=models.CASCADE, verbose_name='Печать', verbose_name_plural='Печати', null=True, blank=True)
-    color = models.ForeignKey(Color, on_delete=models.CASCADE, verbose_name='Цвет', verbose_name_plural='Цвета', null=True, blank=True)
-    glue = models.ForeignKey(Glue, on_delete=models.CASCADE, verbose_name='Клей', verbose_name_plural='Клей', null=True, blank=True)
-    designer = models.ForeignKey(Designer, on_delete=models.CASCADE, verbose_name='Дизайнер', verbose_name_plural='Дизайнеры', null=True, blank=True)
-    press = models.ForeignKey(Press, on_delete=models.CASCADE, verbose_name='Типография', verbose_name_plural='Типографии', null=True, blank=True)
-    watermark = models.ForeignKey(Watermark, on_delete=models.CASCADE, verbose_name='Водяной знак', verbose_name_plural='Водяные знаки', null=True, blank=True)
-    currency = models.ForeignKey(Currency, on_delete=models.CASCADE, verbose_name='Валюта', verbose_name_plural='Валюты', null=True, blank=True)
-    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, verbose_name='Тема', verbose_name_plural='Темы', null=True, blank=True)
-    catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, verbose_name='Каталог', verbose_name_plural='Каталоги', null=True, blank=True)
-    nominal = models.FloatField(verbose_name='Номинал', verbose_name_plural='Номиналы', null=True, blank=True)
-    height = models.FloatField(verbose_name='Высота', verbose_name_plural='Высота', null=True, blank=True)
-    width = models.FloatField(verbose_name='Ширина', verbose_name_plural='Ширина', null=True, blank=True)
+    emission = models.ForeignKey(Emission, on_delete=models.CASCADE, verbose_name='Эмиссия', null=True, blank=True)
+    format = models.ForeignKey(Format, on_delete=models.CASCADE, verbose_name='Формат', null=True, blank=True)
+    stamp = models.ForeignKey(Stamp, on_delete=models.CASCADE, verbose_name='Печать', null=True, blank=True)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, verbose_name='Цвет', null=True, blank=True)
+    glue = models.ForeignKey(Glue, on_delete=models.CASCADE, verbose_name='Клей', null=True, blank=True)
+    designer = models.ForeignKey(Designer, on_delete=models.CASCADE, verbose_name='Дизайнер', null=True, blank=True)
+    press = models.ForeignKey(Press, on_delete=models.CASCADE, verbose_name='Типография', null=True, blank=True)
+    watermark = models.ForeignKey(Watermark, on_delete=models.CASCADE, verbose_name='Водяной знак', null=True, blank=True)
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE, verbose_name='Валюта', null=True, blank=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, verbose_name='Тема', null=True, blank=True)
+    catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, verbose_name='Каталог', null=True, blank=True)
+    nominal = models.FloatField(verbose_name='Номинал', null=True, blank=True)
+    height = models.FloatField(verbose_name='Высота', null=True, blank=True)
+    width = models.FloatField(verbose_name='Ширина', null=True, blank=True)
 
-    user_counter = models.IntegerField(default=0,auto_created=True)
+    user_counter = models.IntegerField(default=0,auto_created=True,verbose_name='В наличии у пользователей')
     def __str__(self):
         return f'{self.name}({self.year})'
     
     class Meta:
         verbose_name = 'Предмет'
         verbose_name_plural = 'Предметы'
-        table_name = 'item'
+        db_table = 'item'
 
 class ItemImage(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет', verbose_name_plural='Предметы')
-    image = models.ImageField(upload_to='images/', verbose_name='Изображение', verbose_name_plural='Изображения')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет')
+    image = models.ImageField(upload_to='images/', verbose_name='Изображение')
 
     def __str__(self):
         return f'{self.item.name}({self.item.year})'
@@ -193,13 +193,13 @@ class ItemImage(models.Model):
     class Meta:
         verbose_name = 'Изображение предмета'
         verbose_name_plural = 'Изображения предметов'
-        table_name = 'item_image'
+        db_table = 'item_image'
 
 class UserItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', verbose_name_plural='Пользователи')
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет', verbose_name_plural='Предметы')
-    quality = models.CharField(max_length=100, verbose_name='Качество', verbose_name_plural='Качества', choices=[('good', 'Хорошее'), ('bad', 'Плохое')])
-    count = models.IntegerField(verbose_name='Количество', verbose_name_plural='Количество',default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет')
+    quality = models.CharField(max_length=100, verbose_name='Качество', choices=[('good', 'Хорошее'), ('bad', 'Плохое')])
+    count = models.IntegerField(verbose_name='Количество', default=0)
 
     def __str__(self):
         return f'{self.user.username}({self.item.name})'
@@ -207,4 +207,4 @@ class UserItem(models.Model):
     class Meta:
         verbose_name = 'Пользовательский предмет'
         verbose_name_plural = 'Пользовательские предметы'
-        table_name = 'user_item'
+        db_table = 'user_item'
