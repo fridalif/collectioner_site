@@ -1,0 +1,56 @@
+.titlesContainer{
+    display: flex;
+    justify-content: center;
+    width:1920px;
+}
+.titles{
+    background-color: white;
+    font-size: 24px;
+    font-family: "Sofia-Sans";
+    height: 500px;
+    width:1460px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    display: flex;
+    gap:20px;
+}
+
+.titlesTitle{
+    font-size: 28px;
+    padding-top:20px;
+    padding-left:20px;
+    position: absolute;
+}
+
+
+.titlesArticle{
+    margin-top:75px;
+    margin-left: 25px;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+    overflow-y: scroll;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    background-color: #FFFFFF;
+}
+
+.titlesArticleHeader{
+    font-size: 20px;
+    margin-top:20px;
+    margin-left:20px;
+    color:#463f3a;
+    text-align: center;
+}
+.titlesArticleHeader:hover{
+    text-decoration: underline;
+}
+.titlesArticleText{
+    font-size: 16px;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}
