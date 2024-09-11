@@ -1,14 +1,16 @@
 import styles from './SecondHeader.module.css'
+import { IoMdSearch } from "react-icons/io";
+import { FaRegUserCircle } from "react-icons/fa";
 
 export function SecondHeader(){
     return(
         <div class={styles.secondHeader}>
             <div class={styles.secondHeaderSearchfield}>
                 <input type="text" placeholder="Искать на сайте..." class={styles.secondHeaderSearchfieldInput} />
-                <img src="lupa.png" class={styles.secondHeaderSearchfieldImg} />
+                <IoMdSearch class={styles.secondHeaderSearchfieldImg} />
             </div>
             <div class={styles.secondHeaderCabinet}>
-                 Личный кабинет
+                 <FaRegUserCircle class={styles.secondHeaderCabinetImg} />Личный кабинет
             </div>
         </div>
     )
