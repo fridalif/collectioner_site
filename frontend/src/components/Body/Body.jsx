@@ -3,7 +3,7 @@ import {SecondHeader} from '../SecondHeader/SecondHeader.jsx';
 export function Body(){
 
     return(
-        <div class={styles.body}>
+        <div className={styles.body}>
             <SecondHeader />
         </div>
     )

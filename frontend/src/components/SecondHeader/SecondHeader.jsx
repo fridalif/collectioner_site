@@ -4,13 +4,13 @@ import { FaRegUserCircle } from "react-icons/fa";
 
 export function SecondHeader(){
     return(
-        <div class={styles.secondHeader}>
-            <div class={styles.secondHeaderSearchfield}>
-                <input type="text" placeholder="Искать на сайте..." class={styles.secondHeaderSearchfieldInput} />
-                <IoMdSearch class={styles.secondHeaderSearchfieldImg} />
+        <div className={styles.secondHeader}>
+            <div className={styles.secondHeaderSearchfield}>
+                <input type="text" placeholder="Искать на сайте..." className={styles.secondHeaderSearchfieldInput} />
+                <IoMdSearch className={styles.secondHeaderSearchfieldImg} />
             </div>
-            <div class={styles.secondHeaderCabinet}>
-                 <FaRegUserCircle class={styles.secondHeaderCabinetImg} />Личный кабинет
+            <div className={styles.secondHeaderCabinet}>
+                 <FaRegUserCircle className={styles.secondHeaderCabinetImg} />Личный кабинет
             </div>
         </div>
     )
