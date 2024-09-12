@@ -1,0 +1,37 @@
+.loginContainerHeight{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:150px;
+    height: 880px;
+    flex-direction: column;
+}
+.loginContainerWidth{
+    display: flex;
+    width: 1920px;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginBlock{
+    display: flex;
+    align-items: center;
+    width: 1000px;
+    height: 600px;
+    background-color: #463F3A;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.loginWindow{
+    width:500px;
+    height: 600px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    transform: translateX(500px);
+    transition: all 1s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

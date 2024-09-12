@@ -3,6 +3,7 @@ import {SecondHeader} from '../SecondHeader/SecondHeader.jsx';
 import {WelcomeMessage} from '../WelcomeMessage/WelcomeMessage.jsx';
 import {LastAddedMarks} from '../LastAddedMarks/LastAddedMarks.jsx';
 import {Titles} from '../Titles/Titles.jsx';
+import {LoginForm} from '../LoginForm/LoginForm.jsx';
 
 export function Body({isLoggedIn, mode}){
 
@@ -17,6 +18,7 @@ export function Body({isLoggedIn, mode}){
                 </>
             :
                 <>
+                    <LoginForm />
                 </>
             }   
         </div>
