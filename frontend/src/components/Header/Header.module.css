@@ -1,5 +1,5 @@
 .header{
-    background-color:#8a817c;
+    background-color:#463F3A;
     height: 50px;
     gap:50px;
     position: fixed;
@@ -24,5 +24,5 @@
 }
 
 .headerNode:hover{
-    background-color: #463f3a;
+    background-color: #221f1c;
 }

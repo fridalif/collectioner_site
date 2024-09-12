@@ -1,5 +1,5 @@
 .secondHeader{
-    background-color: #BCB8B1;
+    background-color: #8A817C;
     position:fixed;
     z-index: 500;
     display: flex;
@@ -39,7 +39,7 @@
     height: 50px;
     display: flex;
     align-items: center;
-    color:#463f3a;
+    color:#221f1c;
     font-size: 24px;
     font-family: "Sofia-Sans";
     cursor: pointer;
@@ -47,5 +47,5 @@
 }
 
 .secondHeaderCabinet:hover{
-    text-decoration: underline;
+    color: orange;
 }
