@@ -41,6 +41,7 @@ def validate_model_ids(model, ids)->List:
     GET
 """
 
+
 @api_view(['GET'])
 def is_logged_in(request:HttpRequest)->Response:
     try:
@@ -362,5 +363,6 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
             return Response({'status':'error','message':'Не удалось добавить предмет в коллекцию'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
-    
+
+
 

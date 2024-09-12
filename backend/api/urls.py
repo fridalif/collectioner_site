@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from api.views import get_items, get_countries, get_history_moments, get_designers, get_my_collection_counters, get_other_filters_except_designers
 from api.views import add_new_item, add_or_remove_item_in_my_collection, is_logged_in
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path('is_logged_in/',is_logged_in,name='is_logged_in'),
     path('add_new_item/',add_new_item,name='add_new_item'),
     path('add_or_remove_item_in_my_collection/',add_or_remove_item_in_my_collection,name='add_or_remove_item_in_my_collection'),
+    path('auth/',include('rest_framework.urls'))
 ]
