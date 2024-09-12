@@ -5,6 +5,7 @@ import axios from 'axios';
 
 export default function Home(){
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const mode = 'Home';
     axios
     .get('http://127.0.0.1:8000/api/is_logged_in/')
     .then(function (response) {
@@ -14,7 +15,7 @@ export default function Home(){
     return (
         <>
             <Header />
-            <Body isLoggedIn={isLoggedIn}/>
+            <Body isLoggedIn={isLoggedIn} mode={mode}/>
         </>
     )
 }
