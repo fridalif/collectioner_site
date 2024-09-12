@@ -40,6 +40,13 @@ def validate_model_ids(model, ids)->List:
 """
     GET
 """
+
+@api_view(['GET'])
+def is_logged_in(request:HttpRequest)->Response:
+    try:
+        return Response({'status':'ok', 'data':{'is_logged_in':request.user.is_authenticated, 'is_superuser':request.user.is_superuser}})
+    except:
+        return Response({'status':'error', 'message':'Не удалось проверить авторизацию'})
 @api_view(['GET'])
 def get_items(request:HttpRequest)->Response:
 
