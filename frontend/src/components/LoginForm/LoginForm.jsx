@@ -22,7 +22,7 @@ export function LoginForm({isLoggedIn}){
                         : 
                             () => {registerToLogin(loginWindow.current); setMode('login')}
                     }>
-                        jklhfdkha
+                        
                     </div>
                 </div>
             </div>
