@@ -1,5 +1,5 @@
 import styles from './LoginForm.module.css'
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { LoginFields, RegisterFields  } from "../LoginFields/LoginFields";
 import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
 import axios from 'axios';
@@ -20,8 +20,12 @@ export function LoginForm({isLoggedIn}){
     const [mode, setMode] = useState('login');
     const [isCsrf, setIsCsrf] = useState(null);
 
-    const getCSRF = () => {
-        axios.get(serverUrl + 'api/get_csrf/', { withCredentials: true })
+    useEffect(() => {
+        getCSRF();
+    }, []);
+
+    const getCSRF = async () => {
+        await axios.get(serverUrl + 'api/get_csrf/', { withCredentials: true })
         .then((res) => {
             const csrfToken = res.headers.get('X-CSRFToken');
             setIsCsrf(csrfToken);
@@ -30,14 +34,20 @@ export function LoginForm({isLoggedIn}){
     }
 
     const loginAsync = async () => {
-        getCSRF();
         console.log(isCsrf);
-        await axios({
-            method: 'post',
-            url: 'http://127.0.0.1:8000/api/auth/login/',
-            data: { username: 'stackoverflowGuru' },
-            headers: { 'X-CSRFToken': isCsrf },
-            timeout: 5000 // Ограничение времени ожидания запроса
+        const data = {
+            username: document.getElementById('login').value,
+            password: document.getElementById('password').value
+        }
+        axios.post(serverUrl + "api/login/", data, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": isCsrf,
+            }
+        })
+        .then((res) => {
+            console.log(res.data);
         });
     }
     

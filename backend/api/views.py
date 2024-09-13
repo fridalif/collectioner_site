@@ -5,6 +5,7 @@ from django.http import HttpRequest
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
+from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
 from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -374,5 +375,21 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
+
+@api_view(['POST'])
+def login_user(request: HttpRequest) -> Response:
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
+        if username is None or password is None:
+            return Response({'status':'error','message':'Не указаны логин или пароль'})
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return Response({'status':'ok'})
+        else:
+            return Response({'status':'error','message':'Неверные логин или пароль'})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
 
 
