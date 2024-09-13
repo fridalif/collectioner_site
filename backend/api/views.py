@@ -7,7 +7,8 @@ from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, UserSerializer
+from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.middleware.csrf import get_token
 """
@@ -54,7 +55,9 @@ def get_csrf(request):
 @api_view(['GET'])
 def is_logged_in(request:HttpRequest)->Response:
     try:
-        return Response({'status':'ok', 'data':{'is_logged_in':request.user.is_authenticated, 'is_superuser':request.user.is_superuser}})
+        if request.user.is_authenticated is not None:
+            return Response({'status':'ok', 'data':{'is_logged_in':True, 'is_superuser':request.user.is_superuser}})
+        return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}})
     except:
         return Response({'status':'error', 'message':'Не удалось проверить авторизацию'})
 
@@ -386,7 +389,7 @@ def login_user(request: HttpRequest) -> Response:
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return Response({'status':'ok'})
+            return Response({'status':'ok','data':user.username})
         return Response({'status':'error','message':'Неверные логин или пароль'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})

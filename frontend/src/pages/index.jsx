@@ -7,7 +7,7 @@ export default function Home(){
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const mode = 'Home';
     axios
-    .get('http://127.0.0.1:8000/api/is_logged_in/')
+    .get('http://127.0.0.1:8000/api/is_logged_in/',{ withCredentials: true })
     .then((response) => {
         setIsLoggedIn(response.data.data['is_logged_in']);
         console.log(response.data.data['is_logged_in']);

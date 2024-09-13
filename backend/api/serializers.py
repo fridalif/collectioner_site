@@ -1,5 +1,6 @@
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
 from rest_framework.serializers import ModelSerializer, CharField
+from django.contrib.auth.models import User
 
 class ItemSerializer(ModelSerializer):
     class Meta:
@@ -77,3 +78,8 @@ class UserItemSerializer(ModelSerializer):
     class Meta:
         model = UserItem
         fields = ['id', 'user', 'item','quality']
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

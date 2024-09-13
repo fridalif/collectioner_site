@@ -16,4 +16,5 @@ urlpatterns = [
     path('add_new_item/',add_new_item,name='add_new_item'),
     path('add_or_remove_item_in_my_collection/',add_or_remove_item_in_my_collection,name='add_or_remove_item_in_my_collection'),
     path('login/',login_user,name='login'),
+    #path('auth/',include('rest_framework.urls'))
 ]
