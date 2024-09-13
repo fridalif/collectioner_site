@@ -387,8 +387,7 @@ def login_user(request: HttpRequest) -> Response:
         if user is not None:
             login(request, user)
             return Response({'status':'ok'})
-        else:
-            return Response({'status':'error','message':'Неверные логин или пароль'})
+        return Response({'status':'error','message':'Неверные логин или пароль'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 

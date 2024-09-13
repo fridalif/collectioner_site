@@ -18,9 +18,9 @@ export function SecondHeader({isLoggedIn}){
                         <FaRegUserCircle className={styles.secondHeaderCabinetImg} /> Личный кабинет 
                     </>
                 :
-                    <>
-                        <IoEnter className={styles.secondHeaderCabinetImg} /> Вход/Регистрация
-                    </>
+                    <a href='/login' className={styles.secondHeaderCabinetLink}>
+                        <IoEnter className={styles.secondHeaderCabinetImg}/> Вход/Регистрация
+                    </a>
                 }
             </div>
         </div>

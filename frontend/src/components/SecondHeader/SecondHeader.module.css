@@ -49,3 +49,15 @@
 .secondHeaderCabinet:hover{
     color: orange;
 }
+
+.secondHeaderCabinetLink{
+    text-decoration: none;
+    color:#221f1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondHeaderCabinetLink:hover{
+    color: orange;
+}
