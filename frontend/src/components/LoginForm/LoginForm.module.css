@@ -75,3 +75,44 @@
     box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
 }
 
+.titleAboutLogin{
+    font-size: 32px;
+    margin-top:50px;
+    margin-left:20px;
+    width: 450px;
+    height: 700px;
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    font-family: "Sofia-Sans";
+}
+
+.titleAboutRegister{
+    font-size: 32px;
+    margin-top:50px;
+    width: 450px;
+    justify-content: flex-start;
+    align-items: center;
+    height: 700px;
+    flex-direction: column;
+    margin-left:520px;
+    position:absolute;
+    display:flex;
+    color: white;
+    font-family: "Sofia-Sans";
+}
+
+.textAbout{
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: "Sofia-Sans";
+    width: 410px;
+    display:flex;
+    align-items: flex-start;
+    color: white;
+}

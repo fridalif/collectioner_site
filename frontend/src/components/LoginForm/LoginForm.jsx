@@ -56,6 +56,25 @@ export function LoginForm({isLoggedIn}){
         <div className={styles.loginContainerHeight}>
             <div className={styles.loginContainerWidth}>
                 <div className={styles.loginBlock}>
+                    <div className={styles.titleAboutLogin}>
+                        <div className={styles.headerAbout}>
+                            С возвращением на наш сайт!
+                        </div>
+                        <div className={styles.textAbout}>    
+                            Войдите в свою учетную запись, чтобы продолжить делиться своими находками, обмениваться опытом и находить единомышленников, которые разделяют вашу страсть к филателии.
+                        </div>
+                    </div>
+                    <div className={styles.titleAboutRegister}>
+                        <div className={styles.headerAbout}>
+                            Добро пожаловать на наш сайт!
+                        </div>
+                        <div className={styles.textAbout}>      
+                            Мы рады видеть вас в нашем сообществе увлеченных коллекционеров! Здесь вы сможете делиться своими находками, обмениваться опытом и находить единомышленников, которые разделяют вашу страсть к филателии. <br /> 
+                            Зарегистрировавшись, вы получите доступ ко множеству полезных функций: создавайте свои коллекции, участвуйте в обсуждениях, получайте советы от экспертов и следите за новыми поступлениями на рынке. <br />
+                            Присоединяйтесь к нам и погружайтесь в увлекательный мир марок. Ваши уникальные истории и открытия ждут своего часа!
+                        </div>
+                    </div>
+                        
                     <div className={styles.loginWindow} ref={loginWindow}>
                         {mode == 'login' ? 
                             <>
