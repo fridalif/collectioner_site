@@ -55,8 +55,8 @@ def get_csrf(request):
 @api_view(['GET'])
 def is_logged_in(request:HttpRequest)->Response:
     try:
-        if request.user.is_authenticated is not None:
-            return Response({'status':'ok', 'data':{'is_logged_in':True, 'is_superuser':request.user.is_superuser}})
+        if request.session.get('user_id') is not None:
+            return Response({'status':'ok', 'data':{'is_logged_in':True, 'is_superuser':User.objects.get(id=request.session.get('user_id')).is_superuser}})
         return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}})
     except:
         return Response({'status':'error', 'message':'Не удалось проверить авторизацию'})
@@ -389,6 +389,7 @@ def login_user(request: HttpRequest) -> Response:
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
+            request.session['user_id'] = user.id
             return Response({'status':'ok','data':user.username})
         return Response({'status':'error','message':'Неверные логин или пароль'})
     except:
