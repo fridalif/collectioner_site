@@ -6,8 +6,11 @@ export function LoginFields(){
             <div className={styles.loginHeader}>
                 Вход
             </div>
-            <input className={styles.loginInput} type='text' placeholder='Логин или почта'/>
-            <input className={styles.loginInput} type='password' placeholder='Пароль'/>
+            <input className={styles.loginInput} type='text' placeholder='Логин' id='login'/>
+            <input className={styles.loginInput} type='password' placeholder='Пароль' id='password'/>
+            <div className={styles.loginForgotPass}>
+                Забыли пароль?
+            </div>
         </>
     )
 }

@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+from django.http import JsonResponse
 from django.http import HttpRequest
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
 from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer
-
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.middleware.csrf import get_token
 """
     Валидаторы
 """
@@ -41,13 +43,21 @@ def validate_model_ids(model, ids)->List:
     GET
 """
 
+# Создаёт уникальный CSRF-токен и вставляет в cookie браузеру
+def get_csrf(request):
+    response = JsonResponse({'detail': 'CSRF cookie set'})
+    response['X-CSRFToken'] = get_token(request)
+    return response
 
+@ensure_csrf_cookie
 @api_view(['GET'])
 def is_logged_in(request:HttpRequest)->Response:
     try:
         return Response({'status':'ok', 'data':{'is_logged_in':request.user.is_authenticated, 'is_superuser':request.user.is_superuser}})
     except:
         return Response({'status':'error', 'message':'Не удалось проверить авторизацию'})
+
+
 @api_view(['GET'])
 def get_items(request:HttpRequest)->Response:
 
