@@ -403,6 +403,19 @@ def login_user(request: HttpRequest) -> Response:
 @api_view(['POST'])
 def register_user(request: HttpRequest) -> Response:
     try:
-        pass
+        username = request.data.get('username')
+        email = request.data.get('email')
+        password = request.data.get('password')
+        if username is None or email is None or password is None:
+            return Response({'status':'error','message':'Не указаны логин, почта или пароль'})
+        username = username.replace('<','')
+        email = email.replace('<','')
+
+        user = User.objects.create_user(username, email, password)
+        user.is_active = False
+        user.save()
+
+        request.session['user_id'] = user.id
+        return Response({'status':'ok','data':user.username})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
