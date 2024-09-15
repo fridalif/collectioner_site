@@ -28,10 +28,12 @@ class CustomUser(models.Model):
     about_me = models.TextField(verbose_name='О себе', null=True, blank=True)
     show_my_collection = models.BooleanField(verbose_name='Показывать мою коллекцию', default=False)
     avatar = models.ImageField(verbose_name='Аватар', null=True, blank=True, upload_to='avatars')
-    
+    sended_message = models.DateTimeField(verbose_name='Время отправки', null=True, blank=True)
+
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+        db_table = 'custom_user'
 
 
 class HistroryMoment(models.Model):

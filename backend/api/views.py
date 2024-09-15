@@ -403,19 +403,47 @@ def login_user(request: HttpRequest) -> Response:
 @api_view(['POST'])
 def register_user(request: HttpRequest) -> Response:
     try:
-        username = request.data.get('username')
-        email = request.data.get('email')
-        password = request.data.get('password')
-        if username is None or email is None or password is None:
-            return Response({'status':'error','message':'Не указаны логин, почта или пароль'})
+        username = str(request.data.get('username'))
+        email = str(request.data.get('email'))
+        password = str(request.data.get('password'))
+        fullname = str(request.data.get('fullname'))
         username = username.replace('<','')
         email = email.replace('<','')
+        fullname = fullname.replace('<','')
+        if username == '':
+            return Response({'status':'error','message':'Не указан логин'})
+        if email == '':
+            return Response({'status':'error','message':'Не указан email'})
+        if password == '':
+            return Response({'status':'error','message':'Не указан пароль'})
+        if fullname == '':
+            return Response({'status':'error','message':'Не указано имя'})
+        if User.objects.filter(username=username).exists():
+            return Response({'status':'error','message':'Пользователь с таким логином уже существует'})
+        if User.objects.filter(email=email).exists():
+            return Response({'status':'error','message':'Пользователь с таким email уже существует'})
+        date_of_birth = request.data.get('date_of_birth')
+        if date_of_birth is None:
+            return Response({'status':'error','message':'Не указана дата рождения'})
+        
+        show_fullname = request.data.get('show_fullname')
+        show_birth_date = request.data.get('show_birth_date')
+        if show_fullname is None:
+            show_fullname = False
+        if show_birth_date is None:
+            show_birth_date = False
+        print(show_fullname, show_birth_date)
+        print(date_of_birth)
+        print(username)
+        print(fullname)
+        print(email)
+        print(password)
+        
+        #user = User.objects.create_user(username, email, password)
+        #user.is_active = False
+        #user.save()
 
-        user = User.objects.create_user(username, email, password)
-        user.is_active = False
-        user.save()
-
-        request.session['user_id'] = user.id
-        return Response({'status':'ok','data':user.username})
+        #request.session['user_id'] = user.id
+        return Response({'status':'ok','data':'okkk'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
