@@ -47,8 +47,14 @@ export function LoginForm({isLoggedIn}){
             }
         })
         .then((res) => {
-            console.log(res.data);
-        });
+            res = res.data;
+            if (res.status === 'ok') {
+                window.location.href = '/';
+                return;
+            }
+            alert(res.message);
+        })
+        .catch((err) => alert('Произошла непредвиденная ошибка'))
     }
     
 
