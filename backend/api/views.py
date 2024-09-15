@@ -6,11 +6,14 @@ from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
 from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, UserSerializer
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.middleware.csrf import get_token
+from django.utils.crypto import get_random_string
+
+
 """
     Валидаторы
 """
@@ -432,18 +435,25 @@ def register_user(request: HttpRequest) -> Response:
             show_fullname = False
         if show_birth_date is None:
             show_birth_date = False
-        print(show_fullname, show_birth_date)
-        print(date_of_birth)
-        print(username)
-        print(fullname)
-        print(email)
-        print(password)
-        
-        #user = User.objects.create_user(username, email, password)
-        #user.is_active = False
-        #user.save()
+        country = request.data.get('country')
+        if not is_int(country):
+            return Response({'status':'error','message':'Не указана страна'})
+        try:
+            country = Country.objects.get(id=int(country))
+            user = User.objects.create_user(username, email, password)
+            activate_hash = get_random_string(length=100)
+            custom_user = CustomUser.objects.create(user=user, fullname=fullname, birth_date=date_of_birth, show_fullname=show_fullname, show_birth_date=show_birth_date, country=country, activate_hash=activate_hash)
+            custom_user.save()
+            user.is_active = False
+            user.save()
+            request.session['user_id'] = user.id
+            return Response({'status':'ok','data':user.username})
+        except Country.DoesNotExist:
+            return Response({'status':'error','message':'Неизвестная страна'})
+        except Exception as e:
+            print(e)
+            return Response({'status':'error','message':'Неизвестная ошибка'})
 
-        #request.session['user_id'] = user.id
-        return Response({'status':'oke','message':'okkk'})
+
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})

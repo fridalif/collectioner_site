@@ -84,7 +84,7 @@ export function LoginForm({isLoggedIn}){
         .then((res) => {
             res = res.data;
             if (res.status === 'ok') {
-                window.location.href = '/';
+                alert('Подтвердите регистрацию, перейдя по ссылке в письме');
                 return;
             }
             alert(res.message);
