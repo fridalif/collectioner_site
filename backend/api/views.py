@@ -59,6 +59,8 @@ def is_logged_in(request:HttpRequest)->Response:
     try:
         if request.session.get('user_id') is not None:
             user = User.objects.get(id=request.session.get('user_id'))
+            if not user.is_active:
+                return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}})
             return Response({'status':'ok', 'data':{'is_logged_in':True, 'is_superuser':user.is_superuser}})
         return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}})
     except:
@@ -391,11 +393,15 @@ def login_user(request: HttpRequest) -> Response:
             return Response({'status':'error','message':'Не указаны логин или пароль'})
         user = authenticate(username=username, password=password)
         if user is not None:
+            if not user.is_active:
+                return Response({'status':'error','message':'Пользователь не активирован или заблокирован'})
             login(request, user)
             request.session['user_id'] = user.id
             return Response({'status':'ok','data':user.username})
         user = authenticate(email=username, password=password)
         if user is not None:
+            if not user.is_active:
+                return Response({'status':'error','message':'Пользователь не активирован или заблокирован'})
             login(request, user)
             request.session['user_id'] = user.id
             return Response({'status':'ok','data':user.username})
