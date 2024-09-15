@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import  AbstractUser
+from django.contrib.auth.models import  User
 
 class Country(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -16,7 +16,8 @@ class Country(models.Model):
         db_table = 'country'
 
 
-class CustomUser(AbstractUser):
+class CustomUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь в джанго')
     activate_hash = models.CharField(max_length=100, verbose_name='Хэш активации', null=True, blank=True)
     fullname = models.CharField(max_length=100, verbose_name='ФИО', null=True, blank=True)
     show_fullname = models.BooleanField(verbose_name='Показывать ФИО', default=False)
@@ -26,11 +27,12 @@ class CustomUser(AbstractUser):
     languages = models.CharField(max_length=100, verbose_name='Языки', null=True, blank=True)
     about_me = models.TextField(verbose_name='О себе', null=True, blank=True)
     show_my_collection = models.BooleanField(verbose_name='Показывать мою коллекцию', default=False)
-
+    avatar = models.ImageField(verbose_name='Аватар', null=True, blank=True, upload_to='avatars')
     
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
 
 class HistroryMoment(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
