@@ -34,7 +34,6 @@ export function LoginForm({isLoggedIn}){
     }
 
     const loginAsync = async () => {
-        console.log(isCsrf);
         const data = {
             username: document.getElementById('login').value,
             password: document.getElementById('password').value
@@ -56,7 +55,42 @@ export function LoginForm({isLoggedIn}){
         })
         .catch((err) => alert('Произошла непредвиденная ошибка'))
     }
-    
+    const registerAsync = async () => {
+        const data = {
+            username: document.getElementById('login').value,
+            password: document.getElementById('password').value,
+            fullname: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            date_of_birth: document.getElementById('dateOfBirth').value,
+            country: document.getElementById('country').value,
+            show_fullname: document.getElementById('showFullName').checked,
+            show_birth_date: document.getElementById('showBirthDate').checked
+        }
+        if (data.password !== document.getElementById('retypePassword').value) {
+            alert('Пароли не совпадают');
+            return;
+        }
+        if (data.username == '' || data.password == '' || data.fullname == '' || data.email == '' || data.date_of_birth == '' || data.country == '') {
+            alert('Заполните все обязательные поля');
+            return;
+        }
+        axios.post(serverUrl + "api/register/", data, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": isCsrf,
+            }
+        })
+        .then((res) => {
+            res = res.data;
+            if (res.status === 'ok') {
+                window.location.href = '/';
+                return;
+            }
+            alert(res.message);
+        })
+        .catch((err) => alert('Произошла непредвиденная ошибка'))
+    }
 
     return (
         <div className={styles.loginContainerHeight}>
@@ -96,7 +130,7 @@ export function LoginForm({isLoggedIn}){
                         :
                             <> 
                                 <RegisterFields />
-                                <div className={styles.loginButton}>
+                                <div className={styles.loginButton} onClick={() => {registerAsync()}}>
                                     Зарегистрироваться
                                 </div>
                                 <div className={styles.loginText} onClick={() => {registerToLogin(loginWindow.current);setMode('login')}}>

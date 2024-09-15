@@ -50,10 +50,10 @@ export function RegisterFields(){
                 <input className={styles.registerInput} type='text' placeholder='Страна' id='country'/>
             </div>
             <div className={styles.registerInputContainer}>
-                <input className={styles.registerInputCheckbox} type='checkbox' name='showFullName' /> Отображать ФИО другим пользователям
+                <input className={styles.registerInputCheckbox} type='checkbox' name='showFullName' id='showFullName' /> Отображать ФИО другим пользователям
             </div>
             <div className={styles.registerInputContainer}>
-                <input className={styles.registerInputCheckbox} type='checkbox' name='showFullName' /> Отображать дату рождения другим пользователям
+                <input className={styles.registerInputCheckbox} type='checkbox' name='showBirthDate' id='showBirthDate'/> Отображать дату рождения другим пользователям
             </div>
         </>
     )

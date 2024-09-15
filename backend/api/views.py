@@ -444,6 +444,6 @@ def register_user(request: HttpRequest) -> Response:
         #user.save()
 
         #request.session['user_id'] = user.id
-        return Response({'status':'ok','data':'okkk'})
+        return Response({'status':'oke','message':'okkk'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
