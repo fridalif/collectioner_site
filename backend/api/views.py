@@ -48,7 +48,6 @@ def validate_model_ids(model, ids)->List:
     GET
 """
 
-# Создаёт уникальный CSRF-токен и вставляет в cookie браузеру
 def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set'})
     response['X-CSRFToken'] = get_token(request)
@@ -461,5 +460,17 @@ def register_user(request: HttpRequest) -> Response:
             return Response({'status':'error','message':'Неизвестная ошибка'})
 
 
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+@api_view(['POST'])
+def activate_user(request: HttpRequest, hash: str) -> Response:
+    try:
+        if CustomUser.objects.filter(activate_hash=hash).exists():
+            user = CustomUser.objects.get(activate_hash=hash)
+            user.is_active = True
+            user.save()
+            return Response({'status':'ok','data':user.user.username})
+        return Response({'status':'error','message':'Неверная ссылка активации'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
