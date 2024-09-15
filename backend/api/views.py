@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
 from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, UserSerializer
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
 
@@ -463,14 +462,17 @@ def register_user(request: HttpRequest) -> Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
-@api_view(['POST'])
+@api_view(['GET'])
 def activate_user(request: HttpRequest, hash: str) -> Response:
     try:
-        if CustomUser.objects.filter(activate_hash=hash).exists():
+        if len(CustomUser.objects.filter(activate_hash=hash)) != 0:
             user = CustomUser.objects.get(activate_hash=hash)
-            user.is_active = True
+            user.user.is_active = True
+            user.user.save()
             user.save()
+            request.session['user_id'] = user.user.id
             return Response({'status':'ok','data':user.user.username})
         return Response({'status':'error','message':'Неверная ссылка активации'})
-    except:
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
