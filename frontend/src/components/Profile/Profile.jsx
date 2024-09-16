@@ -12,8 +12,17 @@ const serverUrl  = 'http://127.0.0.1:8000';
 
 export function Profile(){
     const [mode, setMode] = useState('Profile');
-    const [isMyAccount, setIsMyAccount] = useState(true);
-    const [accountInfo, setAccountInfo] = useState({'account_url':'nothing'});
+    const [isMyAccount, setIsMyAccount] = useState(false);
+    const [email, setEmail] = useState(null);
+    const [username, setUsername] = useState(null);
+    const [avatar, setAvatar] = useState(null);
+    const [fullname, setFullname] = useState(null);
+    const [country, setCountry] = useState(null);
+    const [city, setCity] = useState(null);
+    const [birth_date, setBirth_date] = useState(null);
+    const [languages, setLanguages] = useState(null);
+    const [about, setAbout] = useState(null);
+
     const get_user_info = async () => {
         const queryParameters = new URLSearchParams(window.location.search)
         const user_id = queryParameters.get("user_id")
@@ -30,8 +39,17 @@ export function Profile(){
                     return;
                 }
                 console.log(response.data.data);
-                setAccountInfo(response.data.data.user);
-                setIsMyAccount(response.data.data.is_my_account);
+                let data = response.data.data;
+                setUsername(data.username);
+                setAvatar(data.avatar_url);
+                setFullname(data.fullname);
+                setCountry(data.country);
+                setCity(data.city);
+                setEmail(data.email);
+                setBirth_date(data.birth_date);
+                setLanguages(data.languages);
+                setAbout(data.about);
+                setIsMyAccount(data.isMyAccount);
             })
             .catch((err) => console.error(err))
     }
@@ -66,28 +84,29 @@ export function Profile(){
                         { mode == 'Profile' &&
                         <>
                             <div className={styles.profileAvatarAndName}>
-                                <img src={serverUrl+accountInfo.avatar_url} className={styles.profileAvatar} alt="avatar"/> {accountInfo.username}
+                                <img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/> {username}
                             </div>
                             <div className={styles.profileInfo}>
                                 <div className={styles.profileInfoRow}>
-                                    Полное имя: {accountInfo.fullname}
+                                    Полное имя: {fullname}
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Email: {accountInfo.email}
+                                    Email: {email}
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Страна: {accountInfo.country}
+                                    Страна: {country}
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Дата рождения: {accountInfo.birth_date}
+                                    Дата рождения: {birth_date}
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Языки: {accountInfo.languages}
+                                    Языки: {languages}
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    О себе: {accountInfo.about}
+                                    О себе: {about}
                                 </div>
                             </div>
+                            
                         </>
                         }
                     </div>
