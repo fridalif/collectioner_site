@@ -337,7 +337,7 @@ def get_user(request:HttpRequest, id = None) -> Response:
             except Exception as e:
                 print('{e}')
                 return Response({'status':'error', 'message':'Неизвестная ошибка'})
-            return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
+            return Response({'status':'ok', 'data':{'user':CustomUserSerializer(user).data, 'isMyAccount':True}})
         try:
             user = CustomUser.objects.get(id=int(id))
         except CustomUser.DoesNotExist:
@@ -347,7 +347,7 @@ def get_user(request:HttpRequest, id = None) -> Response:
         if is_int(user_id):
             request_user = User.objects.get(id=int(user_id))
             if user.user == request_user or request_user.is_superuser:
-                return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
+                return Response({'status':'ok', 'data':{'user':CustomUserSerializer(user).data, 'isMyAccount':user.user==request_user}})
         if not user.show_birth_date:
             user.birth_date = None
         if not user.show_fullname:

@@ -30,7 +30,8 @@ export function Profile(){
                     return;
                 }
                 console.log(response.data.data);
-                setAccountInfo(response.data.data);
+                setAccountInfo(response.data.data.user);
+                setIsMyAccount(response.data.data.is_my_account);
             })
             .catch((err) => console.error(err))
     }
