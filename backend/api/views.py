@@ -208,7 +208,10 @@ def get_countries(request:HttpRequest,id=None)->Response:
                 return Response({'status':'ok','data':CountrySerializer(countries,many=True).data})
             except: 
                 return Response({'status':'error','message':'Ошибка получения стран'})
-        return Response({'status':'error','message':'Не указана часть света'})
+        countries = Country.objects.all()
+        data = CountrySerializer(countries,many=True)
+        data = data.data
+        return Response({'status':'ok','data':data})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     

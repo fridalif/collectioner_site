@@ -12,7 +12,7 @@ class CountrySerializer(ModelSerializer):
     
     class Meta:
         model = Country
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'image_url']
 
 class HistoryMomentSerializer(ModelSerializer):
     class Meta:

@@ -1,4 +1,6 @@
 import styles from './LoginFields.module.css'
+import { useEffect, useRef } from 'react'
+import axios from 'axios';
 
 export function LoginFields(){
     return(
@@ -16,6 +18,28 @@ export function LoginFields(){
 }
 
 export function RegisterFields(){
+    
+    const contriesField = useRef();
+
+    useEffect(() => {
+        axios
+            .get('http://127.0.0.1:8000/api/get_countries/',{ withCredentials: true })
+            .then((response) => {
+                response = response.data;
+                if (response.status === 'ok') {
+                    let contriesHTML = "<option value=''>Страна</option>";
+                    response.data.forEach((elem) => {
+                        contriesHTML = contriesHTML + `<option value='${elem.id}'>${elem.name}</option>`
+                    })
+                    contriesField.current.innerHTML = contriesHTML;
+                }
+                else {
+                    alert(response.message);
+                }
+            })
+    }, [])
+
+
     return(
         <>
             <div className={styles.loginHeader}>
@@ -47,7 +71,10 @@ export function RegisterFields(){
             </div>
             <div className={styles.registerInputContainer}>
                 <label className={styles.label} for='contry'> Страна </label> 
-                <input className={styles.registerInput} type='text' placeholder='Страна' id='country'/>
+                <select className={styles.registerInput} type='text' placeholder='Страна' id='country' ref={contriesField}>
+                    <option value=''>Страна</option>
+
+                </select>
             </div>
             <div className={styles.registerInputContainer}>
                 <input className={styles.registerInputCheckbox} type='checkbox' name='showFullName' id='showFullName' /> Отображать ФИО другим пользователям
