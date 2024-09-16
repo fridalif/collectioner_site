@@ -5,7 +5,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { GiChest } from "react-icons/gi";
 import { FaGear } from "react-icons/fa6";
 import { GiExitDoor } from "react-icons/gi";
-import Image from 'next/image'
+import Cookies from 'js-cookie';
 
 
 const serverUrl  = 'http://127.0.0.1:8000';
@@ -22,6 +22,7 @@ export function Profile(){
     const [birth_date, setBirth_date] = useState(null);
     const [languages, setLanguages] = useState(null);
     const [about, setAbout] = useState(null);
+    const [isCsrf, setIsCsrf] = useState(null);
 
     const get_user_info = async () => {
         const queryParameters = new URLSearchParams(window.location.search)
@@ -54,6 +55,35 @@ export function Profile(){
             .catch((err) => console.error(err))
     }
 
+    const getCSRF = async () => {
+        await axios.get(serverUrl + 'api/get_csrf/', { withCredentials: true })
+        .then((res) => {
+            const csrfToken = res.headers.get('X-CSRFToken');
+            setIsCsrf(csrfToken);
+        })
+        .catch((err) => console.error(err))
+    }
+
+    const logout = async () => {
+        await getCSRF();
+        await axios
+            .post(serverUrl + "/api/logout/", { withCredentials: true , headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": isCsrf,
+              }})
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+
+                    return;
+                }
+
+                Cookies.remove('sessionid');
+                window.location.href = '/login';
+            })
+            .catch((err) => console.error(err))
+    }
+
     useEffect(async () => {
         await get_user_info();
         return;
@@ -76,7 +106,7 @@ export function Profile(){
                             </div>
                         }
                         { isMyAccount &&
-                            <div className={mode == 'Logout' ? styles.sideBarBlockChosen : styles.sideBarBlock}>
+                            <div className={mode == 'Logout' ? styles.sideBarBlockChosen : styles.sideBarBlock} onClick={() => logout()}>
                                 <GiExitDoor className={styles.sideBarIcon}/> Выход
                             </div>
                         }

@@ -11,7 +11,7 @@ from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSeria
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
-
+from django.contrib.sessions.models import Session
 
 """
     Валидаторы
@@ -56,7 +56,10 @@ def get_csrf(request):
 def is_logged_in(request:HttpRequest)->Response:
     try:
         if request.session.get('user_id') is not None:
-            user = User.objects.get(id=request.session.get('user_id'))
+            users = User.objects.filter(id=request.session.get('user_id'))
+            if len(users) == 0:
+                return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}}) 
+            user = users[0]
             if not user.is_active:
                 return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}})
             return Response({'status':'ok', 'data':{'is_logged_in':True, 'is_superuser':user.is_superuser}})
@@ -356,6 +359,23 @@ def get_user(request:HttpRequest, id = None) -> Response:
     except Exception as e:
         print(e)
         return Response({'status':'error','message': 'Неизвестная ошибка'})
+
+
+@api_view(['GET'])
+def activate_user(request: HttpRequest, hash: str) -> Response:
+    try:
+        if len(CustomUser.objects.filter(activate_hash=hash)) != 0:
+            user = CustomUser.objects.get(activate_hash=hash)
+            user.user.is_active = True
+            user.user.save()
+            user.save()
+            request.session['user_id'] = user.user.id
+            return Response({'status':'ok','data':user.user.username})
+        return Response({'status':'error','message':'Неверная ссылка активации'})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+    
     
 
 """
@@ -433,7 +453,6 @@ def login_user(request: HttpRequest) -> Response:
         if user is not None:
             if not user.is_active:
                 return Response({'status':'error','message':'Пользователь не активирован или заблокирован'})
-            login(request, user)
             request.session['user_id'] = user.id
             return Response({'status':'ok','data':user.username})
         user = User.objects.filter(email=username)
@@ -504,17 +523,10 @@ def register_user(request: HttpRequest) -> Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
-@api_view(['GET'])
-def activate_user(request: HttpRequest, hash: str) -> Response:
+@api_view(['POST'])
+def logout_user(request: HttpRequest) -> Response:
     try:
-        if len(CustomUser.objects.filter(activate_hash=hash)) != 0:
-            user = CustomUser.objects.get(activate_hash=hash)
-            user.user.is_active = True
-            user.user.save()
-            user.save()
-            request.session['user_id'] = user.user.id
-            return Response({'status':'ok','data':user.user.username})
-        return Response({'status':'error','message':'Неверная ссылка активации'})
-    except Exception as e:
-        print(e)
+        request.session['user_id'] =  -1
+        return Response({'status':'ok'})
+    except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
