@@ -26,3 +26,8 @@
 .headerNode:hover{
     background-color: #221f1c;
 }
+
+.headerLink{
+    text-decoration: none;
+    color: white;
+}

@@ -23,6 +23,7 @@ export function Profile(){
     const [languages, setLanguages] = useState(null);
     const [about, setAbout] = useState(null);
     const [isCsrf, setIsCsrf] = useState(null);
+    let countryField = useRef();
 
     const get_user_info = async () => {
         const queryParameters = new URLSearchParams(window.location.search)
@@ -89,6 +90,25 @@ export function Profile(){
         return;
     }, []);
 
+const get_countries = async () => {
+        await axios
+        .get('http://127.0.0.1:8000/api/get_countries/',{ withCredentials: true })
+        .then((response) => {
+            response = response.data;
+            if (response.status === 'ok') {
+                let contriesHTML = '<option value="">Страна</option>';
+                response.data.forEach((country) => {
+                    contriesHTML += `<option value="${country.id}">${country.name}</option>`
+                })
+                countryField.current.innerHTML = contriesHTML;
+            }
+            else {
+                alert(response.message);
+                return [];
+            }
+        })
+        .catch((err) => {console.error(err); return [];})
+    }
     return(
         <div className={styles.profileContainerHeight}>
             <div className={styles.profileContainerWidth}>
@@ -140,6 +160,43 @@ export function Profile(){
                             
                         </>
                         }
+                        { mode == 'Settings' &&
+                        <>
+                            <div className={styles.profileAvatarAndName}>
+                                <img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/> <input type="text" style={{width: '300px', height: '30px', fontSize: '20px'}} value={username}/>
+                            </div>
+                            <div className={styles.profileInfo}>
+                            <div className={styles.profileInfoRow}>
+                                    Новый пароль: <input type="password" value='' style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    Полное имя: <input type="text" value={fullname} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    Email: <input type="text" value={email} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    Страна: <select style={{width: '300px', fontSize: '18px', marginTop: '10px'}} ref={countryField} onClick={() => get_countries()}>
+                                        <option value=''> Страна </option>  
+                                    </select>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    Город: <input type="text" value={city} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    Дата рождения: <input type="date" value={birth_date} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    Языки: <input type="text" value={languages} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    О себе: <textarea type="text" value={about} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                </div>
+                                <div className={styles.profileInfoRow}>
+                                    <button onClick={() => alert('Отпарвка на сервер ещё не сделана')} className={styles.settingsButton}>Сохранить</button>
+                                </div>
+                            </div>
+                        </>}
                     </div>
                 </div>
             </div>

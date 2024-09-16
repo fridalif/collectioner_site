@@ -112,8 +112,31 @@
     color: black;
 }
 
-.profile_info_row{
+.profileInfoRow{
     display: flex;
     height: 50px;
-    width: 950px;
+    width: 900px;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20px;
+}
+
+.settingsButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    font-size:24px;
+    color:white;
+    font-family: "Sofia-Sans";
+    height: 50px;
+    background-color: #8A817C;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 350px;
+}
+
+.settingsButton:hover{
+    cursor: pointer;
+    background-color: #463F3A;
 }

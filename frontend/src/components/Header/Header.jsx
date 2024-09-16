@@ -5,7 +5,9 @@ export function Header(){
     return(
         <header className={styles.header}>
             <div className={styles.headerNode}>
-                Главная
+                <a href='/' className={styles.headerLink}>
+                    Главная
+                </a>
             </div>
             <div className={styles.headerNode}>
                 Новости
