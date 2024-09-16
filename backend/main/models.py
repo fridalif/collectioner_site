@@ -27,7 +27,7 @@ class CustomUser(models.Model):
     languages = models.CharField(max_length=100, verbose_name='Языки', null=True, blank=True)
     about_me = models.TextField(verbose_name='О себе', null=True, blank=True)
     show_my_collection = models.BooleanField(verbose_name='Показывать мою коллекцию', default=False)
-    avatar = models.ImageField(verbose_name='Аватар', null=True, blank=True, upload_to='avatars')
+    avatar = models.ImageField(verbose_name='Аватар', default='avatar.png', upload_to='avatars')
     sended_message = models.DateTimeField(verbose_name='Время отправки', null=True, blank=True)
 
     class Meta:

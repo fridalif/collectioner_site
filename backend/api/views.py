@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, UserSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, CustomUserSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -321,6 +321,41 @@ def get_my_collection_counters(request:HttpRequest)->Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
+
+@api_view(["GET"])
+def get_user(request:HttpRequest, id = None) -> Response:
+    try:
+        user_id = request.session.get('user_id')
+
+        if id is None:
+            if not is_int(user_id):
+                return Response({'status':'error', 'message':'Не указан пользователь'})
+            try:
+                user = CustomUser.objects.get(user__id=int(user_id))
+            except CustomUser.DoesNotExist:
+                return Response({'status':'error', 'message':'Пользователь не найден'})
+            except:
+                return Response({'status':'error', 'message':'Неизвестная ошибка'})
+            return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
+        try:
+            user = CustomUser.objects.get(id=id)
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error', 'message':'Пользователь не найден'})
+        except:
+            return Response({'status':'error', 'message':'Неизвестная ошибка'})
+        if is_int(user_id):
+            request_user = User.objects.get(id=int(user_id))
+            if user.user == request_user or request_user.is_superuser:
+                return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
+        if not user.show_birth_date:
+            user.birth_date = None
+        if not user.show_fullname:
+            user.fullname = 'Пользователь ограничил доступ'
+        return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
+    except:
+        return Response({'status':'error','message': 'Неизвестная ошибка'})
+    
+
 """
     POST
 """
