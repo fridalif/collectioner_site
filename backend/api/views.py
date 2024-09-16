@@ -396,11 +396,13 @@ def login_user(request: HttpRequest) -> Response:
             login(request, user)
             request.session['user_id'] = user.id
             return Response({'status':'ok','data':user.username})
-        user = authenticate(email=username, password=password)
-        if user is not None:
+        user = User.objects.filter(email=username)
+        if len(user) != 0:
+            user = user[0]
+            if not user.check_password(password):
+                return Response({'status':'error','message':'Неверные логин или пароль'})
             if not user.is_active:
                 return Response({'status':'error','message':'Пользователь не активирован или заблокирован'})
-            login(request, user)
             request.session['user_id'] = user.id
             return Response({'status':'ok','data':user.username})
         return Response({'status':'error','message':'Неверные логин или пароль'})
