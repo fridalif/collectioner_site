@@ -334,11 +334,12 @@ def get_user(request:HttpRequest, id = None) -> Response:
                 user = CustomUser.objects.get(user__id=int(user_id))
             except CustomUser.DoesNotExist:
                 return Response({'status':'error', 'message':'Пользователь не найден'})
-            except:
+            except Exception as e:
+                print('{e}')
                 return Response({'status':'error', 'message':'Неизвестная ошибка'})
             return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
         try:
-            user = CustomUser.objects.get(id=id)
+            user = CustomUser.objects.get(id=int(id))
         except CustomUser.DoesNotExist:
             return Response({'status':'error', 'message':'Пользователь не найден'})
         except:
@@ -352,7 +353,8 @@ def get_user(request:HttpRequest, id = None) -> Response:
         if not user.show_fullname:
             user.fullname = 'Пользователь ограничил доступ'
         return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
-    except:
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message': 'Неизвестная ошибка'})
     
 

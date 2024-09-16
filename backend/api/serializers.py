@@ -10,7 +10,7 @@ class CustomUserSerializer(ModelSerializer):
     avatar_url = CharField(source='avatar.url')
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'fullname', 'birth_date','country','avatar_url','languages', 'about_me', 'show_my_collection', 'show_fullaname', 'show_birth_date']
+        fields = ['id', 'username', 'email', 'fullname', 'birth_date','country','avatar_url','languages', 'about_me', 'show_my_collection', 'show_fullname', 'show_birth_date']
 
 class ItemSerializer(ModelSerializer):
     class Meta:

@@ -14,9 +14,9 @@ export function SecondHeader({isLoggedIn}){
 
                 {
                 isLoggedIn ? 
-                    <>
+                    <a href='/profile' className={styles.secondHeaderCabinetLink}>
                         <FaRegUserCircle className={styles.secondHeaderCabinetImg} /> Личный кабинет 
-                    </>
+                    </a>
                 :
                     <a href='/login' className={styles.secondHeaderCabinetLink}>
                         <IoEnter className={styles.secondHeaderCabinetImg}/> Вход/Регистрация

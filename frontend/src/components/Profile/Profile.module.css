@@ -64,3 +64,56 @@
     cursor: pointer;
     background-color: #463F3A;
 }
+
+.profileContent{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 1100px;
+    flex-direction: column;
+    height: 700px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.profileAvatarAndName{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left:50px;
+    width: 950px;
+    margin-top:20px;
+    height: 200px;
+    border-radius: 10px;
+    font-family: "Sofia-Sans";
+    font-size: 30px;
+    color: black;
+}
+
+.profileAvatar{
+    width:100px;
+    height: 100px;
+}
+
+.profileInfo{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-left:50px;
+    width: 950px;
+    margin-top:20px;
+    height: 400px;
+    border-radius: 10px;
+    font-family: "Sofia-Sans";
+    font-size: 24px;
+    background-color: white;
+    color: black;
+}
+
+.profile_info_row{
+    display: flex;
+    height: 50px;
+    width: 950px;
+}
