@@ -38,17 +38,17 @@ export function Profile(){
                     window.location.href = '/';
                     return;
                 }
-                console.log(response.data.data);
                 let data = response.data.data;
-                setUsername(data.username);
-                setAvatar(data.avatar_url);
-                setFullname(data.fullname);
-                setCountry(data.country);
-                setCity(data.city);
-                setEmail(data.email);
-                setBirth_date(data.birth_date);
-                setLanguages(data.languages);
-                setAbout(data.about);
+                console.log(data)
+                setUsername(data.user.username);
+                setAvatar(data.user.avatar_url);
+                setFullname(data.user.fullname);
+                setCountry(data.user.country);
+                setCity(data.user.city);
+                setEmail(data.user.email);
+                setBirth_date(data.user.birth_date);
+                setLanguages(data.user.languages);
+                setAbout(data.user.about);
                 setIsMyAccount(data.isMyAccount);
             })
             .catch((err) => console.error(err))
@@ -56,6 +56,7 @@ export function Profile(){
 
     useEffect(async () => {
         await get_user_info();
+        return;
     }, []);
 
     return(
