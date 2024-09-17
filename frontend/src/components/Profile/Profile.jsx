@@ -6,10 +6,10 @@ import { GiChest } from "react-icons/gi";
 import { FaGear } from "react-icons/fa6";
 import { GiExitDoor } from "react-icons/gi";
 import Cookies from 'js-cookie';
+import { CiLock } from "react-icons/ci";
 
 
-//const serverUrl  = 'http://127.0.0.1:8000/';
-const serverUrl  = 'https://ae35-178-176-74-38.ngrok-free.app';
+const serverUrl  = 'http://127.0.0.1:8080';
 
 export function Profile(){
     const [mode, setMode] = useState('Profile');
@@ -66,6 +66,95 @@ export function Profile(){
         .catch((err) => console.error(err))
     }
 
+    const changeUserInfo = async () => {
+        await getCSRF();
+        var formData = new FormData();
+        var imagefile = document.getElementById("avatar");
+        formData.append("image", imagefile.files[0]);
+        await axios.post(serverUrl + "/api/change_avatar/", formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',"X-CSRFToken": isCsrf,
+            }
+        })
+        .then((res) => {
+            res = res.data
+            if (res.status === 'ok') {
+                setAvatar(res.data.avatar_url);
+            }
+            else {
+                if (res.message!=='Не указана картинка'){
+                    alert(res.message)
+                }
+            }
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+        var username = document.getElementById("username").value
+        var fullname = document.getElementById("fullname").value
+        var country = document.getElementById("country").value
+        var city = document.getElementById("city").value
+        var birth_date = document.getElementById("birth_date").value
+        var languages = document.getElementById("languages").value
+        var about = document.getElementById("about").value
+        var email = document.getElementById("email").value
+        var password = document.getElementById("password").value
+        var about = document.getElementById("about").value
+
+        var data = {}
+
+        if (username) {
+            data["username"] = username
+        }
+        if (fullname) {
+            data["fullname"] = fullname
+        }
+        if (country) {
+            data["country"] = country
+        }
+        if (city) {
+            data["city"] = city
+        }
+        if (birth_date) {
+            data["birth_date"] = birth_date
+        }
+        if (languages) {
+            data["languages"] = languages
+        }
+        if (about) {
+            data["about"] = about
+        }
+        if (email) {
+            data["email"] = email
+        }
+        if (password) {
+            data["password"] = password
+        }
+        await axios
+            .post(serverUrl + "/api/change_other_user_info/", data, { withCredentials: true , headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": isCsrf,
+              }})
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                var responseData = response.data.data;
+                setUsername(responseData.username);
+                setFullname(responseData.fullname);
+                setCity(responseData.city);
+                setCountry(responseData.country);
+                setEmail(responseData.email);
+                setBirth_date(responseData.birth_date);
+                setLanguages(responseData.languages);
+                setAbout(responseData.about);
+                alert('Изменения сохранены');
+            })
+            .catch((err) => console.error(err))
+    }
+
     const logout = async () => {
         await getCSRF();
         await axios
@@ -86,9 +175,11 @@ export function Profile(){
             .catch((err) => console.error(err))
     }
 
-    useEffect(async () => {
-        await get_user_info();
-        return;
+    useEffect(() => {
+        async function fetchData() {
+            await get_user_info();
+        }
+        fetchData();
     }, []);
 
 const get_countries = async () => {
@@ -127,6 +218,11 @@ const get_countries = async () => {
                             </div>
                         }
                         { isMyAccount &&
+                            <div className={mode == 'SettingsPrivate' ? styles.sideBarBlockChosen : styles.sideBarBlock} onClick={() => setMode('SettingsPrivate')}>
+                                <CiLock className={styles.sideBarIcon}/> Настройки приватности
+                            </div>
+                        }
+                        { isMyAccount &&
                             <div className={mode == 'Logout' ? styles.sideBarBlockChosen : styles.sideBarBlock} onClick={() => logout()}>
                                 <GiExitDoor className={styles.sideBarIcon}/> Выход
                             </div>
@@ -149,6 +245,9 @@ const get_countries = async () => {
                                     Страна: {country}
                                 </div>
                                 <div className={styles.profileInfoRow}>
+                                    Город: {city}
+                                </div>
+                                <div className={styles.profileInfoRow}>
                                     Дата рождения: {birth_date}
                                 </div>
                                 <div className={styles.profileInfoRow}>
@@ -164,37 +263,41 @@ const get_countries = async () => {
                         { mode == 'Settings' &&
                         <>
                             <div className={styles.profileAvatarAndName}>
-                                <img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/> <input type="text" style={{width: '300px', height: '30px', fontSize: '20px'}} value={username}/>
+                                <img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/> <input type="text" placeholder='Никнейм' id='username' style={{width: '300px', height: '30px', fontSize: '20px'}} className={styles.standartInput} defaultValue={username!=null?username:''}/>
                             </div>
+                            <div className={styles.profileInfoRow} style={{'fontSize': '24px','fontFamily': 'Sofia-Sans', 'marginLeft': '40px'}}>
+                                 Изменить аватарку: <input type="file" id="avatar" className={styles.standartInput} style={{'boxShadow': 'none','height': '40px', 'borderRadius':'0px'}}/>
+                            </div>
+
                             <div className={styles.profileInfo}>
-                            <div className={styles.profileInfoRow}>
-                                    Новый пароль: <input type="password" value='' style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                <div className={styles.profileInfoRow}>
+                                    Новый пароль: <input type="password" placeholder='Новый пароль' id='password' defaultValue='' className={styles.standartInput}/>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Полное имя: <input type="text" value={fullname} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                    Полное имя: <input type="text" defaultValue={fullname!=null?fullname:''} placeholder='Полное имя' id='fullname' className={styles.standartInput}/>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Email: <input type="text" value={email} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                    Email: <input type="text" defaultValue={email!=null?email:''} placeholder='Email' id='email' className={styles.standartInput}/>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Страна: <select style={{width: '300px', fontSize: '18px', marginTop: '10px'}} ref={countryField} onClick={() => get_countries()}>
+                                    Страна: <select className={styles.standartInput} id='country' defaultValue='' ref={countryField} onClick={() => get_countries()}>
                                         <option value=''> Страна </option>  
                                     </select>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Город: <input type="text" value={city} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                    Город: <input type="text" defaultValue={city!==null?city:''} placeholder='Город' id='city' className={styles.standartInput}/>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Дата рождения: <input type="date" value={birth_date} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                    Дата рождения: <input type="date" defaultValue={birth_date!=null?birth_date:''} placeholder='Дата рождения' id='birth_date' className={styles.standartInput}/>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    Языки: <input type="text" value={languages} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                    Языки: <input type="text" defaultValue={languages!==null?languages:''} placeholder='Языки' id='languages' className={styles.standartInput}/>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    О себе: <textarea type="text" value={about} style={{width: '300px', fontSize: '18px', marginTop: '10px'}}/>
+                                    О себе: <textarea type="text" defaultValue={about!==null?about:''} placeholder='О себе' id='about' className={styles.standartInput}/>
                                 </div>
                                 <div className={styles.profileInfoRow}>
-                                    <button onClick={() => alert('Отпарвка на сервер ещё не сделана')} className={styles.settingsButton}>Сохранить</button>
+                                    <button onClick={() => changeUserInfo()} className={styles.settingsButton}>Сохранить</button>
                                 </div>
                             </div>
                         </>}
