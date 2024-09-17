@@ -1,5 +1,16 @@
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
 from rest_framework.serializers import ModelSerializer, CharField
+from django.contrib.auth.models import User
+
+
+class CustomUserSerializer(ModelSerializer):
+    username = CharField(source='user.username')
+    email = CharField(source='user.email')
+    country = CharField(source='country.name')
+    avatar_url = CharField(source='avatar.url')
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'fullname', 'birth_date','country','avatar_url','languages', 'about_me', 'show_my_collection', 'show_fullname', 'show_birth_date']
 
 class ItemSerializer(ModelSerializer):
     class Meta:
@@ -11,7 +22,7 @@ class CountrySerializer(ModelSerializer):
     
     class Meta:
         model = Country
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'image_url']
 
 class HistoryMomentSerializer(ModelSerializer):
     class Meta:
@@ -77,3 +88,8 @@ class UserItemSerializer(ModelSerializer):
     class Meta:
         model = UserItem
         fields = ['id', 'user', 'item','quality']
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

@@ -1,0 +1,118 @@
+.loginContainerHeight{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:150px;
+    height: 880px;
+    flex-direction: column;
+}
+.loginContainerWidth{
+    display: flex;
+    width: 1920px;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginBlock{
+    display: flex;
+    align-items: center;
+    width: 1000px;
+    height: 700px;
+    background-color: #463F3A;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.loginWindow{
+    width:500px;
+    height: 700px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    transform: translateX(500px);
+    transition: all 1s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginButton{
+    background-color:#463F3A;
+    border-radius: 10px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 24px;
+    font-family: "Sofia-Sans";
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.loginButton:hover{
+    background-color: #221f1c;
+}
+
+.loginText{
+    border-radius: 10px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: "Sofia-Sans";
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.loginText:hover{
+    color:orange;
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+}
+
+.titleAboutLogin{
+    font-size: 32px;
+    margin-top:50px;
+    margin-left:20px;
+    width: 450px;
+    height: 700px;
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    font-family: "Sofia-Sans";
+}
+
+.titleAboutRegister{
+    font-size: 32px;
+    margin-top:50px;
+    width: 450px;
+    justify-content: flex-start;
+    align-items: center;
+    height: 700px;
+    flex-direction: column;
+    margin-left:520px;
+    position:absolute;
+    display:flex;
+    color: white;
+    font-family: "Sofia-Sans";
+}
+
+.textAbout{
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: "Sofia-Sans";
+    width: 410px;
+    display:flex;
+    align-items: flex-start;
+    color: white;
+}

@@ -1,0 +1,33 @@
+.header{
+    background-color:#463F3A;
+    height: 50px;
+    gap:50px;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerNode{
+    color: white;
+    font-size: 24px;
+    height: 50px;
+    padding-left:40px;
+    padding-right: 40px;
+    font-family: "Sofia-Sans";
+    align-items: center;
+    display: flex;
+}
+
+.headerNode:hover{
+    background-color: #221f1c;
+}
+
+.headerLink{
+    text-decoration: none;
+    color: white;
+}

@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+from django.http import JsonResponse
 from django.http import HttpRequest
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer
+from django.contrib.auth import authenticate, login, logout
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, CustomUserSerializer
+from django.contrib.auth.models import User
+from django.middleware.csrf import get_token
+from django.utils.crypto import get_random_string
+from django.contrib.sessions.models import Session
 
 """
     Валидаторы
@@ -40,6 +46,28 @@ def validate_model_ids(model, ids)->List:
 """
     GET
 """
+
+def get_csrf(request):
+    response = JsonResponse({'detail': 'CSRF cookie set'})
+    response['X-CSRFToken'] = get_token(request)
+    return response
+
+@api_view(['GET'])
+def is_logged_in(request:HttpRequest)->Response:
+    try:
+        if request.session.get('user_id') is not None:
+            users = User.objects.filter(id=request.session.get('user_id'))
+            if len(users) == 0:
+                return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}}) 
+            user = users[0]
+            if not user.is_active:
+                return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}})
+            return Response({'status':'ok', 'data':{'is_logged_in':True, 'is_superuser':user.is_superuser}})
+        return Response({'status':'ok', 'data':{'is_logged_in':False, 'is_superuser':False}})
+    except:
+        return Response({'status':'error', 'message':'Не удалось проверить авторизацию'})
+
+
 @api_view(['GET'])
 def get_items(request:HttpRequest)->Response:
 
@@ -183,7 +211,10 @@ def get_countries(request:HttpRequest,id=None)->Response:
                 return Response({'status':'ok','data':CountrySerializer(countries,many=True).data})
             except: 
                 return Response({'status':'error','message':'Ошибка получения стран'})
-        return Response({'status':'error','message':'Не указана часть света'})
+        countries = Country.objects.all()
+        data = CountrySerializer(countries,many=True)
+        data = data.data
+        return Response({'status':'ok','data':data})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
@@ -293,6 +324,59 @@ def get_my_collection_counters(request:HttpRequest)->Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
+
+@api_view(["GET"])
+def get_user(request:HttpRequest, id = None) -> Response:
+    try:
+        user_id = request.session.get('user_id')
+        if id is None:
+            if not is_int(user_id):
+                return Response({'status':'error', 'message':'Не указан пользователь'})
+            try:
+                user = CustomUser.objects.get(user__id=int(user_id))
+            except CustomUser.DoesNotExist:
+                return Response({'status':'error', 'message':'Пользователь не найден'})
+            except Exception as e:
+                print('{e}')
+                return Response({'status':'error', 'message':'Неизвестная ошибка'})
+            return Response({'status':'ok', 'data':{'user':CustomUserSerializer(user).data, 'isMyAccount':True}})
+        try:
+            user = CustomUser.objects.get(id=int(id))
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error', 'message':'Пользователь не найден'})
+        except:
+            return Response({'status':'error', 'message':'Неизвестная ошибка'})
+        if is_int(user_id):
+            request_user = User.objects.get(id=int(user_id))
+            if user.user == request_user or request_user.is_superuser:
+                return Response({'status':'ok', 'data':{'user':CustomUserSerializer(user).data, 'isMyAccount':user.user==request_user}})
+        if not user.show_birth_date:
+            user.birth_date = None
+        if not user.show_fullname:
+            user.fullname = 'Пользователь ограничил доступ'
+        return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message': 'Неизвестная ошибка'})
+
+
+@api_view(['GET'])
+def activate_user(request: HttpRequest, hash: str) -> Response:
+    try:
+        if len(CustomUser.objects.filter(activate_hash=hash)) != 0:
+            user = CustomUser.objects.get(activate_hash=hash)
+            user.user.is_active = True
+            user.user.save()
+            user.save()
+            request.session['user_id'] = user.user.id
+            return Response({'status':'ok','data':user.user.username})
+        return Response({'status':'error','message':'Неверная ссылка активации'})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+    
+
 """
     POST
 """
@@ -355,5 +439,76 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
             return Response({'status':'error','message':'Не удалось добавить предмет в коллекцию'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
-    
 
+
+@api_view(['POST'])
+def login_user(request: HttpRequest) -> Response:
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
+        if username is None or password is None:
+            return Response({'status':'error','message':'Не указаны логин или пароль'})
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if not user.is_active:
+                return Response({'status':'error','message':'Пользователь не активирован или заблокирован'})
+            request.session['user_id'] = user.id
+            return Response({'status':'ok','data':user.username})
+        user = User.objects.filter(email=username)
+        if len(user) != 0:
+            user = user[0]
+            if not user.check_password(password):
+                return Response({'status':'error','message':'Неверные логин или пароль'})
+            if not user.is_active:
+                return Response({'status':'error','message':'Пользователь не активирован или заблокирован'})
+            request.session['user_id'] = user.id
+            return Response({'status':'ok','data':user.username})
+        return Response({'status':'error','message':'Неверные логин или пароль'})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+
+@api_view(['POST'])
+def register_user(request: HttpRequest) -> Response:
+    try:
+        username = str(request.data.get('username'))
+        email = str(request.data.get('email'))
+        password = str(request.data.get('password'))
+        username = username.replace('<','')
+        email = email.replace('<','')
+        if username == '':
+            return Response({'status':'error','message':'Не указан логин'})
+        if email == '':
+            return Response({'status':'error','message':'Не указан email'})
+        if password == '':
+            return Response({'status':'error','message':'Не указан пароль'})
+        if User.objects.filter(username=username).exists():
+            return Response({'status':'error','message':'Пользователь с таким логином уже существует'})
+        if User.objects.filter(email=email).exists():
+            return Response({'status':'error','message':'Пользователь с таким email уже существует'})
+        
+        try:
+            user = User.objects.create_user(username, email, password)
+            activate_hash = get_random_string(length=100)
+            custom_user = CustomUser.objects.create(user=user, activate_hash=activate_hash)
+            custom_user.save()
+            user.is_active = False
+            user.save()
+            request.session['user_id'] = user.id
+            return Response({'status':'ok','data':user.username})
+        except Country.DoesNotExist:
+            return Response({'status':'error','message':'Неизвестная страна'})
+        except Exception as e:
+            print(e)
+            return Response({'status':'error','message':'Неизвестная ошибка'})
+
+
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+@api_view(['POST'])
+def logout_user(request: HttpRequest) -> Response:
+    try:
+        request.session['user_id'] =  -1
+        return Response({'status':'ok'})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})

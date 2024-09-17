@@ -1,0 +1,52 @@
+
+.lastAddedMarksContainer{
+    display: flex;
+    justify-content: center;
+    width:1920px;
+}
+.lastAddedMarks{
+    background-color: white;
+    font-size: 24px;
+    font-family: "Sofia-Sans";
+    height: 350px;
+    width:1460px;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    display: flex;
+    gap:20px;
+}
+
+.lastAddedMarksTitle{
+    position:absolute;
+    margin-top:25px;
+    margin-left: 25px;
+    font-size: 28px;
+}
+.lastAddedMarksMark{
+    height: 250px;
+    margin-top: 75px;
+    margin-left: 25px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    background-color: #FFFFFF;   
+}
+
+.lastAddedMarksMark:hover{
+    color: orange;
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+}
+
+.lastAddedMarksMarkImg{
+    width:150px;
+    height: 150px;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.lastAddedMarksMarkText{
+    font-size: 20px;
+    width:200px;
+    text-align: center;
+}

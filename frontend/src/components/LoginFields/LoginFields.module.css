@@ -1,0 +1,103 @@
+.loginHeader{
+    font-size: 32px;
+    margin-top:30px;
+    margin-left:20px;
+    color: black;
+    font-family: "Sofia-Sans";
+}
+
+.loginInput{
+    margin-left:20px;
+    margin-right:20px;
+    margin-top: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    width: 400px;
+    font-size:18px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.loginInput:focus{
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+    outline: none;
+}
+.registerInputContainer{
+    width:400px;
+    height: 70px;
+    margin-top: 20px;
+}
+.loginForgotPass{
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 16px;
+    font-family: 'Sofia-Sans';
+    color: black;
+    display:flex;
+    width: 400px;
+    justify-content: flex-end;
+}
+.loginForgotPass:hover{
+    cursor: pointer;
+    color:orange;
+}
+.registerInput{
+    margin-top: 15px;
+    height: 50px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    border-radius: 10px;
+    width: 400px;
+    font-size:18px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.registerInput:focus{
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+    outline: none;
+}
+
+.registerInputContainer .label{
+    display: none;
+    font-size: 14px;
+    font-family: 'Sofia-Sans';
+    position: absolute;
+    background: #fff;
+    margin: 5px 20px;
+    padding-left:3px;
+    padding-right:3px;
+    border-radius: 10px; 
+    z-index: 1;
+}
+.registerInputContainer:hover .label{
+    display: block;
+}
+
+.registerInputContainer .labelBirth{
+    font-size: 14px;
+    font-family: 'Sofia-Sans';
+    position: absolute;
+    background: #fff;
+    margin: 5px 20px;
+    padding-left:3px;
+    padding-right:3px;
+    border-radius: 10px; 
+    z-index: 1;
+}
+
+.registerInputCheckbox{
+    margin-top: 5px;
+    display:inline;
+    font-family: 'Sofia-Sans';
+    height: 20px;
+    position: relative;
+    border-radius: 10px;
+    font-size:18px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.registerInputCheckbox:checked{
+    color: orange;
+}

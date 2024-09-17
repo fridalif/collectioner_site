@@ -1,0 +1,10 @@
+@font-face{
+    font-family: "Sofia-Sans";
+    src: url("./fonts/SofiaSans-VariableFont_wght.ttf");
+}
+
+body{
+    position:absolute;
+    background-color: #F4F3EE;
+    width:1920px;
+}

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import  User
 
 class Country(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -14,6 +14,26 @@ class Country(models.Model):
         verbose_name = 'Страна'
         verbose_name_plural = 'Страны'
         db_table = 'country'
+
+
+class CustomUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь в джанго')
+    activate_hash = models.CharField(max_length=100, verbose_name='Хэш активации', null=True, blank=True)
+    fullname = models.CharField(max_length=100, verbose_name='ФИО', null=True, blank=True)
+    show_fullname = models.BooleanField(verbose_name='Показывать ФИО', default=False)
+    birth_date = models.DateField(verbose_name='Дата рождения', null=True, blank=True)
+    show_birth_date = models.BooleanField(verbose_name='Показывать дату рождения', default=False)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, verbose_name='Страна', null=True, blank=True)
+    languages = models.CharField(max_length=100, verbose_name='Языки', null=True, blank=True)
+    about_me = models.TextField(verbose_name='О себе', null=True, blank=True)
+    show_my_collection = models.BooleanField(verbose_name='Показывать мою коллекцию', default=False)
+    avatar = models.ImageField(verbose_name='Аватар', default='avatar.png', upload_to='avatars')
+    sended_message = models.DateTimeField(verbose_name='Время отправки', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        db_table = 'custom_user'
 
 
 class HistroryMoment(models.Model):
@@ -196,7 +216,7 @@ class ItemImage(models.Model):
         db_table = 'item_image'
 
 class UserItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет')
     quality = models.CharField(max_length=100, verbose_name='Качество', choices=[('good', 'Хорошее'), ('bad', 'Плохое')])
     count = models.IntegerField(verbose_name='Количество', default=0)

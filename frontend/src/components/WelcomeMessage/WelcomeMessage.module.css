@@ -1,0 +1,24 @@
+.welcomeMessageContainer{
+    display: flex;
+
+    justify-content: center;
+    width:1920px;
+}
+.welcomeMessage{
+    background-color: white;
+    margin-top:70px;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 20px;
+    font-family: "Sofia-Sans";
+    width:1460px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.welcomeMessageTitle{
+    font-size: 28px;
+}
+
+.welcomeMessageText{
+    font-size: 20px;
+}
