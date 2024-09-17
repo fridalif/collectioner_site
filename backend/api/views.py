@@ -473,40 +473,23 @@ def register_user(request: HttpRequest) -> Response:
         username = str(request.data.get('username'))
         email = str(request.data.get('email'))
         password = str(request.data.get('password'))
-        fullname = str(request.data.get('fullname'))
         username = username.replace('<','')
         email = email.replace('<','')
-        fullname = fullname.replace('<','')
         if username == '':
             return Response({'status':'error','message':'Не указан логин'})
         if email == '':
             return Response({'status':'error','message':'Не указан email'})
         if password == '':
             return Response({'status':'error','message':'Не указан пароль'})
-        if fullname == '':
-            return Response({'status':'error','message':'Не указано имя'})
         if User.objects.filter(username=username).exists():
             return Response({'status':'error','message':'Пользователь с таким логином уже существует'})
         if User.objects.filter(email=email).exists():
             return Response({'status':'error','message':'Пользователь с таким email уже существует'})
-        date_of_birth = request.data.get('date_of_birth')
-        if date_of_birth is None:
-            return Response({'status':'error','message':'Не указана дата рождения'})
         
-        show_fullname = request.data.get('show_fullname')
-        show_birth_date = request.data.get('show_birth_date')
-        if show_fullname is None:
-            show_fullname = False
-        if show_birth_date is None:
-            show_birth_date = False
-        country = request.data.get('country')
-        if not is_int(country):
-            return Response({'status':'error','message':'Не указана страна'})
         try:
-            country = Country.objects.get(id=int(country))
             user = User.objects.create_user(username, email, password)
             activate_hash = get_random_string(length=100)
-            custom_user = CustomUser.objects.create(user=user, fullname=fullname, birth_date=date_of_birth, show_fullname=show_fullname, show_birth_date=show_birth_date, country=country, activate_hash=activate_hash)
+            custom_user = CustomUser.objects.create(user=user, activate_hash=activate_hash)
             custom_user.save()
             user.is_active = False
             user.save()

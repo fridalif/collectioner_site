@@ -4,8 +4,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 
-//const serverUrl  = 'http://127.0.0.1:8000/';
-const serverUrl  = 'https://ae35-178-176-74-38.ngrok-free.app';
+const serverUrl  = 'http://127.0.0.1:8080';
+
 export default function Home(){
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const mode = 'Login';

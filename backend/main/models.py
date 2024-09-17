@@ -23,7 +23,7 @@ class CustomUser(models.Model):
     show_fullname = models.BooleanField(verbose_name='Показывать ФИО', default=False)
     birth_date = models.DateField(verbose_name='Дата рождения', null=True, blank=True)
     show_birth_date = models.BooleanField(verbose_name='Показывать дату рождения', default=False)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name='Страна')
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, verbose_name='Страна', null=True, blank=True)
     languages = models.CharField(max_length=100, verbose_name='Языки', null=True, blank=True)
     about_me = models.TextField(verbose_name='О себе', null=True, blank=True)
     show_my_collection = models.BooleanField(verbose_name='Показывать мою коллекцию', default=False)

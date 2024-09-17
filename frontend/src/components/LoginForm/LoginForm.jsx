@@ -6,8 +6,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 
-//const serverUrl  = 'http://127.0.0.1:8000/';
-const serverUrl  = 'https://ae35-178-176-74-38.ngrok-free.app/';
+const serverUrl  = 'http://127.0.0.1:8080/';
 const loginToRegister = (elem) => {
     elem.style.transform = 'translateX(0px)';
 }
@@ -60,12 +59,7 @@ export function LoginForm({isLoggedIn}){
         const data = {
             username: document.getElementById('login').value,
             password: document.getElementById('password').value,
-            fullname: document.getElementById('fullName').value,
             email: document.getElementById('email').value,
-            date_of_birth: document.getElementById('dateOfBirth').value,
-            country: document.getElementById('country').value,
-            show_fullname: document.getElementById('showFullName').checked,
-            show_birth_date: document.getElementById('showBirthDate').checked
         }
         if (data.password !== document.getElementById('retypePassword').value) {
             alert('Пароли не совпадают');
