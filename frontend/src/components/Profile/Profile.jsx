@@ -8,7 +8,8 @@ import { GiExitDoor } from "react-icons/gi";
 import Cookies from 'js-cookie';
 
 
-const serverUrl  = 'http://127.0.0.1:8000';
+//const serverUrl  = 'http://127.0.0.1:8000/';
+const serverUrl  = 'https://ae35-178-176-74-38.ngrok-free.app';
 
 export function Profile(){
     const [mode, setMode] = useState('Profile');
@@ -57,7 +58,7 @@ export function Profile(){
     }
 
     const getCSRF = async () => {
-        await axios.get(serverUrl + 'api/get_csrf/', { withCredentials: true })
+        await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
         .then((res) => {
             const csrfToken = res.headers.get('X-CSRFToken');
             setIsCsrf(csrfToken);
@@ -92,7 +93,7 @@ export function Profile(){
 
 const get_countries = async () => {
         await axios
-        .get('http://127.0.0.1:8000/api/get_countries/',{ withCredentials: true })
+        .get(`${serverUrl}/api/get_countries/`,{ withCredentials: true })
         .then((response) => {
             response = response.data;
             if (response.status === 'ok') {

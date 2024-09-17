@@ -2,6 +2,9 @@ import styles from './LoginFields.module.css'
 import { useEffect, useRef } from 'react'
 import axios from 'axios';
 
+
+//const serverUrl  = 'http://127.0.0.1:8000/';
+const serverUrl  = 'https://ae35-178-176-74-38.ngrok-free.app';
 export function LoginFields(){
     return(
         <>
@@ -23,7 +26,7 @@ export function RegisterFields(){
 
     useEffect(() => {
         axios
-            .get('http://127.0.0.1:8000/api/get_countries/',{ withCredentials: true })
+            .get(`${serverUrl}/api/get_countries/`,{ withCredentials: true })
             .then((response) => {
                 response = response.data;
                 if (response.status === 'ok') {

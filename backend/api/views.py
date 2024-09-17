@@ -329,7 +329,6 @@ def get_my_collection_counters(request:HttpRequest)->Response:
 def get_user(request:HttpRequest, id = None) -> Response:
     try:
         user_id = request.session.get('user_id')
-
         if id is None:
             if not is_int(user_id):
                 return Response({'status':'error', 'message':'Не указан пользователь'})

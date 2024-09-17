@@ -6,7 +6,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 
-const serverUrl  = 'http://127.0.0.1:8000/';
+//const serverUrl  = 'http://127.0.0.1:8000/';
+const serverUrl  = 'https://ae35-178-176-74-38.ngrok-free.app/';
 const loginToRegister = (elem) => {
     elem.style.transform = 'translateX(0px)';
 }
