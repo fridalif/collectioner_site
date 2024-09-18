@@ -512,3 +512,81 @@ def logout_user(request: HttpRequest) -> Response:
         return Response({'status':'ok'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
+
+@api_view(['POST'])
+def change_avatar(request: HttpRequest) -> Response:
+    try:
+        if 'image' not in request.FILES:
+            return Response({'status':'error','message':'Не указана картинка'})
+        if not is_int(request.session.get('user_id')):
+            return Response({'status':'error','message':'Пользователь не авторизован'})
+        user = CustomUser.objects.get(user__id=int(request.session['user_id']))
+        user.avatar = request.FILES['image']
+        user.save()
+        return Response({'status':'ok','data':{'avatar_url':user.avatar.url}})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+    
+@api_view(['POST'])
+def change_other_user_info(request: HttpRequest) -> Response:
+    try:
+
+        if not is_int(request.session.get('user_id')):
+            return Response({'status':'error','message':'Пользователь не авторизован'})
+        user = CustomUser.objects.get(user__id=int(request.session['user_id']))
+        fullname = request.data.get('fullname')
+        birth_date = request.data.get('birth_date')
+        country = request.data.get('country')
+        languages = request.data.get('languages')
+        about_me = request.data.get('about_me')
+        city = request.data.get('city')
+        username = request.data.get('username')
+        new_password = request.data.get('new_password')
+        email = request.data.get('email')
+        if fullname is not None and fullname!=user.fullname:
+            fullname = fullname.replace('<','')
+            if fullname != '':
+                user.fullname = fullname
+        if birth_date is not None and birth_date!=user.birth_date:
+            birth_date = birth_date.replace('<','')
+            if birth_date != '':
+                user.birth_date = birth_date
+        if is_int(country):
+            if int(country)!=user.country.id:
+                try:
+                    country = Country.objects.get(id=int(country))
+                except:
+                    return Response({'status':'error','message':'Неизвестная страна'})
+                user.country = country
+        if languages is not None and languages!=user.languages:
+            languages = languages.replace('<','')
+            if languages != '':
+                user.languages = languages
+        if about_me is not None and about_me!=user.about_me:
+            about_me = about_me.replace('<','')
+            if about_me != '':
+                user.about_me = about_me
+        if city is not None and city!=user.city:
+            city = city.replace('<','')
+            if city != '':
+                user.city = city
+        if username is not None and username!=user.user.username:
+            username = username.replace('<','')
+            if len(User.objects.filter(username=username))>0:
+                return Response({'status':'error','message':'Пользователь с таким логином уже существует'})
+            if username != '':
+                user.user.username = username
+        if new_password is not None and new_password!='':
+            user.user.set_password(new_password)
+        if email is not None and email!=user.user.email:
+            email = email.replace('<','')
+            if len(User.objects.filter(email=email))>0:
+                return Response({'status':'error','message':'Пользователь с таким email уже существует'})
+            if email != '':
+                user.user.email = email
+        user.user.save()
+        user.save()
+
+        return Response({'status':'ok','data':CustomUserSerializer(user).data})
+    except:
+        return Response({'status':'error','message':'Неизвестная ошибка'})
