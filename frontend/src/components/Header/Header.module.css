@@ -2,6 +2,7 @@
     background-color:#463F3A;
     height: 50px;
     gap:50px;
+    width: 100%;
     position: fixed;
     z-index: 1000;
     top: 0;

@@ -12,11 +12,11 @@ export function Body({isLoggedIn, mode}){
         <div className={styles.body}>
             <SecondHeader isLoggedIn={isLoggedIn}/>
             { mode =='Home' &&
-                <>
+                <div className={styles.bodyContent}>
                     <WelcomeMessage />
                     <LastAddedMarks />
                     <Titles />
-                </>
+                </div>
             }
             { mode =='Login' &&
                 <>
@@ -24,7 +24,7 @@ export function Body({isLoggedIn, mode}){
                 </>
             } 
             {
-                mode == 'Profile' && <><Profile /></>
+                mode == 'Profile' && <div className={styles.bodyContent}><Profile /></div>
             }  
         </div>
     )

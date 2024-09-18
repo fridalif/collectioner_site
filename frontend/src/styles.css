@@ -6,5 +6,7 @@
 body{
     position:absolute;
     background-color: #F4F3EE;
-    width:1920px;
+    width: 1920px;
+
+    font-family: "Sofia-Sans";
 }

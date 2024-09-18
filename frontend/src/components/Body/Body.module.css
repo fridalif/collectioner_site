@@ -1,10 +1,21 @@
 .body{
-    position: absolute;
     top: 40px;
+    left:0;
+    right:0;
+    width: 1920px;
+    position: absolute;
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 20px;
     padding-bottom: 20px;
     background-color: #F4F3EE;
+}
+
+.bodyContent{
+    width: 1920px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
 }
