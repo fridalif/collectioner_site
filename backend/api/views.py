@@ -354,7 +354,7 @@ def get_user(request:HttpRequest, id = None) -> Response:
             user.birth_date = None
         if not user.show_fullname:
             user.fullname = 'Пользователь ограничил доступ'
-        return Response({'status':'ok', 'data':CustomUserSerializer(user).data})
+        return Response({'status':'ok', 'data':{'user':CustomUserSerializer(user).data, 'isMyAccount':False}})
     except Exception as e:
         print(e)
         return Response({'status':'error','message': 'Неизвестная ошибка'})

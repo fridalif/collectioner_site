@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class CustomUserSerializer(ModelSerializer):
     username = CharField(source='user.username')
     email = CharField(source='user.email')
-    country = CharField(source='country.name')
+    country = CharField(source='country.name', allow_null=True)
     avatar_url = CharField(source='avatar.url')
     class Meta:
         model = CustomUser
