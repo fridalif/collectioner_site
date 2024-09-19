@@ -183,7 +183,7 @@ def get_items(request:HttpRequest)->Response:
             items = items.filter(year__le=int(year_le))
 
         # Сортировка
-        items = items.order_by('-user_counter')
+        items = items.order_by('-id')
 
         # Пагинация
         items = items[offset:offset+limit]
