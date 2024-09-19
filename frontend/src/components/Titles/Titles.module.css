@@ -42,15 +42,39 @@
     font-size: 20px;
     margin-top:20px;
     margin-left:20px;
+    height: 70px;
     color:orange;
     text-align: center;
 }
 .titlesArticleHeader:hover{
     text-decoration: underline;
 }
+.titlesArticleTextContainer{
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 310px;
+}
 .titlesArticleText{
     font-size: 16px;
     text-align: left;
     margin-left: 20px;
     margin-right: 20px;
+    height: 250px;
+    overflow-y: hidden;
+}
+
+.titlesArticleLink{
+    font-size: 16px;
+    color:orange;
+    display: flex;
+    justify-content: flex-end;
+    text-decoration: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 60px;
+    width:300px;
+}
+
+.titlesArticleLink:hover{
+    text-decoration: underline;
 }

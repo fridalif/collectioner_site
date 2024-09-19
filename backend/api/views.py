@@ -6,8 +6,8 @@ from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, CustomUserSerializer
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser, ItemImage
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -69,9 +69,17 @@ def is_logged_in(request:HttpRequest)->Response:
 
 
 @api_view(['GET'])
-def get_items(request:HttpRequest)->Response:
+def get_items(request:HttpRequest, id=None)->Response:
 
     try:
+        if id is not None:
+            try:
+                item = Item.objects.get(id=id)
+                return Response({'status':'ok', 'data':ItemSerializer(item).data})
+            except Item.DoesNotExist:
+                return Response({'status':'error', 'message':'Нет предмета с таким id'})
+            except:
+                return Response({'status':'error', 'message':'Неизвестная ошибка'})
         # Пагинация + валидация limit и offset
         limit = request.GET.get('limit')
         offset = request.GET.get('offset')
@@ -89,66 +97,67 @@ def get_items(request:HttpRequest)->Response:
             items = Item.objects.all()
         except:
             return Response({'status':'error', 'message':'Не удалось получить предметы'})
+
         # Получение + валидация фильтров в которых может быть много выборов
         category = request.GET.get('category')
-        if category is None:
-            return Response({'status':'error', 'message':'Не указан тип предмета'})
-        items = items.filter(category = category)
+        if category is not None:
+            items = items.filter(category = category)
+        
         glues_id = request.GET.getlist('glues')
-        if glues_id is not None:
+        if len(glues_id)!=0:
             glues = validate_model_ids(Glue, glues_id)
             items = items.filter(glue__in=glues)
         
         colors_id = request.GET.getlist('colors')
-        if colors_id is not None:
+        if len(colors_id)!=0:
             colors = validate_model_ids(Color, colors_id)
             items = items.filter(color__in=colors)
 
         stamps_id = request.GET.getlist('stamps')
-        if stamps_id is not None:
+        if len(stamps_id) != 0:
             stamps = validate_model_ids(Stamp, stamps_id)
             items = items.filter(stamp__in=stamps)
 
         formats_id = request.GET.getlist('formats')
-        if formats_id is not None:
+        if len(formats_id) != 0:
             formats = validate_model_ids(Format, formats_id)
             items = items.filter(format__in=formats)
         
         themes_id = request.GET.getlist('themes')
-        if themes_id is not None:
+        if len(themes_id) != 0:
             themes = validate_model_ids(Theme, themes_id)
             items = items.filter(theme__in=themes)
 
         presses_id = request.GET.getlist('presses')
-        if presses_id is not None:
+        if len(presses_id) != 0:
             presses = validate_model_ids(Press, presses_id)
             items = items.filter(press__in=presses)
 
         emissions_id = request.GET.getlist('emissions')
-        if emissions_id is not None:
+        if len(emissions_id) != 0:
             emissions = validate_model_ids(Emission, emissions_id)
             items = items.filter(emission__in=emissions)
 
         designers_id = request.GET.getlist('designers')
-        if designers_id is not None:
+        if len(designers_id) != 0:
             designers = validate_model_ids(Designer, designers_id)
             items = items.filter(designer__in=designers)
 
         catalogs_id = request.GET.getlist('catalogs')
-        if catalogs_id is not None:
+        if len(catalogs_id) != 0:
             catalogs = validate_model_ids(Catalog, catalogs_id)
             items = items.filter(catalog__in=catalogs)
 
         currencies_id = request.GET.getlist('currencies')
-        if currencies_id is not None:
+        if len(currencies_id) != 0:
             currencies = validate_model_ids(Currency, currencies_id)
             items = items.filter(currency__in=currencies)
         
         watermarks_id = request.GET.getlist('watermarks')
-        if watermarks_id is not None:
+        if len(watermarks_id) != 0:
             watermarks = validate_model_ids(Watermark, watermarks_id)
             items = items.filter(watermark__in=watermarks)
-        
+
         # Получение + валидация фильтров в которых есть только 1 выбор
 
         # Фильтрация по историческим моментам, странам и частям света
@@ -188,8 +197,24 @@ def get_items(request:HttpRequest)->Response:
         # Пагинация
         items = items[offset:offset+limit]
 
-        return Response({'status':'ok','data':ItemSerializer(items[offset:offset+limit].data,many=True)})
-    except:
+        return Response({'status':'ok','data':ItemListSerializer(items[offset:offset+limit],many=True).data})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+
+
+@api_view(['GET'])
+def get_item_image_urls(request:HttpRequest)->Response:
+    try:
+        items_ids = request.GET.getlist('items_ids[]')
+        if len(items_ids) == 0:
+            return Response({'status':'error','message':'Не указаны id предметов'})
+        item_images = ItemImage.objects.filter(item__id__in=items_ids)
+        if request.GET.get('only_main') is not None:
+            item_images = item_images.filter(is_main_image=True)
+        return Response({'status':'ok','data':ItemImageSerializer(item_images,many=True).data})
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
 @api_view(['GET'])

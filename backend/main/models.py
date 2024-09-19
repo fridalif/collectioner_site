@@ -207,7 +207,7 @@ class Item(models.Model):
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет')
     image = models.ImageField(upload_to='images/', verbose_name='Изображение')
-
+    is_main_image = models.BooleanField(default=False, verbose_name='Основное изображение')
     def __str__(self):
         return f'{self.item.name}({self.item.year})'
     
