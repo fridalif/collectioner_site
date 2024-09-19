@@ -69,9 +69,17 @@ def is_logged_in(request:HttpRequest)->Response:
 
 
 @api_view(['GET'])
-def get_items(request:HttpRequest)->Response:
+def get_items(request:HttpRequest, id=None)->Response:
 
     try:
+        if id is not None:
+            try:
+                item = Item.objects.get(id=id)
+                return Response({'status':'ok', 'data':ItemSerializer(item).data})
+            except Item.DoesNotExist:
+                return Response({'status':'error', 'message':'Нет предмета с таким id'})
+            except:
+                return Response({'status':'error', 'message':'Неизвестная ошибка'})
         # Пагинация + валидация limit и offset
         limit = request.GET.get('limit')
         offset = request.GET.get('offset')
@@ -192,6 +200,12 @@ def get_items(request:HttpRequest)->Response:
         return Response({'status':'ok','data':ItemListSerializer(items[offset:offset+limit],many=True).data})
     except Exception as e:
         print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+
+def get_item_image_urls(request:HttpRequest, item_id:int)->Response:
+    try:
+        pass
+    except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
 @api_view(['GET'])
