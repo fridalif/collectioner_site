@@ -89,65 +89,67 @@ def get_items(request:HttpRequest)->Response:
             items = Item.objects.all()
         except:
             return Response({'status':'error', 'message':'Не удалось получить предметы'})
+
         # Получение + валидация фильтров в которых может быть много выборов
         category = request.GET.get('category')
         if category is not None:
             items = items.filter(category = category)
+        
         glues_id = request.GET.getlist('glues')
-        if glues_id is not None:
+        if len(glues_id)!=0:
             glues = validate_model_ids(Glue, glues_id)
             items = items.filter(glue__in=glues)
         
         colors_id = request.GET.getlist('colors')
-        if colors_id is not None:
+        if len(colors_id)!=0:
             colors = validate_model_ids(Color, colors_id)
             items = items.filter(color__in=colors)
 
         stamps_id = request.GET.getlist('stamps')
-        if stamps_id is not None:
+        if len(stamps_id) != 0:
             stamps = validate_model_ids(Stamp, stamps_id)
             items = items.filter(stamp__in=stamps)
 
         formats_id = request.GET.getlist('formats')
-        if formats_id is not None:
+        if len(formats_id) != 0:
             formats = validate_model_ids(Format, formats_id)
             items = items.filter(format__in=formats)
         
         themes_id = request.GET.getlist('themes')
-        if themes_id is not None:
+        if len(themes_id) != 0:
             themes = validate_model_ids(Theme, themes_id)
             items = items.filter(theme__in=themes)
 
         presses_id = request.GET.getlist('presses')
-        if presses_id is not None:
+        if len(presses_id) != 0:
             presses = validate_model_ids(Press, presses_id)
             items = items.filter(press__in=presses)
 
         emissions_id = request.GET.getlist('emissions')
-        if emissions_id is not None:
+        if len(emissions_id) != 0:
             emissions = validate_model_ids(Emission, emissions_id)
             items = items.filter(emission__in=emissions)
 
         designers_id = request.GET.getlist('designers')
-        if designers_id is not None:
+        if len(designers_id) != 0:
             designers = validate_model_ids(Designer, designers_id)
             items = items.filter(designer__in=designers)
 
         catalogs_id = request.GET.getlist('catalogs')
-        if catalogs_id is not None:
+        if len(catalogs_id) != 0:
             catalogs = validate_model_ids(Catalog, catalogs_id)
             items = items.filter(catalog__in=catalogs)
 
         currencies_id = request.GET.getlist('currencies')
-        if currencies_id is not None:
+        if len(currencies_id) != 0:
             currencies = validate_model_ids(Currency, currencies_id)
             items = items.filter(currency__in=currencies)
         
         watermarks_id = request.GET.getlist('watermarks')
-        if watermarks_id is not None:
+        if len(watermarks_id) != 0:
             watermarks = validate_model_ids(Watermark, watermarks_id)
             items = items.filter(watermark__in=watermarks)
-        
+
         # Получение + валидация фильтров в которых есть только 1 выбор
 
         # Фильтрация по историческим моментам, странам и частям света
