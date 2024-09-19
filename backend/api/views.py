@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, CustomUserSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, CustomUserSerializer, ItemListSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -189,7 +189,7 @@ def get_items(request:HttpRequest)->Response:
         # Пагинация
         items = items[offset:offset+limit]
 
-        return Response({'status':'ok','data':ItemSerializer(items[offset:offset+limit],many=True).data})
+        return Response({'status':'ok','data':ItemListSerializer(items[offset:offset+limit],many=True).data})
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})

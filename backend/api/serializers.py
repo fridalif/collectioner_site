@@ -3,6 +3,11 @@ from rest_framework.serializers import ModelSerializer, CharField
 from django.contrib.auth.models import User
 
 
+class ItemListSerializer(ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ['id','name']
+
 class CustomUserSerializer(ModelSerializer):
     username = CharField(source='user.username')
     email = CharField(source='user.email')
