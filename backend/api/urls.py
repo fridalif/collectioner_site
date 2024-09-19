@@ -3,7 +3,8 @@ from api.views import get_items, get_countries, get_history_moments, get_designe
 from api.views import add_new_item, add_or_remove_item_in_my_collection, is_logged_in, get_csrf, login_user, register_user, activate_user, get_user
 from api.views import logout_user, change_avatar, change_other_user_info
 urlpatterns = [
-    path('get_items/<int:id>/',get_items,name='get_items'),
+    path('get_items/',get_items,name='get_items'),
+    path('get_items/<int:id>/',get_items,name='get_item'),
     path('get_csrf/', get_csrf, name='get_csrf'),
     path('get_countries/',get_countries,name='get_countries'),
     path('get_countries/<int:id>/',get_countries, name='get_country'),

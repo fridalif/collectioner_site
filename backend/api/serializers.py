@@ -1,5 +1,5 @@
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser
-from rest_framework.serializers import ModelSerializer, CharField
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser, ItemImage
+from rest_framework.serializers import ModelSerializer, CharField, IntegerField
 from django.contrib.auth.models import User
 
 
@@ -98,3 +98,10 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+class ItemImageSerializer(ModelSerializer):
+    item_id = IntegerField(source='item.id')
+    image_url = CharField(source='image.url')
+    class Meta:
+        model = ItemImage
+        fields = ['item_id', 'image_url', 'is_main_image']

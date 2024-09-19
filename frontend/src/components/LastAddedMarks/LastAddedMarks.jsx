@@ -35,8 +35,8 @@ export function LastAddedMarks(){
             { lastAddedMarks.length > 0 && lastAddedMarks.map((mark) => (
                 <div className={styles.lastAddedMarksMark}>
                 <Image src={markImage} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                <div className={styles.lastAddedMarksMarkText}>
-                    Новая марка
+                <div className={styles.lastAddedMarksMarkText} id={mark.id}>
+                    {mark.name}
                 </div>
                 </div>
             ))
