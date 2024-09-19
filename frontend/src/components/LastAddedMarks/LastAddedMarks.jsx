@@ -1,14 +1,14 @@
 import styles from './LastAddedMarks.module.css'
-import Image from 'next/image'
-import markImage from './mark.jpg'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
 
 
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function LastAddedMarks(){
     const [ lastAddedMarks, setLastAddedMarks ] = useState([])
+    const [ startFrom, setStartFrom ] = useState(0)
 
     useEffect(async () => {
         axios
@@ -46,13 +46,25 @@ export function LastAddedMarks(){
         },
         []
     )
+    const prevCard = () => {
+        if (startFrom>0){
+            setStartFrom(startFrom-1);
+        }
+    }
+
+    const nextCard = () => {
+        if (startFrom+5<10){
+            setStartFrom(startFrom+1);
+        }
+    }
+
     return(
         <div className={styles.lastAddedMarksContainer}>
         <div className={styles.lastAddedMarks}>
             <div className={styles.lastAddedMarksTitle}>
                 Последние добавленные марки
             </div>
-            { lastAddedMarks.length > 0 && lastAddedMarks.map((mark) => (
+            { lastAddedMarks.length > 0 && lastAddedMarks.length <=6 && lastAddedMarks.map((mark) => (
                 <div className={styles.lastAddedMarksMark}>
                 <img src={mark.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
                 <div className={styles.lastAddedMarksMarkText} id={mark.id}>
@@ -60,6 +72,37 @@ export function LastAddedMarks(){
                 </div>
                 </div>
             ))
+            }
+            { lastAddedMarks.length > 6 && startFrom==0 &&
+                    <div className={styles.prevButtonChosen}>
+                        <IoIosArrowDropleftCircle />
+                    </div>
+            }
+            { lastAddedMarks.length > 6 && startFrom>0 &&
+                    <div className={styles.prevButton} onClick={()=>prevCard()}>
+                        <IoIosArrowDropleftCircle />
+                    </div>
+            }
+            {
+                lastAddedMarks.length > 6 && lastAddedMarks.map((mark,index)=>(
+                    startFrom<=index && index<startFrom+5 &&
+                    <div className={styles.lastAddedMarksMark}>
+                        <img src={mark.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                        <div className={styles.lastAddedMarksMarkText} id={mark.id}>
+                            {mark.name}
+                        </div>
+                    </div>
+                ))
+            }
+            { lastAddedMarks.length > 6 && startFrom+5 < 10 &&
+                    <div className={styles.prevButton} onClick={()=>nextCard()}>
+                        <IoIosArrowDroprightCircle />
+                    </div>
+            }
+            { lastAddedMarks.length > 6 && startFrom+5 >= 10 &&
+                    <div className={styles.prevButtonChosen}>
+                        <IoIosArrowDroprightCircle />
+                    </div>
             }
         </div>
         </div>

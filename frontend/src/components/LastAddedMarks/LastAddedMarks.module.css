@@ -14,7 +14,7 @@
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     display: flex;
-    gap:20px;
+    gap:10px;
 }
 
 .lastAddedMarksTitle{
@@ -31,6 +31,35 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     background-color: #FFFFFF;   
+}
+
+.prevButton{
+    height: 250px;
+    margin-top: 75px;
+    margin-left: 25px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: #FFFFFF;   
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.prevButtonChosen{
+    height: 250px;
+    margin-top: 75px;
+    margin-left: 25px;
+    width: 100px;
+    border-radius: 10px;
+    color: white;
+    background-color: #463F3A;  
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prevButton:hover{
+    color: white;
+    background-color: #463F3A;
 }
 
 .lastAddedMarksMark:hover{
