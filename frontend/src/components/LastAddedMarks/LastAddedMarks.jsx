@@ -2,7 +2,7 @@ import styles from './LastAddedMarks.module.css'
 import Image from 'next/image'
 import markImage from './mark.jpg'
 import { useState, useEffect } from 'react'
-
+import axios from 'axios'
 
 
 
@@ -12,9 +12,17 @@ export function LastAddedMarks(){
 
     useEffect(() => {
         axios
-            .get(`${serverUrl}lastAddedMarks`)
+            .get(`${serverUrl}/api/get_items/?offset=0&limit=10`)
             .then(response => {
-                setLastAddedMarks(response.data)
+                console.log(response.data);
+                response = response.data;
+                if (response.status === 'ok'){
+                    setLastAddedMarks(response.data);
+                    return;
+                }
+                alert(response.message);
+            })
+            .catch(error => console.error(error))
         },
         []
     )
@@ -24,18 +32,15 @@ export function LastAddedMarks(){
             <div className={styles.lastAddedMarksTitle}>
                 Последние добавленные марки
             </div>
-            <div className={styles.lastAddedMarksMark}>
+            { lastAddedMarks.length > 0 && lastAddedMarks.map((mark) => (
+                <div className={styles.lastAddedMarksMark}>
                 <Image src={markImage} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
                 <div className={styles.lastAddedMarksMarkText}>
                     Новая марка
                 </div>
-            </div>
-            <div className={styles.lastAddedMarksMark}>
-                <Image src={markImage} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                <div className={styles.lastAddedMarksMarkText}>
-                    Новая марка
                 </div>
-            </div>
+            ))
+            }
         </div>
         </div>
     )

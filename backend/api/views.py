@@ -91,9 +91,8 @@ def get_items(request:HttpRequest)->Response:
             return Response({'status':'error', 'message':'Не удалось получить предметы'})
         # Получение + валидация фильтров в которых может быть много выборов
         category = request.GET.get('category')
-        if category is None:
-            return Response({'status':'error', 'message':'Не указан тип предмета'})
-        items = items.filter(category = category)
+        if category is not None:
+            items = items.filter(category = category)
         glues_id = request.GET.getlist('glues')
         if glues_id is not None:
             glues = validate_model_ids(Glue, glues_id)
@@ -188,8 +187,9 @@ def get_items(request:HttpRequest)->Response:
         # Пагинация
         items = items[offset:offset+limit]
 
-        return Response({'status':'ok','data':ItemSerializer(items[offset:offset+limit].data,many=True)})
-    except:
+        return Response({'status':'ok','data':ItemSerializer(items[offset:offset+limit],many=True).data})
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
 @api_view(['GET'])
