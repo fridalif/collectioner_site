@@ -15,7 +15,7 @@ address = 'http://127.0.0.1:3000/activate/'
 
 try:
     with smtplib.SMTP_SSL('smtp.mail.ru', 465) as smtp:
-        smtp.login('my_test_mail_for_dev@mail.ru', 'mGdijcHEvPnMxeFnFdcQ')
+        smtp.login('my_test_mail_for_dev@mail.ru', '*********')
         connection = psycopg2.connect(**db_params)
         cursor = connection.cursor()
         cursor.execute("SELECT custom_user.id, activate_hash, email FROM custom_user LEFT JOIN auth_user on custom_user.user_id = auth_user.id WHERE custom_user.sended_message is null;")
