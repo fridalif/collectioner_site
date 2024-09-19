@@ -206,14 +206,15 @@ def get_items(request:HttpRequest, id=None)->Response:
 @api_view(['GET'])
 def get_item_image_urls(request:HttpRequest)->Response:
     try:
-        items_ids = request.GET.getlist('items')
+        items_ids = request.GET.getlist('items_ids[]')
         if len(items_ids) == 0:
             return Response({'status':'error','message':'Не указаны id предметов'})
         item_images = ItemImage.objects.filter(item__id__in=items_ids)
         if request.GET.get('only_main') is not None:
             item_images = item_images.filter(is_main_image=True)
         return Response({'status':'ok','data':ItemImageSerializer(item_images,many=True).data})
-    except:
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
 @api_view(['GET'])
