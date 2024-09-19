@@ -27,7 +27,7 @@ try:
 
             message = EmailMessage()
             message['Subject'] = 'Подтверждение регистрации на сайте'
-            message['From'] = 'serb.2002@mail.ru'
+            message['From'] = '****'
             message['To'] = email
             message.set_content(f'Благодарим Вас за регистрацию на сайте. Для подтверждения регистрации перейдите по ссылке: {address}?hash={activate_hash}')
             try:
