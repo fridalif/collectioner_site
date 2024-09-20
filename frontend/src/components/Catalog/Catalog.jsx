@@ -6,7 +6,7 @@ export function Catalog(){
     const [worldPart, setWorldPart] = useState(null);
     const [country, setCountry ] = useState(null);
     const [historyMoment, setHistoryMoment] = useState(null);
-
+    const [emission, setEmission] = useState(null);
 
 
     return(
@@ -49,7 +49,12 @@ export function Catalog(){
                         <div className={styles.inputFrom}>До <input type="number" className={styles.inputFromToField} id='year_le'/></div>
                     </div>
                 </div>
-                
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Эмиссия: <br />
+                    <select id='selectEmission' className={styles.selecter} onChange={()=>setEmission(document.getElementById('selectEmission'))}>
+                        <option value={null}> Все </option>
+                    </select>
+                </div>
             </div>
         </div>
     )
