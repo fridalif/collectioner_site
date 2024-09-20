@@ -9,10 +9,11 @@ export function Catalog(){
     const [country, setCountry ] = useState(null);
     const [historyMoment, setHistoryMoment] = useState(null);
     const [filters, setFilters] = useState(null);
+    const [countries, setCountries] = useState([]);
+    const [historyMoments, setHistoryMoments] = useState([]);
 
-
-    useEffect(async ()=>{
-        await axios.get(serverUrl + '/api/get_other_filters/', { withCredentials: true })
+    useEffect(()=>{
+        axios.get(serverUrl + '/api/get_other_filters/', { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
                 console.log(response.data.data);
@@ -24,6 +25,44 @@ export function Catalog(){
             }
         })    
     },[])
+
+    useEffect(()=>{
+        if (worldPart === null) {
+            setCountries(null);
+            return;
+        }
+        axios.get(serverUrl + '/api/get_countries/?world_part=' + worldPart, { withCredentials: true })
+        .then((response) => {
+            if (response.data.status === 'ok') {
+                console.log(response.data.data);
+                setCountries(response.data.data);
+            }
+            else {
+                alert(response.data.message);
+            }
+        })
+    },[worldPart])
+
+    useEffect(()=>{
+        if (country === null) {
+            setHistoryMoments(null);
+            return;
+        }
+        axios.get(serverUrl + '/api/get_history_moments/?country_id=' + country, { withCredentials: true })
+        .then((response) => {
+            if (response.data.status === 'ok') {
+                console.log(response.data.data);
+                setHistoryMoments(response.data.data);
+                return;
+            }
+            else {
+                alert(response.data.message);
+            }
+        })
+    },[country])
+
+    
+
     return(
         <div className={styles.catalogContainer}>
             <div className={styles.catalogSideBar}>
@@ -42,12 +81,14 @@ export function Catalog(){
                         Страна:<br />
                         <select id='selectCountry' className={styles.selecter} onChange={()=>setCountry(document.getElementById('selectCountry').value)}>
                             <option value={null}>{worldPart !== null ? <>Страна</> : <>Выберите часть света</>}</option>
+                            {countries !== null && countries.map((new_country)=>{return <option value={new_country.id}>{new_country.name}</option>})}
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Исторический этап: <br />
                         <select id='selectHistoryMoment' className={styles.selecter} onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
                             <option value={null}>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
+                            {historyMoments !== null && historyMoments.map((historyMoment)=>{return <option value={historyMoment.id}>{historyMoment.name}</option>})}
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
