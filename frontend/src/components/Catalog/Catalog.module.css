@@ -11,8 +11,8 @@
     flex-direction: column;
     justify-content: space-between;
     height: 860px;
-    width:200px;
-    gap:5px;
+    width:250px;
+    gap:10px;
 }
 
 .catalogFilters{
@@ -20,7 +20,7 @@
     margin-top: 20px;
     flex-direction: column;
     height: 790px;
-    width:200px;
+    width:250px;
     gap:20px;
     overflow: scroll;
 }
@@ -28,7 +28,7 @@
 .catalogCommitFilters{
     background-color: #463F3A;
     height: 50px;
-    width: 200px;
+    width: 250px;
     color:white;
     font-family: 'Sofia-Sans';
     font-size: 20px;
