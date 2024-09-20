@@ -5,6 +5,7 @@ import {LastAddedMarks} from '../LastAddedMarks/LastAddedMarks.jsx';
 import {Titles} from '../Titles/Titles.jsx';
 import {LoginForm} from '../LoginForm/LoginForm.jsx';
 import {Profile} from '../Profile/Profile.jsx';
+import { Catalog } from '../Catalog/Catalog,jsx';
 
 export function Body({isLoggedIn, mode}){
 
@@ -25,6 +26,9 @@ export function Body({isLoggedIn, mode}){
             } 
             {
                 mode == 'Profile' && <div className={styles.bodyContent}><Profile /></div>
+            }
+            {
+                mode == 'Catalog' && <div className={styles.bodyContent}><Catalog /></div>
             }  
         </div>
     )
