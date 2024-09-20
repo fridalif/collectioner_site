@@ -1,13 +1,28 @@
 import styles from './Catalog.module.css';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
+const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
 
     const [worldPart, setWorldPart] = useState(null);
     const [country, setCountry ] = useState(null);
     const [historyMoment, setHistoryMoment] = useState(null);
+    const [filters, setFilters] = useState(null);
 
 
+    useEffect(async ()=>{
+        await axios.get(serverUrl + '/api/get_other_filters/', { withCredentials: true })
+        .then((response) => {
+            if (response.data.status === 'ok') {
+                console.log(response.data.data)
+                setFilters(response.data.data)
+            }
+            else {
+                alert(response.data.message);
+            }
+        })    
+    },[])
     return(
         <div className={styles.catalogContainer}>
             <div className={styles.catalogSideBar}>
@@ -53,6 +68,7 @@ export function Catalog(){
                         Эмиссия: <br />
                         <select id='selectEmission' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>

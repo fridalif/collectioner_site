@@ -37,7 +37,7 @@ class HistoryMomentSerializer(ModelSerializer):
 class GlueSerializer(ModelSerializer):
     class Meta:
         model = Glue
-        fileds = '__all__'
+        fields = '__all__'
 
 class ColorSerialzier(ModelSerializer):
     class Meta:

@@ -283,7 +283,8 @@ def get_other_filters_except_designers(request:HttpRequest)->Response:
                 'watermarks':WatermarkSerializer(watermarks,many=True).data
             }
         })
-    except:
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message':'Ошибка при получении фильтров'})
 
 @api_view(['GET'])
