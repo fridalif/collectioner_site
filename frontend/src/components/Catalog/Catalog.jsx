@@ -8,6 +8,14 @@ export function Catalog(){
                 <div className={styles.catalogSideBarTitle}>
                     Фильтры
                 </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Части света:<br />
+                    <input type='checkbox' value='eu'/> Европа <br />
+                    <input type='checkbox' value='as'/> Азия <br />
+                    <input type='checkbox' value='af'/> Африка <br />
+                    <input type='checkbox' value='am'/> Америка <br />
+                    <input type='checkbox' value='ok'/> Океания <br />
+                </div>
             </div>
         </div>
     )
