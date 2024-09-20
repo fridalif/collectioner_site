@@ -7,6 +7,9 @@ export function Catalog(){
     const [country, setCountry ] = useState(null);
     const [historyMoment, setHistoryMoment] = useState(null);
     const [emission, setEmission] = useState(null);
+    const [format, setFormat] = useState(null);
+    const [stamp, setStamp] = useState(null);
+    const [color, setColor] = useState(null);
 
 
     return(
@@ -52,6 +55,24 @@ export function Catalog(){
                 <div className={styles.catalogSideBarFilterBlock}>
                     Эмиссия: <br />
                     <select id='selectEmission' className={styles.selecter} onChange={()=>setEmission(document.getElementById('selectEmission'))}>
+                        <option value={null}> Все </option>
+                    </select>
+                </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Формат: <br />
+                    <select id='selectFormat' className={styles.selecter} onChange={()=>setFormat(document.getElementById('selectFormat'))}>
+                        <option value={null}> Все </option>
+                    </select>
+                </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Печать: <br />
+                    <select id='selectStamp' className={styles.selecter} onChange={()=>setStamp(document.getElementById('selectStamp'))}>
+                        <option value={null}> Все </option>
+                    </select>
+                </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Цвет: <br />
+                    <select id='selectColor' className={styles.selecter} onChange={()=>setColor(document.getElementById('selectColor'))}>
                         <option value={null}> Все </option>
                     </select>
                 </div>
