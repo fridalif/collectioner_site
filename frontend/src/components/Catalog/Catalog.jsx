@@ -6,16 +6,6 @@ export function Catalog(){
     const [worldPart, setWorldPart] = useState(null);
     const [country, setCountry ] = useState(null);
     const [historyMoment, setHistoryMoment] = useState(null);
-    const [emission, setEmission] = useState(null);
-    const [format, setFormat] = useState(null);
-    const [stamp, setStamp] = useState(null);
-    const [color, setColor] = useState(null);
-    const [glue, setGlue] = useState(null);
-    const [press, setPress] = useState(null);
-    const [watermark, setWatermark] = useState(null);
-    const [currency, setCurrency] = useState(null);
-    const [theme, setTheme] = useState(null);
-    const [catalog, setCatalog] = useState(null);
 
 
     return(
@@ -61,51 +51,70 @@ export function Catalog(){
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Эмиссия: <br />
-                        <select id='selectEmission' className={styles.selecter} onChange={()=>setEmission(document.getElementById('selectEmission'))}>
+                        <select id='selectEmission' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Формат: <br />
-                        <select id='selectFormat' className={styles.selecter} onChange={()=>setFormat(document.getElementById('selectFormat'))}>
+                        <select id='selectFormat' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Печать: <br />
-                        <select id='selectStamp' className={styles.selecter} onChange={()=>setStamp(document.getElementById('selectStamp'))}>
+                        <select id='selectStamp' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Цвет: <br />
-                        <select id='selectColor' className={styles.selecter} onChange={()=>setColor(document.getElementById('selectColor'))}>
+                        <select id='selectColor' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Клей: <br />
-                        <select id='selectGlue' className={styles.selecter} onChange={()=>setGlue(document.getElementById('selectGlue'))}>
+                        <select id='selectGlue' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Типография: <br />
-                        <select id='selectPress' className={styles.selecter} onChange={()=>setPress(document.getElementById('selectPress'))}>
+                        <select id='selectPress' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Водяной знак: <br />
-                        <select id='selectWatermark' className={styles.selecter} onChange={()=>setWatermark(document.getElementById('selectWatermark'))}>
+                        <select id='selectWatermark' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Валюта: <br />
-                        <select id='selectCurrency' className={styles.selecter} onChange={()=>setCurrency(document.getElementById('selectCurrency'))}>
+                        <select id='selectCurrency' className={styles.selecter}>
                             <option value={null}> Все </option>
                         </select>
+                    </div>
+                    <div className={styles.catalogSideBarFilterBlock}>
+                        Тема: <br />
+                        <select id='selectTheme' className={styles.selecter}>
+                            <option value={null}> Все </option>
+                        </select>
+                    </div>
+                    <div className={styles.catalogSideBarFilterBlock}>
+                        Каталог: <br />
+                        <select id='selectCatalog' className={styles.selecter}>
+                            <option value={null}> Все </option>
+                        </select>
+                    </div>
+                    <div className={styles.catalogSideBarFilterBlock}>
+                        Номинал: <br />
+                        <div className={styles.inputFromTo}>
+                            <div className={styles.inputFrom}>От <input type="text" className={styles.inputFromToField} id='nominal_ge'/></div>
+                            <div className={styles.inputFrom}>До <input type="text" className={styles.inputFromToField} id='nominal_le'/></div>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.catalogCommitFilters}>
