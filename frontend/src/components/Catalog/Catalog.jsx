@@ -15,8 +15,9 @@ export function Catalog(){
         await axios.get(serverUrl + '/api/get_other_filters/', { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
-                console.log(response.data.data)
-                setFilters(response.data.data)
+                console.log(response.data.data);
+                setFilters(response.data.data);
+                return;
             }
             else {
                 alert(response.data.message);
@@ -68,61 +69,128 @@ export function Catalog(){
                         Эмиссия: <br />
                         <select id='selectEmission' className={styles.selecter}>
                             <option value={null}> Все </option>
-                            
+                            {filters && filters.emissions && filters.emissions.map((item)=>{
+                                return(
+                                    <option key={item.id} value={item.id}>{item.name}</option>
+                                )
+                            })}
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Формат: <br />
                         <select id='selectFormat' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.formats && filters.formats.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Печать: <br />
                         <select id='selectStamp' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.stamps && filters.stamps.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Цвет: <br />
                         <select id='selectColor' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.colors && filters.colors.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Клей: <br />
                         <select id='selectGlue' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.glues && filters.glues.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Типография: <br />
                         <select id='selectPress' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.press && filters.press.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Водяной знак: <br />
                         <select id='selectWatermark' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.watermarks && filters.watermarks.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Валюта: <br />
                         <select id='selectCurrency' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.currencies && filters.currencies.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Тема: <br />
                         <select id='selectTheme' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.themes && filters.themes.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Каталог: <br />
                         <select id='selectCatalog' className={styles.selecter}>
                             <option value={null}> Все </option>
+                            {
+                                filters && filters.catalogs && filters.catalogs.map((item)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.name}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
