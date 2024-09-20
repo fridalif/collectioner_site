@@ -34,6 +34,12 @@ export function Catalog(){
                         <option value={null}>{country === null ? <>Выберите страну</>:<>Исторические этапы</>}</option>
                     </select>
                 </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Временной промежуток: <br />
+                    От <input type="number" className={styles.selecter}/>
+                    До <input type="number" className={styles.selecter}/>
+                </div>
+                
             </div>
         </div>
     )
