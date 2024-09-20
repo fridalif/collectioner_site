@@ -98,67 +98,55 @@ def get_items(request:HttpRequest, id=None)->Response:
         except:
             return Response({'status':'error', 'message':'Не удалось получить предметы'})
 
-        # Получение + валидация фильтров в которых может быть много выборов
+        # Получение + валидация фильтров
         category = request.GET.get('category')
         if category is not None:
             items = items.filter(category = category)
         
-        glues_id = request.GET.getlist('glues')
-        if len(glues_id)!=0:
-            glues = validate_model_ids(Glue, glues_id)
-            items = items.filter(glue__in=glues)
+        glues_id = request.GET.get('glues')
+        if is_int(glues_id):
+            items = items.filter(glue__id=int(glues_id))
         
-        colors_id = request.GET.getlist('colors')
-        if len(colors_id)!=0:
-            colors = validate_model_ids(Color, colors_id)
-            items = items.filter(color__in=colors)
+        colors_id = request.GET.get('colors')
+        if is_int(colors_id):
+            items = items.filter(color__id=int(colors_id))
 
-        stamps_id = request.GET.getlist('stamps')
-        if len(stamps_id) != 0:
-            stamps = validate_model_ids(Stamp, stamps_id)
-            items = items.filter(stamp__in=stamps)
+        stamps_id = request.GET.get('stamps')
+        if is_int(stamps_id):
+            items = items.filter(stamp__id=int(stamps_id))
 
-        formats_id = request.GET.getlist('formats')
-        if len(formats_id) != 0:
-            formats = validate_model_ids(Format, formats_id)
-            items = items.filter(format__in=formats)
+        formats_id = request.GET.get('formats')
+        if is_int(formats_id):
+            items = items.filter(format__id=int(formats_id))
         
-        themes_id = request.GET.getlist('themes')
-        if len(themes_id) != 0:
-            themes = validate_model_ids(Theme, themes_id)
-            items = items.filter(theme__in=themes)
+        themes_id = request.GET.get('themes')
+        if is_int(themes_id):
+            items = items.filter(theme__id=int(themes_id))
 
-        presses_id = request.GET.getlist('presses')
-        if len(presses_id) != 0:
-            presses = validate_model_ids(Press, presses_id)
-            items = items.filter(press__in=presses)
+        presses_id = request.GET.get('presses')
+        if is_int(presses_id):
+            items = items.filter(press__id=int(presses_id))
 
-        emissions_id = request.GET.getlist('emissions')
-        if len(emissions_id) != 0:
-            emissions = validate_model_ids(Emission, emissions_id)
-            items = items.filter(emission__in=emissions)
+        emissions_id = request.GET.get('emissions')
+        if is_int(emissions_id):
+            items = items.filter(emission__id=int(emissions_id))
 
-        designers_id = request.GET.getlist('designers')
-        if len(designers_id) != 0:
-            designers = validate_model_ids(Designer, designers_id)
-            items = items.filter(designer__in=designers)
+        designers_id = request.GET.get('designers')
+        if is_int(designers_id):
+            items = items.filter(designer__id=int(designers_id))
 
-        catalogs_id = request.GET.getlist('catalogs')
-        if len(catalogs_id) != 0:
-            catalogs = validate_model_ids(Catalog, catalogs_id)
-            items = items.filter(catalog__in=catalogs)
+        catalogs_id = request.GET.get('catalogs')
+        if is_int(catalogs_id):
+            items = items.filter(catalog__id=int(catalogs_id))
 
-        currencies_id = request.GET.getlist('currencies')
-        if len(currencies_id) != 0:
-            currencies = validate_model_ids(Currency, currencies_id)
-            items = items.filter(currency__in=currencies)
+        currencies_id = request.GET.get('currencies')
+        if is_int(currencies_id):
+            items = items.filter(currency__id=int(currencies_id))
         
-        watermarks_id = request.GET.getlist('watermarks')
-        if len(watermarks_id) != 0:
-            watermarks = validate_model_ids(Watermark, watermarks_id)
-            items = items.filter(watermark__in=watermarks)
+        watermarks_id = request.GET.get('watermarks')
+        if is_int(watermarks_id):
+            items = items.filter(watermark__id=int(watermarks_id))
 
-        # Получение + валидация фильтров в которых есть только 1 выбор
 
         # Фильтрация по историческим моментам, странам и частям света
         history = request.GET.get('history_moment')
@@ -176,19 +164,19 @@ def get_items(request:HttpRequest, id=None)->Response:
 
 
         nominal_ge = request.GET.get('nominal_ge')
-        if nominal_ge is not None and is_float(nominal_ge):
+        if is_float(nominal_ge):
             items = items.filter(nominal__ge=float(nominal_ge))
 
         nominal_le = request.GET.get('nominal_le')
-        if nominal_le is not None and is_float(nominal_le):
+        if is_float(nominal_le):
             items = items.filter(nominal__le=float(nominal_le))
 
         year_ge = request.GET.get('year_ge')
-        if year_ge is not None and is_int(year_ge):
+        if is_int(year_ge):
             items = items.filter(year__ge=int(year_ge))
 
         year_le = request.GET.get('year_le')
-        if year_le is not None and is_int(year_le):
+        if is_int(year_le):
             items = items.filter(year__le=int(year_le))
 
         # Сортировка

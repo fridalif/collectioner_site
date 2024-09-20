@@ -13,6 +13,10 @@ export function Catalog(){
     const [glue, setGlue] = useState(null);
     const [press, setPress] = useState(null);
     const [watermark, setWatermark] = useState(null);
+    const [currency, setCurrency] = useState(null);
+    const [theme, setTheme] = useState(null);
+    const [catalog, setCatalog] = useState(null);
+
 
     return(
         <div className={styles.catalogContainer}>
@@ -94,6 +98,12 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Водяной знак: <br />
                         <select id='selectWatermark' className={styles.selecter} onChange={()=>setWatermark(document.getElementById('selectWatermark'))}>
+                            <option value={null}> Все </option>
+                        </select>
+                    </div>
+                    <div className={styles.catalogSideBarFilterBlock}>
+                        Валюта: <br />
+                        <select id='selectCurrency' className={styles.selecter} onChange={()=>setCurrency(document.getElementById('selectCurrency'))}>
                             <option value={null}> Все </option>
                         </select>
                     </div>
