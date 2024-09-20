@@ -13,7 +13,7 @@ export function Catalog(){
         <div className={styles.catalogContainer}>
             <div className={styles.catalogSideBar}>
                 <div className={styles.catalogSideBarFilterBlock}>
-                    Части света:<br />
+                    Часть света:<br />
                     <form>
                         <input type='radio' name='world_part' value='eu' onClick={()=>setWorldPart('eu')}/> Европа <br />
                         <input type='radio' name='world_part' value='as' onClick={()=>setWorldPart('as')}/> Азия <br />
@@ -23,21 +23,29 @@ export function Catalog(){
                     </form>
                 </div>
                 <div className={styles.catalogSideBarFilterBlock}>
-                    Страны:<br />
+                    Страна:<br />
                     <select id='selectCountry' className={styles.selecter} onChange={()=>setCountry(document.getElementById('selectCountry').value)}>
-                        <option value={null}>{worldPart !== null ? <>Страны</> : <>Выберите часть света</>}</option>
+                        <option value={null}>{worldPart !== null ? <>Страна</> : <>Выберите часть света</>}</option>
                     </select>
                 </div>
                 <div className={styles.catalogSideBarFilterBlock}>
-                    Исторические этапы: <br />
+                    Исторический этап: <br />
                     <select id='selectHistoryMoment' className={styles.selecter} onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
-                        <option value={null}>{country === null ? <>Выберите страну</>:<>Исторические этапы</>}</option>
+                        <option value={null}>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
+                    </select>
+                </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Категория: <br />
+                    <select id='selectCategory' className={styles.selecter}>
+                        <option value={null}> Все </option>
+                        <option value='mark'> Марка </option>
+                        <option value='philatel'>Филателистический продукт</option>
                     </select>
                 </div>
                 <div className={styles.catalogSideBarFilterBlock}>
                     Временной промежуток: <br />
-                    От <input type="number" className={styles.selecter}/>
-                    До <input type="number" className={styles.selecter}/>
+                    От <input type="number" className={styles.selecter} id='year_ge'/>
+                    До <input type="number" className={styles.selecter} id='year_le'/>
                 </div>
                 
             </div>

@@ -12,6 +12,7 @@
     height: 850px;
     width:200px;
     gap:20px;
+    overflow: scroll;
 }
 
 .catalogSideBarTitle{
