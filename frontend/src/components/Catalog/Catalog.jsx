@@ -43,9 +43,11 @@ export function Catalog(){
                     </select>
                 </div>
                 <div className={styles.catalogSideBarFilterBlock}>
-                    Временной промежуток: <br />
-                    От <input type="number" className={styles.selecter} id='year_ge'/>
-                    До <input type="number" className={styles.selecter} id='year_le'/>
+                    Год: <br />
+                    <div className={styles.inputFromTo}>
+                        <div className={styles.inputFrom}>От <input type="number" className={styles.inputFromToField} id='year_ge'/></div>
+                        <div className={styles.inputFrom}>До <input type="number" className={styles.inputFromToField} id='year_le'/></div>
+                    </div>
                 </div>
                 
             </div>
