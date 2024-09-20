@@ -24,13 +24,13 @@ export function Catalog(){
                 </div>
                 <div className={styles.catalogSideBarFilterBlock}>
                     Страны:<br />
-                    <select id='selectCountry' onChange={()=>setCountry(document.getElementById('selectCountry').value)}>
+                    <select id='selectCountry' className={styles.selecter} onChange={()=>setCountry(document.getElementById('selectCountry').value)}>
                         <option value={null}>{worldPart !== null ? <>Страны</> : <>Выберите часть света</>}</option>
                     </select>
                 </div>
                 <div className={styles.catalogSideBarFilterBlock}>
                     Исторические этапы: <br />
-                    <select id='selectHistoryMoment' onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
+                    <select id='selectHistoryMoment' className={styles.selecter} onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
                         <option value={null}>{country === null ? <>Выберите страну</>:<>Исторические этапы</>}</option>
                     </select>
                 </div>
