@@ -10,7 +10,9 @@ export function Catalog(){
     const [format, setFormat] = useState(null);
     const [stamp, setStamp] = useState(null);
     const [color, setColor] = useState(null);
-
+    const [glue, setGlue] = useState(null);
+    const [press, setPress] = useState(null);
+    const [watermark, setWatermark] = useState(null);
 
     return(
         <div className={styles.catalogContainer}>
@@ -73,6 +75,24 @@ export function Catalog(){
                 <div className={styles.catalogSideBarFilterBlock}>
                     Цвет: <br />
                     <select id='selectColor' className={styles.selecter} onChange={()=>setColor(document.getElementById('selectColor'))}>
+                        <option value={null}> Все </option>
+                    </select>
+                </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Клей: <br />
+                    <select id='selectGlue' className={styles.selecter} onChange={()=>setGlue(document.getElementById('selectGlue'))}>
+                        <option value={null}> Все </option>
+                    </select>
+                </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Типография: <br />
+                    <select id='selectPress' className={styles.selecter} onChange={()=>setPress(document.getElementById('selectPress'))}>
+                        <option value={null}> Все </option>
+                    </select>
+                </div>
+                <div className={styles.catalogSideBarFilterBlock}>
+                    Водяной знак: <br />
+                    <select id='selectWatermark' className={styles.selecter} onChange={()=>setWatermark(document.getElementById('selectWatermark'))}>
                         <option value={null}> Все </option>
                     </select>
                 </div>
