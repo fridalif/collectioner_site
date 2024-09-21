@@ -13,6 +13,7 @@ export function Catalog(){
     const [historyMoments, setHistoryMoments] = useState([]);
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
 
     useEffect(()=>{
         axios.get(serverUrl + '/api/get_other_filters/', { withCredentials: true })
@@ -30,6 +31,7 @@ export function Catalog(){
     },[])
 
     useEffect(()=>{
+        setCountry(null);
         if (worldPart === null) {
             setCountries(null);
             return;
@@ -48,6 +50,7 @@ export function Catalog(){
     },[worldPart])
 
     useEffect(()=>{
+        setHistoryMoment(null);
         if (country === null) {
             setHistoryMoments(null);
             return;
@@ -142,6 +145,43 @@ export function Catalog(){
             resultUrl += `&nominal_le=${nominalLe}`;
         }
         console.log(resultUrl);
+        axios.get(resultUrl, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status === 'ok' && response.data.data.length === 0) {
+                    setTotalItems(0);
+                    setItems([]);
+                    return;
+                }
+                if (response.data.status === 'ok') {
+                    let items_ids = []
+                    for (let i = 0; i < response.data.data.length; i++){
+                        items_ids.push(response.data.data[i].id)
+                    }
+                    axios.get(`${serverUrl}/api/get_item_image_urls/`, {params: {items_ids: items_ids, only_main: true}})
+                        .then(response_images => {
+                            if (response_images.data.status !== 'ok'){
+                                alert(response_images.data.message);
+                                return;
+                            }
+                            for (let i = 0; i < response.data.data.length; i++){
+                                for (let j = 0; j < response_images.data.data.length; j++){
+                                    if (response.data.data[i].id === response_images.data.data[j].item_id){
+                                        response.data.data[i].image_url = response_images.data.data[j].image_url
+                                    }
+                                }
+                            }
+                            console.log(response.data);
+                            setItems(response.data.data);
+                        })
+                        .catch(error => console.error(error))
+                    setTotalItems(response.data.total);    
+                    return;
+                }
+                else {
+                    alert(response.data.message);
+                }
+            })
+            .catch((err) => console.error(err))
         
     }
     
@@ -335,80 +375,38 @@ export function Catalog(){
             </div>
             <div className={styles.catalogContent}>
                 <div className={styles.catalogContentRow}>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
+                    {
+                        items.map((item,index)=>{
+                            if (index<6){
+                            return(
+                                <div className={styles.lastAddedMarksMark}>
+                                    <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                                    <div className={styles.lastAddedMarksMarkText} id={item.id}>
+                                        {item.name}
+                                    </div>
+                                </div>
+                            )
+                            }
+                        })
+                    }
+                    
                 </div>
                 <div className={styles.catalogContentRow}>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
-                    <div className={styles.lastAddedMarksMark}>
-                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
-                            <div className={styles.lastAddedMarksMarkText} id="1">
-                                dfsopfjops
-                            </div>
-                    </div>
+                    {
+                        items.map((item,index)=>{
+                            if (index>=6){
+                            return(
+                                <div className={styles.lastAddedMarksMark}>
+                                    <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                                    <div className={styles.lastAddedMarksMarkText} id={item.id}>
+                                        {item.name}
+                                    </div>
+                                </div>
+                            )
+                            }
+                        })
+                    }
+                    
                 </div>
                 
             </div>

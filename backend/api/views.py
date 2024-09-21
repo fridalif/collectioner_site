@@ -151,41 +151,41 @@ def get_items(request:HttpRequest, id=None)->Response:
         # Фильтрация по историческим моментам, странам и частям света
         history = request.GET.get('history_moment')
         if history is not None and is_int(history):
-            items = items.filter(history_moment__id=int(history))
+            items = items.filter(histrory_moment__id=int(history))
         else:
             country = request.GET.get('country')
             if country is not None and is_int(country):
-                items = items.filter(history_moment__country__id=int(country))
+                items = items.filter(histrory_moment__country__id=int(country))
             else:
                 world_part = request.GET.get('world_part')
                 if world_part is not None:
-                    countries = Country.objects.filter(world_part)
-                    items = items.filter(history_moment__country__in=countries)
+                    countries = Country.objects.filter(world_part=world_part)
+                    items = items.filter(histrory_moment__country__in=countries)
 
 
         nominal_ge = request.GET.get('nominal_ge')
         if is_float(nominal_ge):
-            items = items.filter(nominal__ge=float(nominal_ge))
+            items = items.filter(nominal__gte=float(nominal_ge))
 
         nominal_le = request.GET.get('nominal_le')
         if is_float(nominal_le):
-            items = items.filter(nominal__le=float(nominal_le))
+            items = items.filter(nominal__lte=float(nominal_le))
 
         year_ge = request.GET.get('year_ge')
         if is_int(year_ge):
-            items = items.filter(year__ge=int(year_ge))
+            items = items.filter(year__gte=int(year_ge))
 
         year_le = request.GET.get('year_le')
         if is_int(year_le):
-            items = items.filter(year__le=int(year_le))
+            items = items.filter(year__lte=int(year_le))
 
         # Сортировка
         items = items.order_by('-id')
-
+        total = len(items)
         # Пагинация
         items = items[offset:offset+limit]
 
-        return Response({'status':'ok','data':ItemListSerializer(items[offset:offset+limit],many=True).data})
+        return Response({'status':'ok','data':ItemListSerializer(items[offset:offset+limit],many=True).data,'total':total})
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
