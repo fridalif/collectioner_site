@@ -72,8 +72,8 @@ export function Catalog(){
 
     const getItems = ()=> {
         let resultUrl = serverUrl + '/api/get_items/'
-        let offset = (currentPage-1)*12;
-        let limit = 12;
+        let offset = (currentPage-1)*15;
+        let limit = 15;
         resultUrl += `?offset=${offset}&limit=${limit}`
         if (historyMoment!==null && historyMoment!==''){
             resultUrl += `&history_moment=${historyMoment}`;
@@ -378,7 +378,7 @@ export function Catalog(){
                 <div className={styles.catalogContentRow}>
                     {
                         items.map((item,index)=>{
-                            if (index<6){
+                            if (index<5){
                             return(
                                 <div className={styles.lastAddedMarksMark}>
                                     <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
@@ -395,7 +395,7 @@ export function Catalog(){
                 <div className={styles.catalogContentRow}>
                     {
                         items.map((item,index)=>{
-                            if (index>=6){
+                            if (index>=5&&index<10){
                             return(
                                 <div className={styles.lastAddedMarksMark}>
                                     <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
@@ -407,45 +407,21 @@ export function Catalog(){
                             }
                         })
                     }
-                    
                 </div>
-                <div className={styles.paginationRow}>
-                    { totalItems>12  &&
-                        <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell}>
-                            <IoIosArrowDropleftCircle />
-                        </div>
-                    }
-                    {totalItems>12 &&
-                        <>
-                            <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(1)}>
-                                1
-                            </div>
-                            <div className={currentPage == 2 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(2)}>
-                                2
-                            </div>
-                        </>
-                    }
+                <div className={styles.catalogContentRow}>
                     {
-                        totalItems>36 && totalItems<=48 &&
-                        <div className={currentPage == 3 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(3)}>
-                            3
-                        </div>
-                    }
-                    {totalItems>48 &&
-                        <>
-                            <div className={currentPage == Math.trunc(totalItems/12) ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/12))}>
-                                {Math.trunc(totalItems/12)}
-                            </div>
-                            <div className={currentPage == Math.trunc(totalItems/12)+1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/12)+1)}>
-                                {Math.trunc(totalItems/12)+1}
-                            </div>
-                        </>
-                    }
-
-                    { totalItems>12  &&
-                        <div className={currentPage == (Math.trunc(totalItems/12)+1) ?styles.paginationCellChosen : styles.paginationCell}>
-                            <IoIosArrowDroprightCircle />
-                        </div>
+                        items.map((item,index)=>{
+                            if (index>=10){
+                            return(
+                                <div className={styles.lastAddedMarksMark}>
+                                    <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                                    <div className={styles.lastAddedMarksMarkText} id={item.id}>
+                                        {item.name}
+                                    </div>
+                                </div>
+                            )
+                            }
+                        })
                     }
                 </div>
             </div>
