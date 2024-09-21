@@ -1,6 +1,7 @@
 import styles from './Catalog.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
@@ -408,7 +409,18 @@ export function Catalog(){
                     }
                     
                 </div>
-                
+                <div className={styles.paginationRow}>
+                    { totalItems>12  &&
+                        <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell}>
+                            <IoIosArrowDropleftCircle />
+                        </div>
+                    }
+                    { totalItems>12  &&
+                        <div className={styles.paginationCell}>
+                            <IoIosArrowDroprightCircle />
+                        </div>
+                    }
+                </div>
             </div>
             
         </div>
