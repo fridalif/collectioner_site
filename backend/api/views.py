@@ -185,7 +185,7 @@ def get_items(request:HttpRequest, id=None)->Response:
         # Пагинация
         items = items[offset:offset+limit]
 
-        return Response({'status':'ok','data':ItemListSerializer(items[offset:offset+limit],many=True).data,'total':total})
+        return Response({'status':'ok','data':ItemListSerializer(items,many=True).data,'total':total})
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})

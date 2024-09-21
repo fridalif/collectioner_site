@@ -415,8 +415,35 @@ export function Catalog(){
                             <IoIosArrowDropleftCircle />
                         </div>
                     }
+                    {totalItems>12 &&
+                        <>
+                            <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(1)}>
+                                1
+                            </div>
+                            <div className={currentPage == 2 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(2)}>
+                                2
+                            </div>
+                        </>
+                    }
+                    {
+                        totalItems>36 && totalItems<=48 &&
+                        <div className={currentPage == 3 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(3)}>
+                            3
+                        </div>
+                    }
+                    {totalItems>48 &&
+                        <>
+                            <div className={currentPage == Math.trunc(totalItems/12) ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/12))}>
+                                {Math.trunc(totalItems/12)}
+                            </div>
+                            <div className={currentPage == Math.trunc(totalItems/12)+1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/12)+1)}>
+                                {Math.trunc(totalItems/12)+1}
+                            </div>
+                        </>
+                    }
+
                     { totalItems>12  &&
-                        <div className={styles.paginationCell}>
+                        <div className={currentPage == (Math.trunc(totalItems/12)+1) ?styles.paginationCellChosen : styles.paginationCell}>
                             <IoIosArrowDroprightCircle />
                         </div>
                     }
