@@ -246,6 +246,87 @@ export function Catalog(){
                     Применить фильтры
                 </div>
             </div>
+            <div className={styles.catalogContent}>
+                <div className={styles.catalogContentRow}>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                </div>
+                <div className={styles.catalogContentRow}>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                    <div className={styles.lastAddedMarksMark}>
+                            <img src='/image.png' alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                            <div className={styles.lastAddedMarksMarkText} id="1">
+                                dfsopfjops
+                            </div>
+                    </div>
+                </div>
+                
+            </div>
+            
         </div>
+        
     )
 }
