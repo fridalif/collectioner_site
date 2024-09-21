@@ -25,7 +25,8 @@ export function Catalog(){
             else {
                 alert(response.data.message);
             }
-        })    
+        })
+        .catch((err) => console.error(err))    
     },[])
 
     useEffect(()=>{
@@ -43,6 +44,7 @@ export function Catalog(){
                 alert(response.data.message);
             }
         })
+        .catch((err) => console.error(err))
     },[worldPart])
 
     useEffect(()=>{
@@ -61,10 +63,86 @@ export function Catalog(){
                 alert(response.data.message);
             }
         })
+        .catch((err) => console.error(err))
     },[country])
 
     const getItems = ()=> {
+        let resultUrl = serverUrl + '/api/get_items/'
+        let offset = (currentPage-1)*12;
+        let limit = 12;
+        resultUrl += `?offset=${offset}&limit=${limit}`
+        if (historyMoment!==null && historyMoment!==''){
+            resultUrl += `&history_moment=${historyMoment}`;
+        }
+        else if (country!==null && country!==''){
+            resultUrl += `&country=${country}`;
+        }
+        else if (worldPart!==null){
+            resultUrl += `&world_part=${worldPart}`;
+        }
+        let category = document.getElementById('selectCategory').value;
+        if (category !== ''){
+            resultUrl += `&category=${category}`;
+        }
+        let yearGe = document.getElementById('year_ge').value;
+        let yearLe = document.getElementById('year_le').value;
+        if (yearGe !== ''){
+            resultUrl += `&year_ge=${yearGe}`;
+        }
+        if (yearLe !== ''){
+            resultUrl += `&year_le=${yearLe}`;
+        }
+        let emission = document.getElementById('selectEmission').value;
+        let format = document.getElementById('selectFormat').value;
+        let stamp = document.getElementById('selectStamp').value;
+        let color = document.getElementById('selectColor').value;
+        let glue = document.getElementById('selectGlue').value;
+        let press = document.getElementById('selectPress').value;
+        let watermark = document.getElementById('selectWatermark').value;
+        let currency = document.getElementById('selectCurrency').value;
+        let theme = document.getElementById('selectTheme').value;
+        let catalog = document.getElementById('selectCatalog').value;
+        let nominalGe = document.getElementById('nominal_ge').value;
+        let nominalLe = document.getElementById('nominal_le').value;
 
+        if (emission !== ''){
+            resultUrl += `&emissions=${emission}`;
+        }
+        if (format !== ''){
+            resultUrl += `&formats=${format}`;
+        }
+        if (stamp !== ''){
+            resultUrl += `&stamps=${stamp}`;
+        }
+        if (color !== ''){
+            resultUrl += `&colors=${color}`;
+        }
+        if (glue !== ''){
+            resultUrl += `&glues=${glue}`;
+        }
+        if (press !== ''){
+            resultUrl += `&press=${press}`;
+        }
+        if (watermark !== ''){
+            resultUrl += `&watermarks=${watermark}`;
+        }
+        if (currency !== ''){
+            resultUrl += `&currencies=${currency}`;
+        }
+        if (theme !== ''){
+            resultUrl += `&themes=${theme}`;
+        }
+        if (catalog !== ''){
+            resultUrl += `&catalogs=${catalog}`;
+        }
+        if (nominalGe !== ''){
+            resultUrl += `&nominal_ge=${nominalGe}`;
+        }
+        if (nominalLe !== ''){
+            resultUrl += `&nominal_le=${nominalLe}`;
+        }
+        console.log(resultUrl);
+        
     }
     
     useEffect(()=>{
@@ -89,21 +167,21 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Страна:<br />
                         <select id='selectCountry' className={styles.selecter} onChange={()=>setCountry(document.getElementById('selectCountry').value)}>
-                            <option value={null}>{worldPart !== null ? <>Страна</> : <>Выберите часть света</>}</option>
+                            <option value=''>{worldPart !== null ? <>Страна</> : <>Выберите часть света</>}</option>
                             {countries !== null && countries.map((new_country)=>{return <option value={new_country.id}>{new_country.name}</option>})}
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Исторический этап: <br />
                         <select id='selectHistoryMoment' className={styles.selecter} onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
-                            <option value={null}>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
+                            <option value=''>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
                             {historyMoments !== null && historyMoments.map((historyMoment)=>{return <option value={historyMoment.id}>{historyMoment.name}</option>})}
                         </select>
                     </div>
                     <div className={styles.catalogSideBarFilterBlock}>
                         Категория: <br />
                         <select id='selectCategory' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             <option value='mark'> Марка </option>
                             <option value='philatel'>Филателистический продукт</option>
                         </select>
@@ -118,7 +196,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Эмиссия: <br />
                         <select id='selectEmission' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {filters && filters.emissions && filters.emissions.map((item)=>{
                                 return(
                                     <option key={item.id} value={item.id}>{item.name}</option>
@@ -129,7 +207,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Формат: <br />
                         <select id='selectFormat' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.formats && filters.formats.map((item)=>{
                                     return(
@@ -142,7 +220,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Печать: <br />
                         <select id='selectStamp' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.stamps && filters.stamps.map((item)=>{
                                     return(
@@ -155,7 +233,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Цвет: <br />
                         <select id='selectColor' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.colors && filters.colors.map((item)=>{
                                     return(
@@ -168,7 +246,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Клей: <br />
                         <select id='selectGlue' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.glues && filters.glues.map((item)=>{
                                     return(
@@ -181,7 +259,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Типография: <br />
                         <select id='selectPress' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.press && filters.press.map((item)=>{
                                     return(
@@ -194,7 +272,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Водяной знак: <br />
                         <select id='selectWatermark' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.watermarks && filters.watermarks.map((item)=>{
                                     return(
@@ -207,7 +285,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Валюта: <br />
                         <select id='selectCurrency' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.currencies && filters.currencies.map((item)=>{
                                     return(
@@ -220,7 +298,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Тема: <br />
                         <select id='selectTheme' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.themes && filters.themes.map((item)=>{
                                     return(
@@ -233,7 +311,7 @@ export function Catalog(){
                     <div className={styles.catalogSideBarFilterBlock}>
                         Каталог: <br />
                         <select id='selectCatalog' className={styles.selecter}>
-                            <option value={null}> Все </option>
+                            <option value=''> Все </option>
                             {
                                 filters && filters.catalogs && filters.catalogs.map((item)=>{
                                     return(
@@ -251,7 +329,7 @@ export function Catalog(){
                         </div>
                     </div>
                 </div>
-                <div className={styles.catalogCommitFilters}>
+                <div className={styles.catalogCommitFilters} onClick={() => getItems()}>
                     Применить фильтры
                 </div>
             </div>
