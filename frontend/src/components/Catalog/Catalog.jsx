@@ -191,6 +191,18 @@ export function Catalog(){
     },[currentPage])
     
 
+    const nextPage = () => {
+        if (currentPage<Math.trunc(totalItems/12)+1){
+            setCurrentPage(currentPage+1);
+        }
+    }
+
+    const prevPage = () => {
+        if (currentPage>1){
+            setCurrentPage(currentPage-1);
+        }
+    }
+
     return(
         <div className={styles.catalogContainer}>
             <div className={styles.catalogSideBar}>
@@ -411,7 +423,7 @@ export function Catalog(){
                 </div>
                 <div className={styles.paginationRow}>
                     { totalItems>12  &&
-                        <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell}>
+                        <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => prevPage()}>
                             <IoIosArrowDropleftCircle />
                         </div>
                     }
@@ -426,8 +438,48 @@ export function Catalog(){
                         </>
                     }
                     {
+                        currentPage-2 > 2 &&
+                        <>
+                            <div className={styles.paginationCell}>
+                                ...
+                            </div>
+                            <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage-2)}>
+                                {currentPage-2}
+                            </div>
+                        </>
+                    }
+                    {
+                        currentPage-1 > 2 &&
+                        <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage-1)}>
+                            {currentPage-1}
+                        </div>
+                    }
+                    {
+                        currentPage > 2 && currentPage < Math.trunc(totalItems/12) &&
+                        <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage)}>
+                            {currentPage}
+                        </div>
+                    }
+                    {
+                        currentPage+1 < Math.trunc(totalItems/12) &&
+                        <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage+1)}>
+                            {currentPage+1}
+                        </div>
+                    }
+                    {
+                        currentPage+2 < Math.trunc(totalItems/12) &&
+                        <>
+                            <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage+2)}>
+                                {currentPage+2}
+                            </div>
+                            <div className={styles.paginationCell}>
+                                ...
+                            </div>
+                        </>
+                    }
+                    {
                         totalItems>36 && totalItems<=48 &&
-                        <div className={currentPage == 3 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage()}>
+                        <div className={currentPage == 3 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(3)}>
                             3
                         </div>
                     }
@@ -443,7 +495,7 @@ export function Catalog(){
                     }
 
                     { totalItems>12  &&
-                        <div className={currentPage == (Math.trunc(totalItems/12)+1) ?styles.paginationCellChosen : styles.paginationCell}>
+                        <div className={currentPage == (Math.trunc(totalItems/12)+1) ?styles.paginationCellChosen : styles.paginationCell} onClick={() => nextPage()}>
                             <IoIosArrowDroprightCircle />
                         </div>
                     }
