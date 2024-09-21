@@ -11,6 +11,8 @@ export function Catalog(){
     const [filters, setFilters] = useState(null);
     const [countries, setCountries] = useState([]);
     const [historyMoments, setHistoryMoments] = useState([]);
+    const [items, setItems] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(()=>{
         axios.get(serverUrl + '/api/get_other_filters/', { withCredentials: true })
@@ -61,6 +63,13 @@ export function Catalog(){
         })
     },[country])
 
+    const getItems = ()=> {
+
+    }
+    
+    useEffect(()=>{
+        getItems();
+    },[currentPage])
     
 
     return(
