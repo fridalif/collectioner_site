@@ -6,6 +6,7 @@ import {Titles} from '../Titles/Titles.jsx';
 import {LoginForm} from '../LoginForm/LoginForm.jsx';
 import {Profile} from '../Profile/Profile.jsx';
 import { Catalog } from '../Catalog/Catalog.jsx';
+import { Item } from '../Item/Item.jsx'
 
 export function Body({isLoggedIn, mode}){
 
@@ -30,6 +31,9 @@ export function Body({isLoggedIn, mode}){
             {
                 mode == 'Catalog' && <div className={styles.bodyContent}><Catalog /></div>
             }  
+            {
+                mode == 'Item' && <div className={styles.bodyContent}><Item isLoggedIn={isLoggedIn} /></div>
+            }
         </div>
     )
 }
