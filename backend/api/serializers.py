@@ -18,9 +18,22 @@ class CustomUserSerializer(ModelSerializer):
         fields = ['id', 'username', 'email','city', 'fullname', 'birth_date','country','avatar_url','languages', 'about_me', 'show_my_collection', 'show_fullname', 'show_birth_date']
 
 class ItemSerializer(ModelSerializer):
+    history_moment_name = CharField(source="histrory_moment.name")
+    country_name = CharField(source='histrory_moment.country.name')
+    emission_name = CharField(source='emission.name')
+    format_name = CharField(source='format.name')
+    stamp_name = CharField(source='stamp.name')
+    color_name = CharField(source='color.name')
+    glue_name = CharField(source='glue.name')
+    designer_name = CharField(source='designer.name')
+    press_name = CharField(source='press.name')
+    watermark_name = CharField(source='watermark.name')
+    currency_name = CharField(source='currency.name')
+    theme_name = CharField(source='theme.name')
+
     class Meta:
         model = Item
-        fields = '__all__'
+        fields = ['id','name','history_moment_name','country_name','emission_name','format_name','stamp_name', 'color_name', 'glue_name', 'designer_name', 'press_name', 'watermark_name', 'currency_name','theme_name','nominal','height','width']
 
 class CountrySerializer(ModelSerializer):
     image_url = CharField(source='flag.url')
