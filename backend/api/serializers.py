@@ -33,7 +33,7 @@ class ItemSerializer(ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ['id','name','history_moment_name','country_name','emission_name','format_name','stamp_name', 'color_name', 'glue_name', 'designer_name', 'press_name', 'watermark_name', 'currency_name','theme_name','nominal','height','width']
+        fields = ['id','name','history_moment_name','country_name','emission_name','format_name','stamp_name', 'color_name', 'glue_name', 'designer_name', 'press_name', 'watermark_name', 'currency_name','theme_name','nominal','height','width','year']
 
 class CountrySerializer(ModelSerializer):
     image_url = CharField(source='flag.url')
