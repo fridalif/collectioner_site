@@ -225,7 +225,10 @@ export function Item({isLoggedIn}){
                         }
                     </div>
                     <div className={styles.contentCharacteristics}>
-                        fff
+                        { isLoggedIn && 
+                        <div className={styles.contentCharacteristicsRow} style={{fontWeight:'bold', fontSize:'24px'}}>
+                            Добавить в коллекцию
+                        </div>}
                     </div>
                 </div>
             </div>
