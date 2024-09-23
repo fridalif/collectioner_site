@@ -62,7 +62,166 @@ export function Item({isLoggedIn}){
                             </div>
                         );
                     })}
-                
+                </div>
+                <div className={styles.contentCharacteristics}>
+                    { characteristics!==null && characteristics.name!==null &&
+                    <div className={styles.contentCharacteristicsRow} style={{fontWeight:'bold', fontSize:'24px'}}>
+                        {characteristics.name}
+                    </div>
+                    }
+                    { characteristics !== null && characteristics.country_name!==null &&
+                    <div className={styles.contentCharacteristicsRow}>
+                        <div>
+                            Страна:
+                        </div>
+                        <div>
+                            <img src={characteristics.country_flag} style={{width:'20px', height:'20px'}} alt=''/>{characteristics.country_name}
+                        </div>
+                    </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.history_moment_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Исторический момент:
+                            </div>
+                            <div>
+                                {characteristics.history_moment_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.year!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Год:
+                            </div>
+                            <div>
+                                {characteristics.year}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.width!==null && characteristics.height !== null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Размер:
+                            </div>
+                            <div>
+                                {characteristics.width}x{characteristics.height}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.format_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Формат:
+                            </div>
+                            <div>
+                                {characteristics.format_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.currency_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Валюта:
+                            </div>
+                            <div>
+                                {characteristics.currency_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.press_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Типография:
+                            </div>
+                            <div>
+                                {characteristics.press_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.designer_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Дизайнер:
+                            </div>
+                            <div>
+                                {characteristics.designer_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.emission_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Эмиссия:
+                            </div>
+                            <div>
+                                {characteristics.emission_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.glue_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Клей:
+                            </div>
+                            <div>
+                                {characteristics.glue_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.nominal!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Номинал:
+                            </div>
+                            <div>
+                                {characteristics.nominal}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.stamp_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Печать:
+                            </div>
+                            <div>
+                                {characteristics.stamp_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.watermark_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Водяной знак:
+                            </div>
+                            <div>
+                                {characteristics.watermark_name}
+                            </div>
+                        </div>
+                    }
+                    {
+                        characteristics !== null && characteristics.theme_name!==null &&
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div>
+                                Тема:
+                            </div>
+                            <div>
+                                {characteristics.theme_name}
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

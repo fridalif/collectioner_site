@@ -30,10 +30,11 @@ class ItemSerializer(ModelSerializer):
     watermark_name = CharField(source='watermark.name', allow_null=True)
     currency_name = CharField(source='currency.name', allow_null=True)
     theme_name = CharField(source='theme.name', allow_null=True)
+    country_flag = CharField(source='histrory_moment.country.flag.url', allow_null=True)
 
     class Meta:
         model = Item
-        fields = ['id','name','history_moment_name','country_name','emission_name','format_name','stamp_name', 'color_name', 'glue_name', 'designer_name', 'press_name', 'watermark_name', 'currency_name','theme_name','nominal','height','width','year']
+        fields = ['id','country_flag','name','history_moment_name','country_name','emission_name','format_name','stamp_name', 'color_name', 'glue_name', 'designer_name', 'press_name', 'watermark_name', 'currency_name','theme_name','nominal','height','width','year']
 
 class CountrySerializer(ModelSerializer):
     image_url = CharField(source='flag.url')

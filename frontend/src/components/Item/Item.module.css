@@ -50,3 +50,21 @@
     height: 45px;
     box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
 }
+
+.contentCharacteristics{
+    display:flex;
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 900px;
+    height: 400px;
+    flex-direction: column;
+    gap:10px;
+}
+.contentCharacteristicsRow{
+    display:flex;
+    justify-content: space-between;
+    width: 450px;
+    height: 20px;
+    font-family: 'Sofia-Sans';
+    font-size: 20px;
+}
