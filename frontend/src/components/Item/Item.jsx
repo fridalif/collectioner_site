@@ -27,6 +27,16 @@ export function Item({isLoggedIn}){
             setImagesList(response_images.data.data);
         })
         .catch((err)=>console.log(err))
+        axios.get(`${serverUrl}/api/get_items/${itemId}/`, { withCredentials: true })
+        .then((response) => {
+            if (response.data.status !== 'ok') {
+                alert(response.data.message);
+                return;
+            }
+            console.log(response.data.data);
+            setCharacteristics(response.data.data);
+        })
+        .catch((err) => console.error(err))
     },[])
     return(
         <div className={styles.pageBody}>

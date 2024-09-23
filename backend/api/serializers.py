@@ -20,16 +20,16 @@ class CustomUserSerializer(ModelSerializer):
 class ItemSerializer(ModelSerializer):
     history_moment_name = CharField(source="histrory_moment.name")
     country_name = CharField(source='histrory_moment.country.name')
-    emission_name = CharField(source='emission.name')
-    format_name = CharField(source='format.name')
-    stamp_name = CharField(source='stamp.name')
-    color_name = CharField(source='color.name')
-    glue_name = CharField(source='glue.name')
-    designer_name = CharField(source='designer.name')
-    press_name = CharField(source='press.name')
-    watermark_name = CharField(source='watermark.name')
-    currency_name = CharField(source='currency.name')
-    theme_name = CharField(source='theme.name')
+    emission_name = CharField(source='emission.name', allow_null=True)
+    format_name = CharField(source='format.name', allow_null=True)
+    stamp_name = CharField(source='stamp.name', allow_null=True)
+    color_name = CharField(source='color.name', allow_null=True)
+    glue_name = CharField(source='glue.name', allow_null=True)
+    designer_name = CharField(source='designer.name', allow_null=True)
+    press_name = CharField(source='press.name', allow_null=True)
+    watermark_name = CharField(source='watermark.name', allow_null=True)
+    currency_name = CharField(source='currency.name', allow_null=True)
+    theme_name = CharField(source='theme.name', allow_null=True)
 
     class Meta:
         model = Item

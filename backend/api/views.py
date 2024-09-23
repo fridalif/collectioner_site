@@ -78,7 +78,8 @@ def get_items(request:HttpRequest, id=None)->Response:
                 return Response({'status':'ok', 'data':ItemSerializer(item).data})
             except Item.DoesNotExist:
                 return Response({'status':'error', 'message':'Нет предмета с таким id'})
-            except:
+            except Exception as e:
+                print(e)
                 return Response({'status':'error', 'message':'Неизвестная ошибка'})
         # Пагинация + валидация limit и offset
         limit = request.GET.get('limit')
@@ -214,7 +215,8 @@ def get_countries(request:HttpRequest,id=None)->Response:
                 return Response({'status':'ok','data':CountrySerializer(country).data})
             except Country.DoesNotExist:
                 return Response({'status':'error','message':'Нет страны с таким id'})
-            except:
+            except Exception as e:
+                print(e)
                 return Response({'status':'error','message':'Неизвестная ошибка'})
             
         world_part = request.GET.get('world_part')
@@ -228,7 +230,8 @@ def get_countries(request:HttpRequest,id=None)->Response:
         data = CountrySerializer(countries,many=True)
         data = data.data
         return Response({'status':'ok','data':data})
-    except:
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
 
