@@ -175,7 +175,6 @@ class Catalog(models.Model):
 
 class Item(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
-    description = models.TextField(verbose_name='Описание', null=True, blank=True)
     year = models.IntegerField(verbose_name='Год', null=True, blank=True)
     histrory_moment = models.ForeignKey(HistroryMoment, on_delete=models.CASCADE, verbose_name='Исторический момент')
     category = models.CharField(max_length=100, verbose_name='Категория', choices=[('mark', 'Марка'), ('philatel', 'Филателистический продукт')])

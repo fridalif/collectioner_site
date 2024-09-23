@@ -18,9 +18,23 @@ class CustomUserSerializer(ModelSerializer):
         fields = ['id', 'username', 'email','city', 'fullname', 'birth_date','country','avatar_url','languages', 'about_me', 'show_my_collection', 'show_fullname', 'show_birth_date']
 
 class ItemSerializer(ModelSerializer):
+    history_moment_name = CharField(source="histrory_moment.name")
+    country_name = CharField(source='histrory_moment.country.name')
+    emission_name = CharField(source='emission.name', allow_null=True)
+    format_name = CharField(source='format.name', allow_null=True)
+    stamp_name = CharField(source='stamp.name', allow_null=True)
+    color_name = CharField(source='color.name', allow_null=True)
+    glue_name = CharField(source='glue.name', allow_null=True)
+    designer_name = CharField(source='designer.name', allow_null=True)
+    press_name = CharField(source='press.name', allow_null=True)
+    watermark_name = CharField(source='watermark.name', allow_null=True)
+    currency_name = CharField(source='currency.name', allow_null=True)
+    theme_name = CharField(source='theme.name', allow_null=True)
+    country_flag = CharField(source='histrory_moment.country.flag.url', allow_null=True)
+
     class Meta:
         model = Item
-        fields = '__all__'
+        fields = ['id','country_flag','name','history_moment_name','country_name','emission_name','format_name','stamp_name', 'color_name', 'glue_name', 'designer_name', 'press_name', 'watermark_name', 'currency_name','theme_name','nominal','height','width','year']
 
 class CountrySerializer(ModelSerializer):
     image_url = CharField(source='flag.url')
@@ -37,7 +51,7 @@ class HistoryMomentSerializer(ModelSerializer):
 class GlueSerializer(ModelSerializer):
     class Meta:
         model = Glue
-        fileds = '__all__'
+        fields = '__all__'
 
 class ColorSerialzier(ModelSerializer):
     class Meta:

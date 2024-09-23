@@ -1,0 +1,70 @@
+.pageBody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:1920px;
+    height: 850px;
+    margin-top: 50px;
+}
+
+.contentContainer{
+    width: 1000px;
+    height: 800px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.contentImagesRow{
+    display:flex;
+    margin-left: 50px;
+    margin-top: 50px;
+    width: 900px;
+    height: 200px;
+}
+.contentMainImage{
+    width:200px;
+    height: 200px;
+}
+
+.contentMiniImagesColumn{
+    margin-top:100px;
+    width:60px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contentMiniImage{
+    width: 45px;
+    height: 45px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.contentMiniImage:hover{
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+}
+
+.contentMiniImageChosen{
+    width: 45px;
+    height: 45px;
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+}
+
+.contentCharacteristics{
+    display:flex;
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 900px;
+    height: 400px;
+    flex-direction: column;
+    gap:10px;
+}
+.contentCharacteristicsRow{
+    display:flex;
+    justify-content: space-between;
+    width: 450px;
+    height: 20px;
+    font-family: 'Sofia-Sans';
+    font-size: 20px;
+}

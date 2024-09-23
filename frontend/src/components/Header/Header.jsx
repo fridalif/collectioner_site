@@ -13,7 +13,9 @@ export function Header(){
                 Новости
             </div>
             <div className={styles.headerNode}>
-                Каталог
+                <a href='/catalog' className={styles.headerLink}>
+                    Каталог
+                </a>
             </div>
             <div className={styles.headerNode}>
                 Пользователи
