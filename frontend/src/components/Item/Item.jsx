@@ -33,9 +33,9 @@ export function Item({isLoggedIn}){
             <div className={styles.contentContainer}>
                 <div className={styles.contentImagesRow}>
                     <div className={styles.contentMainImage}>
-                        <img src={imagesList!==null && imagesList[currentImage].image_url} style={{width:'200px', height:'200px'}}/>
+                        <img src={imagesList!==null && imagesList.length>0 &&imagesList[currentImage].image_url} style={{width:'200px', height:'200px'}} alt='Нет изображения'/>
                     </div>
-                    { imagesList!==null && imagesList.map((element,index)=>{
+                    { imagesList!==null &&imagesList.map((element,index)=>{
                         if (index%2==1){
                             return(<></>);
                         }

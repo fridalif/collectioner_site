@@ -392,7 +392,7 @@ export function Catalog(){
                         items.map((item,index)=>{
                             if (index<6){
                             return(
-                                <div className={styles.lastAddedMarksMark}>
+                                <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${item.id}`}>
                                     <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
                                     <div className={styles.lastAddedMarksMarkText} id={item.id}>
                                         {item.name}
@@ -409,7 +409,7 @@ export function Catalog(){
                         items.map((item,index)=>{
                             if (index>=6){
                             return(
-                                <div className={styles.lastAddedMarksMark}>
+                                <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${item.id}`}>
                                     <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
                                     <div className={styles.lastAddedMarksMarkText} id={item.id}>
                                         {item.name}
