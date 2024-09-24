@@ -313,7 +313,7 @@ def get_designers(request:HttpRequest)->Response:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
     
-"""
+
 @api_view(["GET"])
 def get_user(request:HttpRequest, id = None) -> Response:
     try:
@@ -347,7 +347,7 @@ def get_user(request:HttpRequest, id = None) -> Response:
     except Exception as e:
         print(e)
         return Response({'status':'error','message': 'Неизвестная ошибка'})
-"""
+
 
 @api_view(['GET'])
 def activate_user(request: HttpRequest, hash: str) -> Response:
