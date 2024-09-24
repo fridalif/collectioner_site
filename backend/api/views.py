@@ -369,7 +369,13 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
-    
+def get_user_collections(request: HttpRequest) -> Response:
+    try:
+        pass
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+
 
 """
     POST
