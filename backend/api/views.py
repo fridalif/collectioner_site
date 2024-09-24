@@ -370,15 +370,24 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
 @api_view(['GET'])
-def get_user_collections(request: HttpRequest) -> Response:
+def get_user_collections(request: HttpRequest, user_id = None) -> Response:
     try:
-        user_id = request.session.get('user_id')
+        current_user_id = request.session.get('user_id')
+        if not is_int(current_user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        current_user_id = int(current_user_id)
+        if user_id is None:
+            user_id = current_user_id
+        
         if not is_int(user_id):
             return Response({'status':'error', 'message':'Не указан пользователь'})
+        
         user = CustomUser.objects.get(user__id=int(user_id))
         collections = UserCollection.objects.filter(user=user)
+        if int(user_id) != current_user_id and not User.objects.get(id=current_user_id).is_superuser:
+            collections = collections.filter(can_see_other=True)
         if len(collections) == 0:
-            return Response({'status':'error', 'message':'Коллекции не найдены'})
+            return Response({'status':'ok', 'data':[]})
         return Response({'status':'ok', 'data': UserCollectionSerializer(collections, many=True).data})
     except Exception as e:
         print(e)
