@@ -414,50 +414,55 @@ def add_new_item(request:HttpRequest) -> Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
-""" 
+
 @api_view(['POST','DELETE'])
 def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
     try:
-        if not request.user.is_authenticated:
-            return Response({'status':'error','message':'Необходима авторизация'})
+        user_id = request.session.get('user_id')
+        if not is_int(user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        user_id = int(user_id)
         data = request.data
-        data['user'] = request.user
-        is_add = data.get('is_add')
-        if is_add is None:
-            return Response({'status':'error','message':'Не указано действие'})
-        data.pop('is_add',None)
+        item_id = data.get('item_id')
+        collection_id = data.get('collection_id')
+        quality = data.get('quality')
+        if not is_int(item_id) or not is_int(collection_id) or quality is None:
+            return Response({'status':'error', 'message':'Не указаны id предмета или коллекции'})
         try:
-            item = Item.objects.get(id=data['item_id'])
+            item = Item.objects.get(id=item_id)
         except Item.DoesNotExist:
-            return Response({'status':'error','message':'Нет предмета с таким id'})
-        except:
-            return Response({'status':'error','message':'Неизвестная ошибка'})
-        data['item'] = item    
-        records = UserItem.objects.filter(user=request.user, item=item, quality=data['quality'])
-        if len(records) != 0:
-            record = record[0]
-            if is_add:
-                record.count += 1
-                record.save()
-                return Response({'status':'ok','data':UserItemSerializer(record).data})
-            if record.count <= 0:
-                return Response({'status':'error','message':'Коллекция пуста'})
-            record.count -= 1
-            record.save()
-            return Response({'status':'ok','data':UserItemSerializer(record).data})
+            return Response({'status':'error', 'message':'Предмет не найден'})
+        
         try:
-            if not is_add:
-                return Response({'status':'error','message':'Коллекция пуста'})
-            data['count'] = 1
-            serializer = UserItemSerializer(data=data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response({'status':'ok','data':serializer.data})
+            collection = Collection.objects.get(id=collection_id)
+        except Collection.DoesNotExist:
+            return Response({'status':'error', 'message':'Коллекция не найдена'})
+        
+        try:
+            user_collection = UserCollection.objects.get(user_id=user_id, collection_id=collection_id)
+        except UserCollection.DoesNotExist:
+            return Response({'status':'error', 'message':'Предмет не находится в коллекции'})
         except:
-            return Response({'status':'error','message':'Не удалось добавить предмет в коллекцию'})
+            return Response({'status':'error', 'message':'Неизвестная ошибка'})
+        
+        if len(CollectionItem.objects.filter(item=item, user_collection=user_collection, quality=quality)) == 0:
+            CollectionItem(item=item, user_collection=user_collection,quality=quality).save()
+
+        collection_item = CollectionItem.objects.get(item=item, user_collection=user_collection,quality=quality)
+        if request.method == 'POST':
+            collection_item.count +=1
+            collection_item.save()
+        else:
+            if collection_item == 0:
+                return Response({'status':'error','message':'Не может быть меньше 0'})
+            collection_item.count-=1
+            collection_item.save()
+        return Response({'status':'ok','data':{'counter':collection_item.count}})
+        
+
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
-"""
+
 
 @api_view(['POST'])
 def login_user(request: HttpRequest) -> Response:

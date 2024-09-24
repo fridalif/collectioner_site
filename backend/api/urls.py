@@ -1,7 +1,8 @@
 from django.urls import path
 from api.views import get_items, get_countries, get_history_moments, get_designers,  get_other_filters_except_designers
 from api.views import add_new_item, is_logged_in, get_csrf, login_user, register_user, activate_user, get_user, get_item_image_urls
-from api.views import logout_user, change_avatar, change_other_user_info, get_user_collections
+from api.views import logout_user, change_avatar, change_other_user_info, get_user_collections, add_or_remove_item_in_my_collection
+
 urlpatterns = [
     path('get_items/',get_items,name='get_items'),
     path('get_items/<int:id>/',get_items,name='get_item'),
@@ -20,7 +21,7 @@ urlpatterns = [
     path('get_user/<int:id>/', get_user, name='get_user'),
     path('is_logged_in/',is_logged_in,name='is_logged_in'),
     path('add_new_item/',add_new_item,name='add_new_item'),
-    #path('add_or_remove_item_in_my_collection/',add_or_remove_item_in_my_collection,name='add_or_remove_item_in_my_collection'),
+    path('add_or_remove_item_in_my_collection/',add_or_remove_item_in_my_collection,name='add_or_remove_item_in_my_collection'),
     path('login/',login_user,name='login'),
     path('register/',register_user,name='register'),
     path('activate_user/<str:hash>/',activate_user,name='activate_user'),
