@@ -1,4 +1,4 @@
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser, ItemImage
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CollectionItem, CustomUser, ItemImage, UserCollection
 from rest_framework.serializers import ModelSerializer, CharField, IntegerField
 from django.contrib.auth.models import User
 
@@ -102,11 +102,6 @@ class WatermarkSerializer(ModelSerializer):
     class Meta:
         model = Watermark
         fields = '__all__'
-
-class UserItemSerializer(ModelSerializer):
-    class Meta:
-        model = UserItem
-        fields = ['id', 'user', 'item','quality']
 
 class UserSerializer(ModelSerializer):
     class Meta:

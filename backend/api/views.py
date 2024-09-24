@@ -6,8 +6,8 @@ from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, UserItem, CustomUser, ItemImage
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, UserItemSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -311,37 +311,9 @@ def get_designers(request:HttpRequest)->Response:
             return Response({'status':'error','message':'Ошибка при получении дизайнеров'})    
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
-    
-@api_view(['GET'])
-def get_my_collection_counters(request:HttpRequest)->Response:
-    try:
-        if not request.user.is_authenticated:
-            return Response({'status':'error','message':'Необходима авторизация'})
-        ids = request.GET.getlist('ids')
-        if ids is None:
-            return Response({'status':'error','message':'Не указаны id предметов'})
-        try:
-            items = Item.objects.filter(id__in=ids)
-            user_items = UserItem.objects.filter(user=request.user, item__in=items)
-            qualities = ['good','bad']
-            counters = {}
-            for item in items:
-                item_qualities = user_items.filter(item=item)
-                if str(item.id) not in counters.keys():
-                    counters[str(item.id)] = {}
-                for quality in qualities:
-                    item_quality = item_qualities.filter(quality=quality)
-                    if len(item_quality) == 0:
-                        counters[str(item.id)][quality] = 0
-                        continue
-                    counters[str(item.id)][quality] = item_quality[0].count
-            return Response({'status':'ok','data':counters})                  
-        except:
-            return Response({'status':'error','message':'Ошибка получения счётчиков предметов'})
-    except:
-        return Response({'status':'error','message':'Неизвестная ошибка'})
-    
 
+    
+"""
 @api_view(["GET"])
 def get_user(request:HttpRequest, id = None) -> Response:
     try:
@@ -375,7 +347,7 @@ def get_user(request:HttpRequest, id = None) -> Response:
     except Exception as e:
         print(e)
         return Response({'status':'error','message': 'Неизвестная ошибка'})
-
+"""
 
 @api_view(['GET'])
 def activate_user(request: HttpRequest, hash: str) -> Response:
@@ -413,7 +385,8 @@ def add_new_item(request:HttpRequest) -> Response:
             return Response({'status':'error','message':'Не удалось добавить предмет'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
-    
+
+""" 
 @api_view(['POST','DELETE'])
 def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
     try:
@@ -456,7 +429,7 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
             return Response({'status':'error','message':'Не удалось добавить предмет в коллекцию'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
-
+"""
 
 @api_view(['POST'])
 def login_user(request: HttpRequest) -> Response:

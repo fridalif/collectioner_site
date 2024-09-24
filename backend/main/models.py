@@ -30,7 +30,8 @@ class CustomUser(models.Model):
     show_my_collection = models.BooleanField(verbose_name='Показывать мою коллекцию', default=False)
     avatar = models.ImageField(verbose_name='Аватар', default='avatar.png', upload_to='avatars')
     sended_message = models.DateTimeField(verbose_name='Время отправки', null=True, blank=True)
-
+    is_premium = models.BooleanField(verbose_name='Премиум', default=False)
+    
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
@@ -178,7 +179,7 @@ class Item(models.Model):
     year = models.IntegerField(verbose_name='Год', null=True, blank=True)
     histrory_moment = models.ForeignKey(HistroryMoment, on_delete=models.CASCADE, verbose_name='Исторический момент')
     category = models.CharField(max_length=100, verbose_name='Категория', choices=[('mark', 'Марка'), ('philatel', 'Филателистический продукт')])
-
+    only_for_premium = models.BooleanField(verbose_name='Только для премиум', default=False)
     emission = models.ForeignKey(Emission, on_delete=models.CASCADE, verbose_name='Эмиссия', null=True, blank=True)
     format = models.ForeignKey(Format, on_delete=models.CASCADE, verbose_name='Формат', null=True, blank=True)
     stamp = models.ForeignKey(Stamp, on_delete=models.CASCADE, verbose_name='Печать', null=True, blank=True)
@@ -215,8 +216,31 @@ class ItemImage(models.Model):
         verbose_name_plural = 'Изображения предметов'
         db_table = 'item_image'
 
-class UserItem(models.Model):
+class Collection(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Коллекция'
+        verbose_name_plural = 'Коллекции'
+        db_table = 'collection'
+
+class UserCollection(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
+    collection = models.ForeignKey(Collection, on_delete=models.CASCADE, verbose_name='Коллекция')
+    can_see_other = models.BooleanField(default=False, verbose_name='Могут видеть другие пользователи')
+    def __str__(self):
+        return f'{self.user.username}({self.collection.name})'
+    
+    class Meta:
+        verbose_name = 'Пользовательская коллекция'
+        verbose_name_plural = 'Пользовательские коллекции'
+        db_table = 'user_collection'
+
+class CollectionItem(models.Model):
+    user_collection = models.ForeignKey(UserCollection, on_delete=models.CASCADE, verbose_name='Пользовательская коллекция')
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет')
     quality = models.CharField(max_length=100, verbose_name='Качество', choices=[('good', 'Хорошее'), ('bad', 'Плохое')])
     count = models.IntegerField(verbose_name='Количество', default=0)
@@ -225,6 +249,6 @@ class UserItem(models.Model):
         return f'{self.user.username}({self.item.name})'
     
     class Meta:
-        verbose_name = 'Пользовательский предмет'
-        verbose_name_plural = 'Пользовательские предметы'
-        db_table = 'user_item'
+        verbose_name = 'Предмет в коллекции'
+        verbose_name_plural = 'Предметы в коллекции'
+        db_table = 'collection_item'
