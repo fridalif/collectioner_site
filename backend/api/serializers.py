@@ -3,6 +3,13 @@ from rest_framework.serializers import ModelSerializer, CharField, IntegerField
 from django.contrib.auth.models import User
 
 
+class UserCollectionSerializer(ModelSerializer):
+    collection_name = CharField(source="collection.name")
+    collection_id = IntegerField(source="collection.id")
+    class Meta:
+        model = UserCollection
+        fields = ['collection_id','collection_name']
+
 class ItemListSerializer(ModelSerializer):
     class Meta:
         model = Item

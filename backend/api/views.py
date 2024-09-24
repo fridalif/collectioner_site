@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage, Collection, CollectionItem, UserCollection
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -369,9 +369,17 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
+@api_view(['GET'])
 def get_user_collections(request: HttpRequest) -> Response:
     try:
-        pass
+        user_id = request.session.get('user_id')
+        if not is_int(user_id):
+            return Response({'status':'error', 'message':'Не указан пользователь'})
+        user = CustomUser.objects.get(user__id=int(user_id))
+        collections = UserCollection.objects.filter(user=user)
+        if len(collections) == 0:
+            return Response({'status':'error', 'message':'Коллекции не найдены'})
+        return Response({'status':'ok', 'data': UserCollectionSerializer(collections, many=True).data})
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
