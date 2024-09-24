@@ -6,7 +6,7 @@ from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage, Collection, CollectionItem, UserCollection
 from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
@@ -358,6 +358,11 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
             user.user.save()
             user.save()
             request.session['user_id'] = user.user.id
+            if len(Collection.objects.filter(name='Моя коллекция')) == 0:
+                collection = Collection(name='Моя коллекция')
+                collection.save()
+            collection = Collection.objects.get(name='Моя коллекция')
+            UserCollection(user=user, collection=collection).save()
             return Response({'status':'ok','data':user.user.username})
         return Response({'status':'error','message':'Неверная ссылка активации'})
     except Exception as e:
