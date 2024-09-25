@@ -5,18 +5,19 @@ import axios from 'axios';
 
 const serverUrl = 'http://127.0.0.1:8080';
 export function Item({isLoggedIn}){
-    let itemId = 1;
+    let itemId = -1;
     const [ imagesList, setImagesList ] = useState(null);
     const [ currentImage, setCurrentImage ] = useState(0);
     const [ characteristics, setCharacteristics ] = useState(null);
     const [ userCollections, setUserCollections ] = useState(null);
-    const [ quality, setQuality ] = useState('Низкое')
+    const [ quality, setQuality ] = useState('bad')
     const [ selectedCollection, setSelectedCollection ] = useState(null);
     const [ itemsCounter, setItemsCounter ] = useState(0);
-
+    const [ itemIdForGettingCounter, setItemIdForGettingCounter ] = useState(-1);
     useEffect(()=>{
         const query = new URLSearchParams(window.location.search);
         itemId = query.get('item_id');
+        setItemIdForGettingCounter(itemId);
         if (itemId === null || itemId === ''){
             window.location.href = '/catalog';
             return;
@@ -40,9 +41,7 @@ export function Item({isLoggedIn}){
             console.log(response.data.data);
             setCharacteristics(response.data.data);
         })
-        .catch((err) => console.error(err))
-
-        
+        .catch((err) => console.error(err))        
     },[]);
 
     useEffect(()=>{
@@ -56,7 +55,7 @@ export function Item({isLoggedIn}){
                 console.log(response.data.data);
                 setUserCollections(response.data.data);
                 if(response.data.data.length>0){
-                    setSelectedCollection(response.data.data[0].id);
+                    setSelectedCollection(response.data.data[0].collection_id);
                 }
             })
             .catch((err) => console.error(err))
@@ -64,19 +63,19 @@ export function Item({isLoggedIn}){
     },[isLoggedIn])
 
     useEffect(()=>{
-        if(selectedCollection!==null){
-            axios.get(`${serverUrl}/api/get_items_counter/`, {params: {collection_id: selectedCollection}, withCredentials: true })
+        if(selectedCollection!==null && selectedCollection!==undefined && itemIdForGettingCounter!==-1){
+            axios.get(`${serverUrl}/api/get_collection_quality_count/`, {params: {collection_id: selectedCollection, quality: quality, item_id: itemIdForGettingCounter}, withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     alert(response.data.message);
                     return;
                 }
                 console.log(response.data.data);
-                setItemsCounter(response.data.data);
+                setItemsCounter(response.data.data.count);
             })
             .catch((err) => console.error(err))
         }
-    },[quality, selectedCollection])
+    },[quality, selectedCollection, itemIdForGettingCounter])
 
     return(
         <div className={styles.pageBody}>
@@ -285,8 +284,9 @@ export function Item({isLoggedIn}){
                                 </select>
                                 }
                             </div>
+                            
                             <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
-
+                                {itemsCounter}
                             </div>
                         </>
                         }

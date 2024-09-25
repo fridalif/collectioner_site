@@ -403,7 +403,11 @@ def get_collection_quility_count(request: HttpRequest) -> Response:
         if not is_int(collection_id):
             return Response({'status':'error', 'message':'Не указана коллекция'})
         try:
-            collection = Collection.objects.get(id=request.GET.get('collection_id'))
+            custom_user = CustomUser.objects.get(user__id=int(current_user_id))
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error', 'message':'Пользователь не найден'})
+        try:
+            collection = Collection.objects.get(id=int(request.GET.get('collection_id')))
         except Collection.DoesNotExist:
             return Response({'status':'error', 'message':'Коллекция не найдена'})
         quality = request.GET.get('quality')
@@ -417,7 +421,7 @@ def get_collection_quility_count(request: HttpRequest) -> Response:
         except Item.DoesNotExist:
             return Response({'status':'error', 'message':'Предмет не найден'})
         try:
-            user_collection = UserCollection.objects.get(user__id=current_user_id, collection=collection)
+            user_collection = UserCollection.objects.get(user=custom_user, collection=collection)
         except UserCollection.DoesNotExist:
             return Response({'status':'error', 'message':'Коллекция не найдена'})
         if len(CollectionItem.objects.filter(user_collection=user_collection, item=item, quality=quality)) == 0:
