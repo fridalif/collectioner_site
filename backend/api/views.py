@@ -453,7 +453,7 @@ def add_new_item(request:HttpRequest) -> Response:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
 
-@api_view(['POST','DELETE'])
+@api_view(['POST'])
 def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
     try:
         user_id = request.session.get('user_id')
@@ -475,9 +475,12 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
             collection = Collection.objects.get(id=collection_id)
         except Collection.DoesNotExist:
             return Response({'status':'error', 'message':'Коллекция не найдена'})
-        
         try:
-            user_collection = UserCollection.objects.get(user_id=user_id, collection_id=collection_id)
+            custom_user = CustomUser.objects.get(user__id=user_id)
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error', 'message':'Пользователь не найден'})
+        try:
+            user_collection = UserCollection.objects.get(user=custom_user, collection=collection)
         except UserCollection.DoesNotExist:
             return Response({'status':'error', 'message':'Предмет не находится в коллекции'})
         except:
@@ -487,11 +490,11 @@ def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
             CollectionItem(item=item, user_collection=user_collection,quality=quality).save()
 
         collection_item = CollectionItem.objects.get(item=item, user_collection=user_collection,quality=quality)
-        if request.method == 'POST':
+        if data.get('isMinus') is None:
             collection_item.count +=1
             collection_item.save()
         else:
-            if collection_item == 0:
+            if collection_item.count == 0:
                 return Response({'status':'error','message':'Не может быть меньше 0'})
             collection_item.count-=1
             collection_item.save()

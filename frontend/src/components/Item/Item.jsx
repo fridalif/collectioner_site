@@ -1,7 +1,7 @@
 import styles from './Item.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { HiOutlinePlus, HiOutlineMinus } from "react-icons/hi2";
 
 const serverUrl = 'http://127.0.0.1:8080';
 export function Item({isLoggedIn}){
@@ -14,6 +14,17 @@ export function Item({isLoggedIn}){
     const [ selectedCollection, setSelectedCollection ] = useState(null);
     const [ itemsCounter, setItemsCounter ] = useState(0);
     const [ itemIdForGettingCounter, setItemIdForGettingCounter ] = useState(-1);
+    const [isCsrf, setIsCsrf] = useState(null);
+
+    const getCSRF = async () => {
+        await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
+        .then((res) => {
+            const csrfToken = res.headers.get('X-CSRFToken');
+            setIsCsrf(csrfToken);
+        })
+        .catch((err) => console.error(err))
+    }
+
     useEffect(()=>{
         const query = new URLSearchParams(window.location.search);
         itemId = query.get('item_id');
@@ -41,7 +52,8 @@ export function Item({isLoggedIn}){
             console.log(response.data.data);
             setCharacteristics(response.data.data);
         })
-        .catch((err) => console.error(err))        
+        .catch((err) => console.error(err))  
+        getCSRF();      
     },[]);
 
     useEffect(()=>{
@@ -76,6 +88,59 @@ export function Item({isLoggedIn}){
             .catch((err) => console.error(err))
         }
     },[quality, selectedCollection, itemIdForGettingCounter])
+
+    
+
+    const addItem = async () => {
+        const data = {
+            collection_id: selectedCollection,
+            item_id: itemIdForGettingCounter,
+            quality: quality
+        }
+        axios.post(serverUrl + "/api/add_or_remove_item_in_my_collection/", data, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": isCsrf,
+            }
+        })
+        .then((res) => {
+            res = res.data;
+            if (res.status === 'ok') {
+                setItemsCounter(res.data.counter);
+                return;
+            }
+            alert(res.message);
+        })
+        .catch((err) => alert('Произошла непредвиденная ошибка'))
+    }
+
+    const removeItem = async () => {
+    
+        const data = {
+            collection_id: selectedCollection,
+            item_id: itemIdForGettingCounter,
+            quality: quality,
+            isMinus: true
+        }
+        axios.post(serverUrl + "/api/add_or_remove_item_in_my_collection/", data, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": isCsrf,
+            }
+        })
+        .then((res) => {
+            res = res.data;
+            if (res.status === 'ok') {
+                setItemsCounter(res.data.counter);
+                return;
+            }
+            alert(res.message);
+        })
+        .catch((err) => alert('Произошла непредвиденная ошибка'))
+    }
+
 
     return(
         <div className={styles.pageBody}>
@@ -285,8 +350,8 @@ export function Item({isLoggedIn}){
                                 }
                             </div>
                             
-                            <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
-                                {itemsCounter}
+                            <div className={styles.contentCharacteristicsRow} style={{'height':'100px',marginTop:'20px',justifyContent:'center', fontSize:'30px'}}>
+                                <HiOutlineMinus className={styles.minusButton} onClick={() => removeItem()}/><div>{itemsCounter}</div><HiOutlinePlus className={styles.minusButton} onClick={() => addItem()}/>
                             </div>
                         </>
                         }

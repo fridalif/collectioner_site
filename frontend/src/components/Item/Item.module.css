@@ -82,3 +82,17 @@
     border-radius: 10px;
     background-color: white;
 }
+
+.minusButton{
+    margin-top: 5px;
+    font-size: 24px;
+}
+
+.minusButton:hover{
+    cursor: pointer;
+    color: orange;
+}
+
+.minusButton:active{
+    color: red;
+}
