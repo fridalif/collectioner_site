@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage, Collection, CollectionItem, UserCollection
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -369,13 +369,68 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
     
-def get_user_collections(request: HttpRequest) -> Response:
+@api_view(['GET'])
+def get_user_collections(request: HttpRequest, user_id = None) -> Response:
     try:
-        pass
+        current_user_id = request.session.get('user_id')
+        if not is_int(current_user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        current_user_id = int(current_user_id)
+        if user_id is None:
+            user_id = current_user_id
+        
+        if not is_int(user_id):
+            return Response({'status':'error', 'message':'Не указан пользователь'})
+        
+        user = CustomUser.objects.get(user__id=int(user_id))
+        collections = UserCollection.objects.filter(user=user)
+        if int(user_id) != current_user_id and not User.objects.get(id=current_user_id).is_superuser:
+            collections = collections.filter(can_see_other=True)
+        if len(collections) == 0:
+            return Response({'status':'ok', 'data':[]})
+        return Response({'status':'ok', 'data': UserCollectionSerializer(collections, many=True).data})
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
+@api_view(['GET'])
+def get_collection_quility_count(request: HttpRequest) -> Response:
+    try:
+        current_user_id = request.session.get('user_id')
+        if not is_int(current_user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        collection_id = request.GET.get('collection_id')
+        if not is_int(collection_id):
+            return Response({'status':'error', 'message':'Не указана коллекция'})
+        try:
+            custom_user = CustomUser.objects.get(user__id=int(current_user_id))
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error', 'message':'Пользователь не найден'})
+        try:
+            collection = Collection.objects.get(id=int(request.GET.get('collection_id')))
+        except Collection.DoesNotExist:
+            return Response({'status':'error', 'message':'Коллекция не найдена'})
+        quality = request.GET.get('quality')
+        if quality not in ['bad','good']:
+            return Response({'status':'error', 'message':'Неизвестное качество'})
+        item_id = request.GET.get('item_id')
+        if not is_int(item_id):
+            return Response({'status':'error', 'message':'Не указан предмет'})
+        try:
+            item = Item.objects.get(id=item_id)
+        except Item.DoesNotExist:
+            return Response({'status':'error', 'message':'Предмет не найден'})
+        try:
+            user_collection = UserCollection.objects.get(user=custom_user, collection=collection)
+        except UserCollection.DoesNotExist:
+            return Response({'status':'error', 'message':'Коллекция не найдена'})
+        if len(CollectionItem.objects.filter(user_collection=user_collection, item=item, quality=quality)) == 0:
+            CollectionItem(user_collection=user_collection, item=item, quality=quality).save()
+            return Response({'status':'ok', 'data':{'count':0}})
+        return Response({'status':'ok', 'data':{'count':CollectionItem.objects.filter(user_collection=user_collection, item=item, quality=quality)[0].count}})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
 
 """
     POST
@@ -397,50 +452,58 @@ def add_new_item(request:HttpRequest) -> Response:
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
-""" 
-@api_view(['POST','DELETE'])
+
+@api_view(['POST'])
 def add_or_remove_item_in_my_collection(request:HttpRequest) -> Response:
     try:
-        if not request.user.is_authenticated:
-            return Response({'status':'error','message':'Необходима авторизация'})
+        user_id = request.session.get('user_id')
+        if not is_int(user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        user_id = int(user_id)
         data = request.data
-        data['user'] = request.user
-        is_add = data.get('is_add')
-        if is_add is None:
-            return Response({'status':'error','message':'Не указано действие'})
-        data.pop('is_add',None)
+        item_id = data.get('item_id')
+        collection_id = data.get('collection_id')
+        quality = data.get('quality')
+        if not is_int(item_id) or not is_int(collection_id) or quality is None:
+            return Response({'status':'error', 'message':'Не указаны id предмета или коллекции'})
         try:
-            item = Item.objects.get(id=data['item_id'])
+            item = Item.objects.get(id=item_id)
         except Item.DoesNotExist:
-            return Response({'status':'error','message':'Нет предмета с таким id'})
-        except:
-            return Response({'status':'error','message':'Неизвестная ошибка'})
-        data['item'] = item    
-        records = UserItem.objects.filter(user=request.user, item=item, quality=data['quality'])
-        if len(records) != 0:
-            record = record[0]
-            if is_add:
-                record.count += 1
-                record.save()
-                return Response({'status':'ok','data':UserItemSerializer(record).data})
-            if record.count <= 0:
-                return Response({'status':'error','message':'Коллекция пуста'})
-            record.count -= 1
-            record.save()
-            return Response({'status':'ok','data':UserItemSerializer(record).data})
+            return Response({'status':'error', 'message':'Предмет не найден'})
+        
         try:
-            if not is_add:
-                return Response({'status':'error','message':'Коллекция пуста'})
-            data['count'] = 1
-            serializer = UserItemSerializer(data=data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response({'status':'ok','data':serializer.data})
+            collection = Collection.objects.get(id=collection_id)
+        except Collection.DoesNotExist:
+            return Response({'status':'error', 'message':'Коллекция не найдена'})
+        try:
+            custom_user = CustomUser.objects.get(user__id=user_id)
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error', 'message':'Пользователь не найден'})
+        try:
+            user_collection = UserCollection.objects.get(user=custom_user, collection=collection)
+        except UserCollection.DoesNotExist:
+            return Response({'status':'error', 'message':'Предмет не находится в коллекции'})
         except:
-            return Response({'status':'error','message':'Не удалось добавить предмет в коллекцию'})
+            return Response({'status':'error', 'message':'Неизвестная ошибка'})
+        
+        if len(CollectionItem.objects.filter(item=item, user_collection=user_collection, quality=quality)) == 0:
+            CollectionItem(item=item, user_collection=user_collection,quality=quality).save()
+
+        collection_item = CollectionItem.objects.get(item=item, user_collection=user_collection,quality=quality)
+        if data.get('isMinus') is None:
+            collection_item.count +=1
+            collection_item.save()
+        else:
+            if collection_item.count == 0:
+                return Response({'status':'error','message':'Не может быть меньше 0'})
+            collection_item.count-=1
+            collection_item.save()
+        return Response({'status':'ok','data':{'counter':collection_item.count}})
+        
+
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
-"""
+
 
 @api_view(['POST'])
 def login_user(request: HttpRequest) -> Response:

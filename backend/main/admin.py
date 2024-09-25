@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main.models import Item, Watermark, Currency, Catalog, Designer, Emission, Theme, Press, Format, Country, Color, Stamp, Glue, HistroryMoment, CustomUser, ItemImage, UserCollection, CollectionItem
+from main.models import Item, Watermark, Currency, Catalog, Designer, Emission, Theme, Press, Format, Country, Color, Stamp, Glue, HistroryMoment, CustomUser, ItemImage, UserCollection, CollectionItem, Collection
 # Register your models here.
 
 admin.site.register(Item)
@@ -20,3 +20,4 @@ admin.site.register(CustomUser)
 admin.site.register(ItemImage)
 admin.site.register(UserCollection)
 admin.site.register(CollectionItem)
+admin.site.register(Collection)

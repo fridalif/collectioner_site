@@ -68,8 +68,31 @@
 .contentCharacteristicsRow{
     display:flex;
     justify-content: space-between;
-    width: 450px;
+    width: 400px;
     height: 20px;
     font-family: 'Sofia-Sans';
     font-size: 16px;
+}
+.selectCollection{
+    width:100%;
+    height: 50px;
+    font-size: 16px;
+    margin-top:20px;
+    font-family: 'Sofia-Sans';
+    border-radius: 10px;
+    background-color: white;
+}
+
+.minusButton{
+    margin-top: 5px;
+    font-size: 24px;
+}
+
+.minusButton:hover{
+    cursor: pointer;
+    color: orange;
+}
+
+.minusButton:active{
+    color: red;
 }

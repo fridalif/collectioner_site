@@ -1,18 +1,34 @@
 import styles from './Item.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { HiOutlinePlus, HiOutlineMinus } from "react-icons/hi2";
 
 const serverUrl = 'http://127.0.0.1:8080';
 export function Item({isLoggedIn}){
-    let itemId = 1;
+    let itemId = -1;
     const [ imagesList, setImagesList ] = useState(null);
     const [ currentImage, setCurrentImage ] = useState(0);
-    const [ characteristics, setCharacteristics] = useState(null);
+    const [ characteristics, setCharacteristics ] = useState(null);
+    const [ userCollections, setUserCollections ] = useState(null);
+    const [ quality, setQuality ] = useState('bad')
+    const [ selectedCollection, setSelectedCollection ] = useState(null);
+    const [ itemsCounter, setItemsCounter ] = useState(0);
+    const [ itemIdForGettingCounter, setItemIdForGettingCounter ] = useState(-1);
+    const [isCsrf, setIsCsrf] = useState(null);
+
+    const getCSRF = async () => {
+        await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
+        .then((res) => {
+            const csrfToken = res.headers.get('X-CSRFToken');
+            setIsCsrf(csrfToken);
+        })
+        .catch((err) => console.error(err))
+    }
 
     useEffect(()=>{
         const query = new URLSearchParams(window.location.search);
         itemId = query.get('item_id');
+        setItemIdForGettingCounter(itemId);
         if (itemId === null || itemId === ''){
             window.location.href = '/catalog';
             return;
@@ -36,8 +52,96 @@ export function Item({isLoggedIn}){
             console.log(response.data.data);
             setCharacteristics(response.data.data);
         })
-        .catch((err) => console.error(err))
-    },[])
+        .catch((err) => console.error(err))  
+        getCSRF();      
+    },[]);
+
+    useEffect(()=>{
+        if(isLoggedIn){
+            axios.get(`${serverUrl}/api/get_user_collections/`, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                console.log(response.data.data);
+                setUserCollections(response.data.data);
+                if(response.data.data.length>0){
+                    setSelectedCollection(response.data.data[0].collection_id);
+                }
+            })
+            .catch((err) => console.error(err))
+        }
+    },[isLoggedIn])
+
+    useEffect(()=>{
+        if(selectedCollection!==null && selectedCollection!==undefined && itemIdForGettingCounter!==-1){
+            axios.get(`${serverUrl}/api/get_collection_quality_count/`, {params: {collection_id: selectedCollection, quality: quality, item_id: itemIdForGettingCounter}, withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                console.log(response.data.data);
+                setItemsCounter(response.data.data.count);
+            })
+            .catch((err) => console.error(err))
+        }
+    },[quality, selectedCollection, itemIdForGettingCounter])
+
+    
+
+    const addItem = async () => {
+        const data = {
+            collection_id: selectedCollection,
+            item_id: itemIdForGettingCounter,
+            quality: quality
+        }
+        axios.post(serverUrl + "/api/add_or_remove_item_in_my_collection/", data, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": isCsrf,
+            }
+        })
+        .then((res) => {
+            res = res.data;
+            if (res.status === 'ok') {
+                setItemsCounter(res.data.counter);
+                return;
+            }
+            alert(res.message);
+        })
+        .catch((err) => alert('Произошла непредвиденная ошибка'))
+    }
+
+    const removeItem = async () => {
+    
+        const data = {
+            collection_id: selectedCollection,
+            item_id: itemIdForGettingCounter,
+            quality: quality,
+            isMinus: true
+        }
+        axios.post(serverUrl + "/api/add_or_remove_item_in_my_collection/", data, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": isCsrf,
+            }
+        })
+        .then((res) => {
+            res = res.data;
+            if (res.status === 'ok') {
+                setItemsCounter(res.data.counter);
+                return;
+            }
+            alert(res.message);
+        })
+        .catch((err) => alert('Произошла непредвиденная ошибка'))
+    }
+
+
     return(
         <div className={styles.pageBody}>
             <div className={styles.contentContainer}>
@@ -229,6 +333,25 @@ export function Item({isLoggedIn}){
                         <>
                             <div className={styles.contentCharacteristicsRow} style={{fontWeight:'bold', fontSize:'24px'}}>
                                 Добавить в коллекцию
+                            </div>
+                            <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
+                                {userCollections !== null &&
+                                <select name='selectCollection' id='selectCollection' className={styles.selectCollection} onChange={()=>setSelectedCollection(document.getElementById('selectCollection').value)}>
+                                    {userCollections.map((collection) => <option key={collection.collection_id} value={collection.collection_id}>{collection.collection_name}</option>)}
+                                </select>
+                                }
+                            </div>
+                            <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
+                                {userCollections !== null &&
+                                <select name='selectQuality' id='selectQuality' className={styles.selectCollection} onChange={()=>setQuality(document.getElementById('selectQuality').value)}>
+                                    <option value='bad'>Низкое</option>
+                                    <option value='good'>Высокое</option>
+                                </select>
+                                }
+                            </div>
+                            
+                            <div className={styles.contentCharacteristicsRow} style={{'height':'100px',marginTop:'20px',justifyContent:'center', fontSize:'30px'}}>
+                                <HiOutlineMinus className={styles.minusButton} onClick={() => removeItem()}/><div>{itemsCounter}</div><HiOutlinePlus className={styles.minusButton} onClick={() => addItem()}/>
                             </div>
                         </>
                         }
