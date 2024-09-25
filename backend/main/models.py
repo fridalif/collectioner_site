@@ -232,7 +232,7 @@ class UserCollection(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE, verbose_name='Коллекция')
     can_see_other = models.BooleanField(default=False, verbose_name='Могут видеть другие пользователи')
     def __str__(self):
-        return f'{self.user.username}({self.collection.name})'
+        return f'{self.user.user.username}({self.collection.name})'
     
     class Meta:
         verbose_name = 'Пользовательская коллекция'

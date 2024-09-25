@@ -9,6 +9,7 @@ export function Item({isLoggedIn}){
     const [ imagesList, setImagesList ] = useState(null);
     const [ currentImage, setCurrentImage ] = useState(0);
     const [ characteristics, setCharacteristics] = useState(null);
+    const [ userCollections, setUserCollections ] = useState(null);
 
     useEffect(()=>{
         const query = new URLSearchParams(window.location.search);
@@ -37,7 +38,26 @@ export function Item({isLoggedIn}){
             setCharacteristics(response.data.data);
         })
         .catch((err) => console.error(err))
-    },[])
+
+        
+    },[]);
+
+    useEffect(()=>{
+        if(isLoggedIn){
+            console.log('hihihihihi');
+            axios.get(`${serverUrl}/api/get_user_collections/`, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                console.log(response.data.data);
+                setUserCollections(response.data.data);
+            })
+            .catch((err) => console.error(err))
+        }
+    },[isLoggedIn])
+
     return(
         <div className={styles.pageBody}>
             <div className={styles.contentContainer}>
