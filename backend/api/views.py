@@ -393,6 +393,40 @@ def get_user_collections(request: HttpRequest, user_id = None) -> Response:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
+@api_view(['GET'])
+def get_collection_quility_count(request: HttpRequest) -> Response:
+    try:
+        current_user_id = request.session.get('user_id')
+        if not is_int(current_user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        collection_id = request.GET.get('collection_id')
+        if not is_int(collection_id):
+            return Response({'status':'error', 'message':'Не указана коллекция'})
+        try:
+            collection = Collection.objects.get(id=request.GET.get('collection_id'))
+        except Collection.DoesNotExist:
+            return Response({'status':'error', 'message':'Коллекция не найдена'})
+        quality = request.GET.get('quality')
+        if quality not in ['bad','good']:
+            return Response({'status':'error', 'message':'Неизвестное качество'})
+        item_id = request.GET.get('item_id')
+        if not is_int(item_id):
+            return Response({'status':'error', 'message':'Не указан предмет'})
+        try:
+            item = Item.objects.get(id=item_id)
+        except Item.DoesNotExist:
+            return Response({'status':'error', 'message':'Предмет не найден'})
+        try:
+            user_collection = UserCollection.objects.get(user__id=current_user_id, collection=collection)
+        except UserCollection.DoesNotExist:
+            return Response({'status':'error', 'message':'Коллекция не найдена'})
+        if len(CollectionItem.objects.filter(user_collection=user_collection, item=item, quality=quality)) == 0:
+            CollectionItem(user_collection=user_collection, item=item, quality=quality).save()
+            return Response({'status':'ok', 'data':{'count':0}})
+        return Response({'status':'ok', 'data':{'count':CollectionItem.objects.filter(user_collection=user_collection, item=item, quality=quality)[0].count}})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
 
 """
     POST

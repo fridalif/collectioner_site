@@ -8,8 +8,11 @@ export function Item({isLoggedIn}){
     let itemId = 1;
     const [ imagesList, setImagesList ] = useState(null);
     const [ currentImage, setCurrentImage ] = useState(0);
-    const [ characteristics, setCharacteristics] = useState(null);
+    const [ characteristics, setCharacteristics ] = useState(null);
     const [ userCollections, setUserCollections ] = useState(null);
+    const [ quality, setQuality ] = useState('Низкое')
+    const [ selectedCollection, setSelectedCollection ] = useState(null);
+    const [ itemsCounter, setItemsCounter ] = useState(0);
 
     useEffect(()=>{
         const query = new URLSearchParams(window.location.search);
@@ -44,7 +47,6 @@ export function Item({isLoggedIn}){
 
     useEffect(()=>{
         if(isLoggedIn){
-            console.log('hihihihihi');
             axios.get(`${serverUrl}/api/get_user_collections/`, { withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
@@ -53,10 +55,28 @@ export function Item({isLoggedIn}){
                 }
                 console.log(response.data.data);
                 setUserCollections(response.data.data);
+                if(response.data.data.length>0){
+                    setSelectedCollection(response.data.data[0].id);
+                }
             })
             .catch((err) => console.error(err))
         }
     },[isLoggedIn])
+
+    useEffect(()=>{
+        if(selectedCollection!==null){
+            axios.get(`${serverUrl}/api/get_items_counter/`, {params: {collection_id: selectedCollection}, withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                console.log(response.data.data);
+                setItemsCounter(response.data.data);
+            })
+            .catch((err) => console.error(err))
+        }
+    },[quality, selectedCollection])
 
     return(
         <div className={styles.pageBody}>
@@ -249,6 +269,24 @@ export function Item({isLoggedIn}){
                         <>
                             <div className={styles.contentCharacteristicsRow} style={{fontWeight:'bold', fontSize:'24px'}}>
                                 Добавить в коллекцию
+                            </div>
+                            <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
+                                {userCollections !== null &&
+                                <select name='selectCollection' id='selectCollection' className={styles.selectCollection} onChange={()=>setSelectedCollection(document.getElementById('selectCollection').value)}>
+                                    {userCollections.map((collection) => <option key={collection.collection_id} value={collection.collection_id}>{collection.collection_name}</option>)}
+                                </select>
+                                }
+                            </div>
+                            <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
+                                {userCollections !== null &&
+                                <select name='selectQuality' id='selectQuality' className={styles.selectCollection} onChange={()=>setQuality(document.getElementById('selectQuality').value)}>
+                                    <option value='bad'>Низкое</option>
+                                    <option value='good'>Высокое</option>
+                                </select>
+                                }
+                            </div>
+                            <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
+
                             </div>
                         </>
                         }
