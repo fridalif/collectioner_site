@@ -2,6 +2,7 @@ import styles from './Catalog.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
+import { IoMdSearch } from "react-icons/io";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
@@ -387,6 +388,10 @@ export function Catalog(){
                 </div>
             </div>
             <div className={styles.catalogContent}>
+                <div className={styles.catalogContentRowSearch}>
+                    <input type="text" placeholder="Искать на каталоге..." className={styles.secondHeaderSearchfieldInput} />
+                    <IoMdSearch className={styles.secondHeaderSearchfieldImg} />
+                </div>
                 <div className={styles.catalogContentRow}>
                     {
                         items.map((item,index)=>{

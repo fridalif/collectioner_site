@@ -1,3 +1,15 @@
+.secondHeaderContainer{
+    background-color: #8A817C;
+    position:fixed;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    border-bottom: black 1px solid;
+    height: 50px;
+    width:100%;
+    left:0%;
+    justify-content: space-between;
+}
 .secondHeader{
     background-color: #8A817C;
     position:fixed;
@@ -17,13 +29,31 @@
     display: flex;
     align-items: center;
 }
-
+.searchResults{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    height: 300px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px black solid;
+    overflow-y: scroll;
+    z-index: 1000;
+}
 .secondHeaderSearchfieldInput{
     width: 500px;
     border-radius: 10px;
     height: 30px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
+
+.secondHeaderSearchResult{
+    width: 500px;
+    height: 30px;
+    background-color: white;
+}
+
 
 .secondHeaderSearchfieldImg{
     width: 20px;

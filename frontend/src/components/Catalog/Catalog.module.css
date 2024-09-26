@@ -20,7 +20,7 @@
     align-items: center;
     width: 1420px;
     height: 860px;
-    gap:100px;
+    gap:50px;
 }
 
 .catalogContentRow{
@@ -29,12 +29,39 @@
     display: flex;
     gap:20px;
 }
+
+.secondHeaderSearchfieldImg{
+    width: 30px;
+    height: 40px;
+    position:absolute;
+    left:940px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.secondHeaderSearchfieldInput{
+    width: 700px;
+    border-radius: 10px;
+    height: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+
+.catalogContentRowSearch{
+    width:1420px;
+    height: 50px;
+    margin-top: 50px;
+    margin-left: 50px;
+    display: flex;
+    gap:20px;
+    align-items: flex-end;
+}
+
 .paginationRow{
     display: flex;
     justify-content: center;
     width: 800px;
     height: 50px;
-    margin-top: 50px;
 }
 
 .paginationCell{
@@ -67,7 +94,6 @@
 }
 .lastAddedMarksMark{
     height: 250px;
-    margin-top: 75px;
     margin-left: 25px;
     width: 200px;
     border-radius: 10px;
