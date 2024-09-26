@@ -2,10 +2,11 @@ import styles from './Catalog.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
+import { IoMdSearch } from "react-icons/io";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
-
+    const [searchQuery, setSearchQuery] = useState(null);
     const [worldPart, setWorldPart] = useState(null);
     const [country, setCountry ] = useState(null);
     const [historyMoment, setHistoryMoment] = useState(null);
@@ -17,6 +18,11 @@ export function Catalog(){
     const [totalItems, setTotalItems] = useState(0);
 
     useEffect(()=>{
+        const queryParameters = new URLSearchParams(window.location.search)
+        let searchQuery_var = queryParameters.get("search_query")
+        if (searchQuery_var) {
+            setSearchQuery(searchQuery_var);
+        }
         axios.get(serverUrl + '/api/get_other_filters/', { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
@@ -84,6 +90,17 @@ export function Catalog(){
         else if (worldPart!==null){
             resultUrl += `&world_part=${worldPart}`;
         }
+        if (searchQuery!==null && searchQuery!==''){
+            resultUrl += `&query=${searchQuery}`;
+        }
+        else if (searchQuery === null){
+            const queryParameters = new URLSearchParams(window.location.search)
+            let searchQuery_var = queryParameters.get("search_query")
+            if (searchQuery_var) {
+                resultUrl += `&query=${searchQuery_var}`;
+            }
+        }
+
         let category = document.getElementById('selectCategory').value;
         if (category !== ''){
             resultUrl += `&category=${category}`;
@@ -387,6 +404,10 @@ export function Catalog(){
                 </div>
             </div>
             <div className={styles.catalogContent}>
+                <div className={styles.catalogContentRowSearch}>
+                    <input type="text" value={searchQuery} placeholder="Искать на каталоге..." className={styles.secondHeaderSearchfieldInput} onChange={(e)=>setSearchQuery(e.target.value)}/>
+                    <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getItems()}/>
+                </div>
                 <div className={styles.catalogContentRow}>
                     {
                         items.map((item,index)=>{
