@@ -11,9 +11,8 @@ export function SecondHeader({isLoggedIn}){
     return(
         <div className={styles.secondHeader}>
             <div className={styles.secondHeaderSearchfield}>
-                <input type="text" placeholder="Искать на сайте..." className={styles.secondHeaderSearchfieldInput} />
-                <IoMdSearch className={styles.secondHeaderSearchfieldImg} />
-                
+                <input type="text" placeholder="Искать на сайте..." className={styles.secondHeaderSearchfieldInput} id="secondHeaderSearchfieldInput"/>
+                <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => window.location.href='/catalog?search_query='+document.getElementById('secondHeaderSearchfieldInput').value}/>      
             </div>
             <div className={styles.secondHeaderCabinet}>
 

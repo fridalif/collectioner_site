@@ -100,6 +100,10 @@ def get_items(request:HttpRequest, id=None)->Response:
             return Response({'status':'error', 'message':'Не удалось получить предметы'})
 
         # Получение + валидация фильтров
+        query = request.GET.get('query')
+        if query is not None:
+            items = items.filter(name__icontains=query)
+            
         category = request.GET.get('category')
         if category is not None:
             items = items.filter(category = category)
