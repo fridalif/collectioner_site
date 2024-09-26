@@ -58,23 +58,26 @@ export function Profile(){
     }
 
     const getCSRF = async () => {
+        let csrfToken = '';
         await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
         .then((res) => {
-            const csrfToken = res.headers.get('X-CSRFToken');
+            csrfToken = res.headers.get('X-CSRFToken');
             setIsCsrf(csrfToken);
+            return csrfToken;
         })
         .catch((err) => console.error(err))
+        return csrfToken;
     }
 
     const changeUserInfo = async () => {
-        await getCSRF();
+        let csrfToken = await getCSRF();
         var formData = new FormData();
         var imagefile = document.getElementById("avatar");
         formData.append("image", imagefile.files[0]);
         await axios.post(serverUrl + "/api/change_avatar/", formData, {
             withCredentials: true,
             headers: {
-                'Content-Type': 'multipart/form-data',"X-CSRFToken": isCsrf,
+                'Content-Type': 'multipart/form-data',"X-CSRFToken": csrfToken,
             }
         })
         .then((res) => {
@@ -156,12 +159,14 @@ export function Profile(){
     }
 
     const logout = async () => {
-        await getCSRF();
-        await axios
-            .post(serverUrl + "/api/logout/", { withCredentials: true , headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": isCsrf,
-              }})
+        let csrfToken = await getCSRF();
+        console.log(csrfToken);
+        await axios.post(serverUrl + "/api/logout/", {}, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',"X-CSRFToken": csrfToken,
+            }
+        })
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     alert(response.data.message);
