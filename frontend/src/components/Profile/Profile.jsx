@@ -301,6 +301,11 @@ const get_countries = async () => {
                                 </div>
                             </div>
                         </>}
+                        { mode == 'Collection' && 
+                        <>
+                            dasdadad
+                        </>
+                        }
                     </div>
                 </div>
             </div>
