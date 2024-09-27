@@ -193,8 +193,31 @@ export function Profile(){
             .catch((err) => console.error(err))
     }
 
-    const changePrivateSettings = () => {
+    const changePrivateSettings = async () => {
+        if (mode !== 'SettingsPrivate' || !isMyAccount) {
+            return;
+        }
+        let csrfToken = await getCSRF();
+        let data = {
+            show_fullname: document.getElementById("showFullname").checked,
+            show_birth_date: document.getElementById("showBirthDate").checked,
+            collection_id: chosenCollection,
+            collection_can_see_other: document.getElementById("canSeeOther").checked
+        }
         
+        await axios
+            .post(serverUrl + "/api/change_private_settings/", data, { withCredentials: true , headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+              }})
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                alert('Изменения сохранены');
+            })
+            .catch((err) => console.error(err))
     }
 
     const logout = async () => {
