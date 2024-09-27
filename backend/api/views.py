@@ -195,7 +195,69 @@ def get_items(request:HttpRequest, id=None)->Response:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
+@api_view(['GET'])
+def get_items_from_collection(request:HttpRequest):
+    try:
+        collection_id = request.GET.get('collection_id')
+        if not is_int(collection_id):
+            return Response({'status':'error','message':'Не указана коллекция'})
+        user_id = request.GET.get('user_id')
+        if not is_int(user_id):
+            user_id = request.session.get('user_id')
+            if not is_int(user_id):
+                return Response({'status':'error','message':'Не указан пользователь'})
+            try:
+                user_id = CustomUser.objects.get(user__id=int(user_id)).id
+            except CustomUser.DoesNotExist:
+                return Response({'status':'error','message':'Не указан пользователь'})
+        try:
+            user = CustomUser.objects.get(id=int(user_id))
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error','message':'Пользователь не найден'})
 
+        try:
+            collection = Collection.objects.get(id=int(collection_id))
+        except Collection.DoesNotExist:
+            return Response({'status':'error','message':'Коллекция не найдена'})
+        
+        limit = request.GET.get('limit')
+        if not is_int(limit) or int(limit)<=0:
+            limit = 10
+        offset = request.GET.get('offset')
+        if not is_int(offset) or int(offset)<0:
+            offset=0
+        
+        try:
+            user_collection = UserCollection.objects.get(user=user,collection=collection)
+        except UserCollection.DoesNotExist:
+            return Response({'status':'error','message':'Коллекция не принадлежит пользователю'})\
+        
+        collection_items = CollectionItem.objects.filter(user_collection=user_collection)
+        items_unit = set([item.item for item in collection_items])[offset:offset+limit]
+        response_data = []
+        for item in items_unit:
+            item_data = {}
+            item_data['id'] = item.id
+            item_data['name'] = item.name
+            image = ItemImage.objects.filter(item=item,is_main_image=True)
+            if len(image) > 0:
+                item_data['image'] = image[0].image.url
+            else:
+                item_data['image'] = None
+            qualities_counters = {}
+            for quality in ['good','bad']:
+                quality_item = collection_items.filter(item=item,quality=quality)
+                if len(quality_item) == 0:
+                    qualities_counters[quality] = 0
+                    continue
+                qualities_counters[quality] = quality_item[0].count
+            item_data['qualities_counters'] = qualities_counters
+            response_data.append(item_data)
+        return Response({'status':'ok','data':response_data})
+                
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
 @api_view(['GET'])
 def get_item_image_urls(request:HttpRequest)->Response:
     try:

@@ -359,10 +359,17 @@ const get_countries = async () => {
                         </>}
                         { mode == 'Collection' && 
                         <>
-                            { isMyAccount &&<div className={styles.addCatalogRow}>
+                            { isMyAccount && <div className={styles.addCatalogRow}>
                                 <input type="text" placeholder='Добавить коллекцию' id='collectionName' className={styles.addCatalogInput} />
                                 <FaPlusCircle className={styles.addCatalogButton} onClick={() => addCollection()}/>
                             </div>}
+                            <div className={styles.addCatalogRow}>
+                                <select className={styles.selectCatalog}>
+                                    { collections.map((item)=>(
+                                        <option value={item.collection_id}>{item.collection_name}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </>
                         }
                     </div>
