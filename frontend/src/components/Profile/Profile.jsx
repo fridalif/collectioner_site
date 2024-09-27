@@ -8,6 +8,7 @@ import { GiExitDoor } from "react-icons/gi";
 import Cookies from 'js-cookie';
 import { CiLock } from "react-icons/ci";
 import { FaPlusCircle } from "react-icons/fa";
+import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 
@@ -236,8 +237,8 @@ export function Profile(){
                     alert(response.data.message);
                     return;
                 }
-                setCollections(response.data.data.items);
-                setTotal(response.data.data.total);
+                
+                setCollections(response.data.data);
                 if (response.data.data.length > 0) {
                     setChosenCollection(response.data.data[0].collection_id);
                 }
@@ -264,7 +265,8 @@ export function Profile(){
                     return;
                 }
                 console.log(response.data.data)
-                setCollectionItems(response.data.data);
+                setCollectionItems(response.data.data.items);
+                setTotal(response.data.data.total);
             })
             .catch((err) => console.error(err));
     },[chosenCollection, currentPage])
@@ -401,7 +403,49 @@ const get_countries = async () => {
                                 </select>
                             </div>
                             <div className={styles.collectionBody}>
-                                dsjkadgbkaj
+                                { currentPage === 1 &&
+                                <div className={styles.prevPageChosen}>
+                                    <IoIosArrowDropleftCircle style={{width:'40px',height:'40px'}}/>
+                                </div>
+                                }
+                                { currentPage !== 1 &&
+                                <div className={styles.prevPage} onClick={()=>setCurrentPage(currentPage-1)}>
+                                    <IoIosArrowDropleftCircle style={{width:'40px',height:'40px'}}/>
+                                </div>}
+                                {
+                                    collectionItems != [] && [0,1,2].map((index)=>{
+                                        if (collectionItems[index]!==undefined){
+                                            console.log(collectionItems[index]);
+                                            return(
+                                                <div className={styles.lastAddedMarksMark} onClick={() => window.location.href='/item?item_id='+collectionItems[index].id}>
+                                                    {collectionItems[index].image && <img src={collectionItems[index].image} className={styles.lastAddedMarksMarkImg}/>}
+                                                    <div className={styles.lastAddedMarksMarkName}>{collectionItems[index].name}</div>
+                                                    <div>
+                                                        Низкое: {collectionItems[index].qualities_counters.bad}
+                                                    </div>
+                                                    <div>
+                                                        Высокое: {collectionItems[index].qualities_counters.good}
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                        return(
+                                            <div className={styles.placeholder}>
+                                                
+                                            </div>
+                                        )
+                                    })
+                                }
+                                { currentPage*3 < total &&
+                                <div className={styles.prevPage} onClick={()=>setCurrentPage(currentPage+1)}>
+                                    <IoIosArrowDroprightCircle style={{width:'40px',height:'40px'}}/>
+                                </div>
+                                }
+                                { currentPage*3 >= total &&
+                                <div className={styles.prevPageChosen}>
+                                    <IoIosArrowDroprightCircle style={{width:'40px',height:'40px'}}/>
+                                </div>
+                                }
                             </div>
                         </>
                         }

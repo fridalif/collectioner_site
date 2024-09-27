@@ -129,13 +129,66 @@
     margin-top: 70px;
     display: flex;
     height: 400px;
-    background-color: yellow;
     width: 1000px;
     align-items: center;
     justify-content: center;
     margin-left: 20px;
+    gap:20px;
+}
+.prevPage{
+    width:100px;
+    height: 400px;
+    background-color: #8A817C;
+    color:white;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+.prevPage:hover{
+    background-color: #463F3A;
+    cursor: pointer;
+}
+.prevPageChosen{
+    width:100px;
+    height: 400px;
+    background-color: #463F3A;
+    color:white;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+.placeholder{
+    height: 400px;
+    width: 250px;
+    border-radius: 10px;
+}
+.lastAddedMarksMark{
+    height: 400px;
+    width: 250px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    background-color: #FFFFFF;   
 }
 
+.lastAddedMarksMarkImg{
+    height: 200px;
+    width: 200px;
+}
+.lastAddedMarksMarkName{
+    font-size: 20px;
+}
+
+.lastAddedMarksMark:hover{
+    color: orange;
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+    cursor:pointer;
+}
 .settingsButton{
     display: flex;
     align-items: center;
