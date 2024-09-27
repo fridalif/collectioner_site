@@ -441,7 +441,22 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
-    
+
+@api_view(['GET'])
+def get_my_private_settings(request:HttpRequest)->Response:
+    try:
+        user_id = request.session.get('user_id')
+        if not is_int(user_id):
+            return Response({'status':'error','message':'Пользователь не авторизован'})
+        try:
+            user = CustomUser.objects.get(user__id=int(user_id))
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error','message':'Пользователь не найден'})
+        return Response({'status':'ok','data':{'show_birth_date':user.show_birth_date, 'show_fullname':user.show_fullname}})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+
 @api_view(['GET'])
 def get_user_collections(request: HttpRequest, user_id = None) -> Response:
     try:
@@ -536,6 +551,38 @@ def add_collection(request:HttpRequest) -> Response:
             return Response({'status':'error','message':'Такая коллекция уже существует'})
         UserCollection(user=custom_user, collection=collection).save()
         return Response({'status':'ok', 'data':UserCollectionSerializer(UserCollection.objects.get(user=custom_user, collection=collection)).data})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error', 'message':'Неизвестная ошиюка'})
+
+@api_view(['POST'])
+def change_private_settings(request:HttpRequest) -> Response:
+    try:
+        user_id = request.session.get('user_id')
+        if not is_int(user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        try:
+            custom_user = CustomUser.objects.get(user__id=int(user_id))
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error', 'message':'Пользователь не найден'})
+        data = request.data
+        show_birth_date = data.get('show_birth_date')
+        show_fullname = data.get('show_fullname')
+        collection_id = data.get('collection_id')
+        collection_can_see_other = data.get('collection_can_see_other')
+        if show_birth_date is None or show_fullname is None or not is_int(collection_id) or collection_can_see_other is None:
+            return Response({'status':'error', 'message':'Не достаточно данных'})
+        try:
+            user_collection = UserCollection.objects.get(user=custom_user, collection__id=int(collection_id))
+        except UserCollection.DoesNotExist:
+            return Response({'status':'error', 'message':'Коллекция не найдена'})
+        custom_user.show_birth_date = show_birth_date
+        custom_user.show_fullname = show_fullname
+        user_collection.can_see_other = collection_can_see_other
+        custom_user.save()
+        user_collection.save()
+        return Response({'status':'ok'})
+
     except Exception as e:
         print(e)
         return Response({'status':'error', 'message':'Неизвестная ошиюка'})
