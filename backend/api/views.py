@@ -379,14 +379,22 @@ def get_user_collections(request: HttpRequest, user_id = None) -> Response:
         current_user_id = request.session.get('user_id')
         if not is_int(current_user_id):
             return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        
         current_user_id = int(current_user_id)
+        
         if user_id is None:
             user_id = current_user_id
+        else:
+            user_id = CustomUser.objects.get(id=int(user_id)).user.id
         
         if not is_int(user_id):
             return Response({'status':'error', 'message':'Не указан пользователь'})
         
-        user = CustomUser.objects.get(user__id=int(user_id))
+        try:
+            user = CustomUser.objects.get(user__id=int(user_id))
+        except CustomUser.DoesNotExist:
+            return Response({'status':'error','message':'Пользователь не найден'})
+        
         collections = UserCollection.objects.filter(user=user)
         if int(user_id) != current_user_id and not User.objects.get(id=current_user_id).is_superuser:
             collections = collections.filter(can_see_other=True)
@@ -455,8 +463,9 @@ def add_collection(request:HttpRequest) -> Response:
         if len(Collection.objects.filter(name=collection_name)) == 0:
             Collection(name=collection_name).save()
         collection = Collection.objects.get(name=collection_name)
-        if len(UserCollection.objects.filter(user=custom_user, collection=collection)) == 0:
-            UserCollection(user=custom_user, collection=collection).save()
+        if len(UserCollection.objects.filter(user=custom_user, collection=collection)) != 0:
+            return Response({'status':'error','message':'Такая коллекция уже существует'})
+        UserCollection(user=custom_user, collection=collection).save()
         return Response({'status':'ok', 'data':UserCollectionSerializer(UserCollection.objects.get(user=custom_user, collection=collection)).data})
     except Exception as e:
         print(e)

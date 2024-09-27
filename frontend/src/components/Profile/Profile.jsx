@@ -27,6 +27,7 @@ export function Profile(){
     const [isCsrf, setIsCsrf] = useState(null);
     let countryField = useRef();
 
+
     const addCollection = async () => {
         let csrfToken = await getCSRF();
         let collectionName = document.getElementById('collectionName').value;
@@ -216,6 +217,27 @@ export function Profile(){
         fetchData();
     }, []);
 
+    useEffect(()=>{
+        if (mode != 'Collection'){
+            return;
+        }
+        const queryParameters = new URLSearchParams(window.location.search);
+        const user_id = queryParameters.get("user_id");
+        let result_url = serverUrl + "/api/get_user_collections/";
+        if (user_id) {
+            result_url += `${user_id}/`
+        }
+        axios.get(result_url, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                console.log(response.data.data)
+                setCollections(response.data.data);
+            })
+    },[mode])
+
 const get_countries = async () => {
         await axios
         .get(`${serverUrl}/api/get_countries/`,{ withCredentials: true })
@@ -339,7 +361,7 @@ const get_countries = async () => {
                         <>
                             { isMyAccount &&<div className={styles.addCatalogRow}>
                                 <input type="text" placeholder='Добавить коллекцию' id='collectionName' className={styles.addCatalogInput} />
-                                <FaPlusCircle className={styles.addCatalogButton}/>
+                                <FaPlusCircle className={styles.addCatalogButton} onClick={() => addCollection()}/>
                             </div>}
                         </>
                         }
