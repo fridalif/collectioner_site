@@ -26,6 +26,10 @@ export function Profile(){
     const [isCsrf, setIsCsrf] = useState(null);
     let countryField = useRef();
 
+    const addCollection = async () => {
+        let csrfToken = await getCSRF();
+        
+    }
     const get_user_info = async () => {
         const queryParameters = new URLSearchParams(window.location.search)
         const user_id = queryParameters.get("user_id")
@@ -308,10 +312,10 @@ const get_countries = async () => {
                         </>}
                         { mode == 'Collection' && 
                         <>
-                            <div className={styles.addCatalogRow}>
+                            { isMyAccount &&<div className={styles.addCatalogRow}>
                                 <input type="text" placeholder='Добавить коллекцию' id='title' className={styles.addCatalogInput} />
                                 <FaPlusCircle className={styles.addCatalogButton}/>
-                            </div>
+                            </div>}
                         </>
                         }
                     </div>

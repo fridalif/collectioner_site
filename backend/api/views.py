@@ -441,6 +441,28 @@ def get_collection_quility_count(request: HttpRequest) -> Response:
 """
 
 @api_view(['POST'])
+def add_collection(request:HttpRequest) -> Response:
+    try:
+        user_id = request.session.get('user_id')
+        if not is_int(user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        custom_user = CustomUser.objects.get(user__id=int(user_id))
+        data = request.data
+        collection_name = data.get('collection_name')
+        if collection_name is None:
+            return Response({'status':'error', 'message': 'Не указано название коллекции'})
+        collection_name = collection_name.replace('<','').replace('>','')
+        if len(Collection.objects.filter(name=collection_name)) == 0:
+            Collection(name=collection_name).save()
+        collection = Collection.objects.get(name=collection_name)
+        if len(UserCollection.objects.filter(user=custom_user, collection=collection)) == 0:
+            UserCollection(user=custom_user, collection=collection).save()
+        return Response({'status':'ok', 'data':UserCollectionSerializer(UserCollection.objects.get(user=custom_user, collection=collection)).data})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error', 'message':'Неизвестная ошиюка'})
+
+@api_view(['POST'])
 def add_new_item(request:HttpRequest) -> Response:
     try:
         if not request.user.is_superuser:
