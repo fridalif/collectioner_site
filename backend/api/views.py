@@ -237,7 +237,7 @@ def get_items_from_collection(request:HttpRequest):
         except UserCollection.DoesNotExist:
             return Response({'status':'error','message':'Коллекция не принадлежит пользователю'})
         
-        collection_items = CollectionItem.objects.filter(user_collection=user_collection)
+        collection_items = CollectionItem.objects.filter(user_collection=user_collection,count__gt=0)
         items_unit = list(set([item.item for item in collection_items]))
         total = len(items_unit)
         items_unit = items_unit[int(offset):int(offset)+int(limit)]
