@@ -7,7 +7,7 @@ import { FaGear } from "react-icons/fa6";
 import { GiExitDoor } from "react-icons/gi";
 import Cookies from 'js-cookie';
 import { CiLock } from "react-icons/ci";
-
+import { FaPlusCircle } from "react-icons/fa";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 
@@ -308,7 +308,10 @@ const get_countries = async () => {
                         </>}
                         { mode == 'Collection' && 
                         <>
-                            dasdadad
+                            <div className={styles.addCatalogRow}>
+                                <input type="text" placeholder='Добавить коллекцию' id='title' className={styles.addCatalogInput} />
+                                <FaPlusCircle className={styles.addCatalogButton}/>
+                            </div>
                         </>
                         }
                     </div>
