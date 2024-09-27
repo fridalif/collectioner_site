@@ -16,6 +16,7 @@ export function Profile(){
     const [collections, setCollections] = useState([]);
     const [ chosenCollection, setChosenCollection ] = useState(null);
     const [ collectionItems, setCollectionItems ] = useState([]);
+    const [ total, setTotal ] = useState(0);
     const [isMyAccount, setIsMyAccount] = useState(false);
     const [email, setEmail] = useState(null);
     const [username, setUsername] = useState(null);
@@ -235,7 +236,8 @@ export function Profile(){
                     alert(response.data.message);
                     return;
                 }
-                setCollections(response.data.data);
+                setCollections(response.data.data.items);
+                setTotal(response.data.data.total);
                 if (response.data.data.length > 0) {
                     setChosenCollection(response.data.data[0].collection_id);
                 }
