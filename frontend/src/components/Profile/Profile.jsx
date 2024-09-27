@@ -13,6 +13,7 @@ const serverUrl  = 'http://127.0.0.1:8080';
 
 export function Profile(){
     const [mode, setMode] = useState('Profile');
+    const [collections, setCollections] = useState([]);
     const [isMyAccount, setIsMyAccount] = useState(false);
     const [email, setEmail] = useState(null);
     const [username, setUsername] = useState(null);
@@ -28,7 +29,31 @@ export function Profile(){
 
     const addCollection = async () => {
         let csrfToken = await getCSRF();
-        
+        let collectionName = document.getElementById('collectionName').value;
+        if (collectionName === '') {
+            alert('Название коллекции не может быть пустым');
+            return;
+        }
+        let data = {
+            collection_name: collectionName
+        }
+        axios
+            .post(serverUrl + "/api/add_collection/", data, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken,
+                }
+            })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                setCollections([...collections, response.data.data]);
+                alert('Коллекция создана');
+            })
+            .catch((err) => console.error(err));
     }
     const get_user_info = async () => {
         const queryParameters = new URLSearchParams(window.location.search)
@@ -313,7 +338,7 @@ const get_countries = async () => {
                         { mode == 'Collection' && 
                         <>
                             { isMyAccount &&<div className={styles.addCatalogRow}>
-                                <input type="text" placeholder='Добавить коллекцию' id='title' className={styles.addCatalogInput} />
+                                <input type="text" placeholder='Добавить коллекцию' id='collectionName' className={styles.addCatalogInput} />
                                 <FaPlusCircle className={styles.addCatalogButton}/>
                             </div>}
                         </>
