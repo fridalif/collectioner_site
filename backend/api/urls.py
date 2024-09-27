@@ -2,6 +2,7 @@ from django.urls import path
 from api.views import get_items, get_countries, get_history_moments, get_designers,  get_other_filters_except_designers
 from api.views import add_new_item, is_logged_in, get_csrf, login_user, register_user, activate_user, get_user, get_item_image_urls
 from api.views import logout_user, change_avatar, change_other_user_info, get_user_collections, add_or_remove_item_in_my_collection, get_collection_quility_count
+from api.views import add_collection
 
 urlpatterns = [
     path('get_items/',get_items,name='get_items'),
@@ -29,4 +30,5 @@ urlpatterns = [
     path('logout/',logout_user,name='logout'),
     path('change_avatar/',change_avatar,name='change_avatar'),
     path('change_other_user_info/',change_other_user_info,name='change_other_user_info'),
+    path('add_collection/',add_collection,name='add_collection'),
 ]
