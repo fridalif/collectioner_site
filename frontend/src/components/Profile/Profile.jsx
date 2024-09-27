@@ -7,12 +7,17 @@ import { FaGear } from "react-icons/fa6";
 import { GiExitDoor } from "react-icons/gi";
 import Cookies from 'js-cookie';
 import { CiLock } from "react-icons/ci";
-
+import { FaPlusCircle } from "react-icons/fa";
+import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 
 export function Profile(){
     const [mode, setMode] = useState('Profile');
+    const [collections, setCollections] = useState([]);
+    const [ chosenCollection, setChosenCollection ] = useState(null);
+    const [ collectionItems, setCollectionItems ] = useState([]);
+    const [ total, setTotal ] = useState(0);
     const [isMyAccount, setIsMyAccount] = useState(false);
     const [email, setEmail] = useState(null);
     const [username, setUsername] = useState(null);
@@ -25,7 +30,36 @@ export function Profile(){
     const [about, setAbout] = useState(null);
     const [isCsrf, setIsCsrf] = useState(null);
     let countryField = useRef();
+    const [ currentPage, setCurrentPage ] = useState(1);
 
+    const addCollection = async () => {
+        let csrfToken = await getCSRF();
+        let collectionName = document.getElementById('collectionName').value;
+        if (collectionName === '') {
+            alert('Название коллекции не может быть пустым');
+            return;
+        }
+        let data = {
+            collection_name: collectionName
+        }
+        axios
+            .post(serverUrl + "/api/add_collection/", data, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken,
+                }
+            })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                setCollections([...collections, response.data.data]);
+                alert('Коллекция создана');
+            })
+            .catch((err) => console.error(err));
+    }
     const get_user_info = async () => {
         const queryParameters = new URLSearchParams(window.location.search)
         const user_id = queryParameters.get("user_id")
@@ -58,23 +92,26 @@ export function Profile(){
     }
 
     const getCSRF = async () => {
+        let csrfToken = '';
         await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
         .then((res) => {
-            const csrfToken = res.headers.get('X-CSRFToken');
+            csrfToken = res.headers.get('X-CSRFToken');
             setIsCsrf(csrfToken);
+            return csrfToken;
         })
         .catch((err) => console.error(err))
+        return csrfToken;
     }
 
     const changeUserInfo = async () => {
-        await getCSRF();
+        let csrfToken = await getCSRF();
         var formData = new FormData();
         var imagefile = document.getElementById("avatar");
         formData.append("image", imagefile.files[0]);
         await axios.post(serverUrl + "/api/change_avatar/", formData, {
             withCredentials: true,
             headers: {
-                'Content-Type': 'multipart/form-data',"X-CSRFToken": isCsrf,
+                'Content-Type': 'multipart/form-data',"X-CSRFToken": csrfToken,
             }
         })
         .then((res) => {
@@ -156,12 +193,14 @@ export function Profile(){
     }
 
     const logout = async () => {
-        await getCSRF();
-        await axios
-            .post(serverUrl + "/api/logout/", { withCredentials: true , headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": isCsrf,
-              }})
+        let csrfToken = await getCSRF();
+        console.log(csrfToken);
+        await axios.post(serverUrl + "/api/logout/", {}, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',"X-CSRFToken": csrfToken,
+            }
+        })
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     alert(response.data.message);
@@ -182,6 +221,55 @@ export function Profile(){
         fetchData();
     }, []);
 
+    useEffect(()=>{
+        if (mode != 'Collection'){
+            return;
+        }
+        const queryParameters = new URLSearchParams(window.location.search);
+        const user_id = queryParameters.get("user_id");
+        let result_url = serverUrl + "/api/get_user_collections/";
+        if (user_id) {
+            result_url += `${user_id}/`
+        }
+        axios.get(result_url, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                
+                setCollections(response.data.data);
+                if (response.data.data.length > 0) {
+                    setChosenCollection(response.data.data[0].collection_id);
+                }
+            })
+    },[mode])
+
+    useEffect(()=>{
+        if (chosenCollection === null){
+            return;
+        }
+        const queryParameters = new URLSearchParams(window.location.search);
+        const user_id = queryParameters.get("user_id");
+        let result_url = serverUrl + "/api/get_items_from_collection/";
+        result_url += `?collection_id=${chosenCollection}`;
+        if (user_id) {
+            result_url += `&user_id=${user_id}`;
+        }
+        result_url += `&limit=3`;
+        result_url += `&offset=${(currentPage-1)*3}`;
+        axios.get(result_url, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                console.log(response.data.data)
+                setCollectionItems(response.data.data.items);
+                setTotal(response.data.data.total);
+            })
+            .catch((err) => console.error(err));
+    },[chosenCollection, currentPage])
 const get_countries = async () => {
         await axios
         .get(`${serverUrl}/api/get_countries/`,{ withCredentials: true })
@@ -301,6 +389,66 @@ const get_countries = async () => {
                                 </div>
                             </div>
                         </>}
+                        { mode == 'Collection' && 
+                        <>
+                            { isMyAccount && <div className={styles.addCatalogRow}>
+                                <input type="text" placeholder='Добавить коллекцию' id='collectionName' className={styles.addCatalogInput} />
+                                <FaPlusCircle className={styles.addCatalogButton} onClick={() => addCollection()}/>
+                            </div>}
+                            <div className={styles.addCatalogRow}>
+                                <select className={styles.selectCatalog} id='selectCollection' onChange={() => setChosenCollection(document.getElementById('selectCollection').value)}>
+                                    { collections.map((item)=>(
+                                        <option value={item.collection_id}>{item.collection_name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className={styles.collectionBody}>
+                                { currentPage === 1 &&
+                                <div className={styles.prevPageChosen}>
+                                    <IoIosArrowDropleftCircle style={{width:'40px',height:'40px'}}/>
+                                </div>
+                                }
+                                { currentPage !== 1 &&
+                                <div className={styles.prevPage} onClick={()=>setCurrentPage(currentPage-1)}>
+                                    <IoIosArrowDropleftCircle style={{width:'40px',height:'40px'}}/>
+                                </div>}
+                                {
+                                    collectionItems != [] && [0,1,2].map((index)=>{
+                                        if (collectionItems[index]!==undefined){
+                                            console.log(collectionItems[index]);
+                                            return(
+                                                <div className={styles.lastAddedMarksMark} onClick={() => window.location.href='/item?item_id='+collectionItems[index].id}>
+                                                    {collectionItems[index].image && <img src={collectionItems[index].image} className={styles.lastAddedMarksMarkImg}/>}
+                                                    <div className={styles.lastAddedMarksMarkName}>{collectionItems[index].name}</div>
+                                                    <div>
+                                                        Низкое: {collectionItems[index].qualities_counters.bad}
+                                                    </div>
+                                                    <div>
+                                                        Высокое: {collectionItems[index].qualities_counters.good}
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                        return(
+                                            <div className={styles.placeholder}>
+                                                
+                                            </div>
+                                        )
+                                    })
+                                }
+                                { currentPage*3 < total &&
+                                <div className={styles.prevPage} onClick={()=>setCurrentPage(currentPage+1)}>
+                                    <IoIosArrowDroprightCircle style={{width:'40px',height:'40px'}}/>
+                                </div>
+                                }
+                                { currentPage*3 >= total &&
+                                <div className={styles.prevPageChosen}>
+                                    <IoIosArrowDroprightCircle style={{width:'40px',height:'40px'}}/>
+                                </div>
+                                }
+                            </div>
+                        </>
+                        }
                     </div>
                 </div>
             </div>

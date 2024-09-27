@@ -25,15 +25,19 @@ export function LoginForm({isLoggedIn}){
     }, []);
 
     const getCSRF = async () => {
+        let csrfToken = '';
         await axios.get(serverUrl + 'api/get_csrf/', { withCredentials: true })
         .then((res) => {
-            const csrfToken = res.headers.get('X-CSRFToken');
+            csrfToken = res.headers.get('X-CSRFToken');
             setIsCsrf(csrfToken);
+            return csrfToken;
         })
         .catch((err) => console.error(err))
+        return csrfToken;
     }
 
     const loginAsync = async () => {
+        let csrfToken = await getCSRF();
         const data = {
             username: document.getElementById('login').value,
             password: document.getElementById('password').value
@@ -42,7 +46,7 @@ export function LoginForm({isLoggedIn}){
             withCredentials: true,
             headers: {
               "Content-Type": "application/json",
-              "X-CSRFToken": isCsrf,
+              "X-CSRFToken": csrfToken,
             }
         })
         .then((res) => {
@@ -56,6 +60,7 @@ export function LoginForm({isLoggedIn}){
         .catch((err) => alert('Произошла непредвиденная ошибка'))
     }
     const registerAsync = async () => {
+        let csrfToken = await getCSRF()
         const data = {
             username: document.getElementById('login').value,
             password: document.getElementById('password').value,
@@ -73,7 +78,7 @@ export function LoginForm({isLoggedIn}){
             withCredentials: true,
             headers: {
               "Content-Type": "application/json",
-              "X-CSRFToken": isCsrf,
+              "X-CSRFToken": csrfToken,
             }
         })
         .then((res) => {

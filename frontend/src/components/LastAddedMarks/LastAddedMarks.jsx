@@ -86,7 +86,7 @@ export function LastAddedMarks(){
             {
                 lastAddedMarks.length > 6 && lastAddedMarks.map((mark,index)=>(
                     startFrom<=index && index<startFrom+5 &&
-                    <div className={styles.lastAddedMarksMark}>
+                    <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${mark.id}`}>
                         <img src={mark.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
                         <div className={styles.lastAddedMarksMarkText} id={mark.id}>
                             {mark.name}

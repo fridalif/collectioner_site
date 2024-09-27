@@ -405,7 +405,7 @@ export function Catalog(){
             </div>
             <div className={styles.catalogContent}>
                 <div className={styles.catalogContentRowSearch}>
-                    <input type="text" value={searchQuery} placeholder="Искать на каталоге..." className={styles.secondHeaderSearchfieldInput} onChange={(e)=>setSearchQuery(e.target.value)}/>
+                    <input type="text" value={searchQuery} placeholder="Искать в каталоге..." className={styles.secondHeaderSearchfieldInput} onChange={(e)=>setSearchQuery(e.target.value)}/>
                     <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getItems()}/>
                 </div>
                 <div className={styles.catalogContentRow}>
