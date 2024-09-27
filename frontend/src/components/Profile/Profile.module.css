@@ -125,6 +125,17 @@
     margin-left: 20px;
 }
 
+.collectionBody{
+    margin-top: 70px;
+    display: flex;
+    height: 400px;
+    background-color: yellow;
+    width: 1000px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+}
+
 .settingsButton{
     display: flex;
     align-items: center;

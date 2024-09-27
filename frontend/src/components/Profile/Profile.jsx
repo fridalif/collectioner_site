@@ -14,6 +14,8 @@ const serverUrl  = 'http://127.0.0.1:8080';
 export function Profile(){
     const [mode, setMode] = useState('Profile');
     const [collections, setCollections] = useState([]);
+    const [ chosenCollection, setChosenCollection ] = useState(null);
+    const [ collectionItems, setCollectionItems ] = useState([]);
     const [isMyAccount, setIsMyAccount] = useState(false);
     const [email, setEmail] = useState(null);
     const [username, setUsername] = useState(null);
@@ -26,7 +28,7 @@ export function Profile(){
     const [about, setAbout] = useState(null);
     const [isCsrf, setIsCsrf] = useState(null);
     let countryField = useRef();
-
+    const [ currentPage, setCurrentPage ] = useState(1);
 
     const addCollection = async () => {
         let csrfToken = await getCSRF();
@@ -233,11 +235,37 @@ export function Profile(){
                     alert(response.data.message);
                     return;
                 }
-                console.log(response.data.data)
                 setCollections(response.data.data);
+                if (response.data.data.length > 0) {
+                    setChosenCollection(response.data.data[0].collection_id);
+                }
             })
     },[mode])
 
+    useEffect(()=>{
+        if (chosenCollection === null){
+            return;
+        }
+        const queryParameters = new URLSearchParams(window.location.search);
+        const user_id = queryParameters.get("user_id");
+        let result_url = serverUrl + "/api/get_items_from_collection/";
+        result_url += `?collection_id=${chosenCollection}`;
+        if (user_id) {
+            result_url += `&user_id=${user_id}`;
+        }
+        result_url += `&limit=3`;
+        result_url += `&offset=${(currentPage-1)*3}`;
+        axios.get(result_url, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                console.log(response.data.data)
+                setCollectionItems(response.data.data);
+            })
+            .catch((err) => console.error(err));
+    },[chosenCollection, currentPage])
 const get_countries = async () => {
         await axios
         .get(`${serverUrl}/api/get_countries/`,{ withCredentials: true })
@@ -364,11 +392,14 @@ const get_countries = async () => {
                                 <FaPlusCircle className={styles.addCatalogButton} onClick={() => addCollection()}/>
                             </div>}
                             <div className={styles.addCatalogRow}>
-                                <select className={styles.selectCatalog}>
+                                <select className={styles.selectCatalog} id='selectCollection' onChange={() => setChosenCollection(document.getElementById('selectCollection').value)}>
                                     { collections.map((item)=>(
                                         <option value={item.collection_id}>{item.collection_name}</option>
                                     ))}
                                 </select>
+                            </div>
+                            <div className={styles.collectionBody}>
+                                dsjkadgbkaj
                             </div>
                         </>
                         }

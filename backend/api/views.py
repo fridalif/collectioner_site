@@ -238,9 +238,9 @@ def get_items_from_collection(request:HttpRequest):
             return Response({'status':'error','message':'Коллекция не принадлежит пользователю'})
         
         collection_items = CollectionItem.objects.filter(user_collection=user_collection)
-        items_unit = set([item.item for item in collection_items])
+        items_unit = list(set([item.item for item in collection_items]))
         total = len(items_unit)
-        items_unit = items_unit[offset:offset+limit]
+        items_unit = items_unit[int(offset):int(offset)+int(limit)]
         response_data = []
         for item in items_unit:
             item_data = {}
