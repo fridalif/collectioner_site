@@ -200,11 +200,11 @@ export function Profile(){
         let csrfToken = await getCSRF();
         let data = {
             show_fullname: document.getElementById("showFullname").checked,
-            show_birth_date: document.getElementById("showBirthDate").checked,
+            show_birth_date: document.getElementById("showBirthdate").checked,
             collection_id: chosenCollection,
             collection_can_see_other: document.getElementById("canSeeOther").checked
         }
-        
+
         await axios
             .post(serverUrl + "/api/change_private_settings/", data, { withCredentials: true , headers: {
                 "Content-Type": "application/json",
@@ -491,12 +491,12 @@ const get_countries = async () => {
                             <>
                                 <div className={styles.profileInfoRow} style={{'marginTop':'30px','fontSize':'24px'}}>
                                     <div>
-                                        {privateSettings !== null && privateSettings.show_fullname ? <input type='checkbox' name='show_fullname' id='showFullname' checked/> :<input type='checkbox' name='show_fullname' id='showFullname'/>} Показывать полное имя
+                                        {privateSettings !== null && privateSettings.show_fullname ? <input type='checkbox' name='show_fullname' id='showFullname' defaultChecked/> :<input type='checkbox' name='show_fullname' id='showFullname'/>} Показывать полное имя
                                     </div>
                                 </div>
                                 <div className={styles.profileInfoRow} style={{'marginTop':'30px','fontSize':'24px'}}>
                                     <div>
-                                        {privateSettings !== null && privateSettings.show_birth_date ? <input type='checkbox' name='show_birth_date' id='showBirthdate' checked/> :<input type='checkbox' name='show_birth_date' id='showBirthdate'/>} Показывать дату рождения
+                                        {privateSettings !== null && privateSettings.show_birth_date ? <input type='checkbox' name='show_birth_date' id='showBirthdate' defaultChecked/> :<input type='checkbox' name='show_birth_date' id='showBirthdate'/>} Показывать дату рождения
                                     </div>
                                 </div>
                                 <div className={styles.profileInfoRow} style={{'marginTop':'50px','fontSize':'24px'}}>
@@ -510,7 +510,7 @@ const get_countries = async () => {
                                             chosenCollection !== null && collections.map((item)=>{
                                                 if (item.collection_id == chosenCollection){
                                                     if (item.can_see_other){
-                                                        return (<><input type='checkbox' name='can_see_other' id='canSeeOther' checked/> Показывать коллекцию </>)
+                                                        return (<><input type='checkbox' name='can_see_other' id='canSeeOther' defaultChecked /> Показывать коллекцию </>)
                                                     }
                                                     return (<><input type='checkbox' name='can_see_other' id='canSeeOther'/> Показывать коллекцию </>)
                                                     
