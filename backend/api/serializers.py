@@ -8,7 +8,7 @@ class UserCollectionSerializer(ModelSerializer):
     collection_id = IntegerField(source="collection.id")
     class Meta:
         model = UserCollection
-        fields = ['collection_id','collection_name']
+        fields = ['collection_id','collection_name','can_see_other']
 
 class ItemListSerializer(ModelSerializer):
     class Meta:

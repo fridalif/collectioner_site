@@ -31,6 +31,7 @@ export function Profile(){
     const [isCsrf, setIsCsrf] = useState(null);
     let countryField = useRef();
     const [ currentPage, setCurrentPage ] = useState(1);
+    const [ privateSettings, setPrivateSettings ] = useState(null);
 
     const addCollection = async () => {
         let csrfToken = await getCSRF();
@@ -192,6 +193,33 @@ export function Profile(){
             .catch((err) => console.error(err))
     }
 
+    const changePrivateSettings = async () => {
+        if (mode !== 'SettingsPrivate' || !isMyAccount) {
+            return;
+        }
+        let csrfToken = await getCSRF();
+        let data = {
+            show_fullname: document.getElementById("showFullname").checked,
+            show_birth_date: document.getElementById("showBirthdate").checked,
+            collection_id: chosenCollection,
+            collection_can_see_other: document.getElementById("canSeeOther").checked
+        }
+
+        await axios
+            .post(serverUrl + "/api/change_private_settings/", data, { withCredentials: true , headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+              }})
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                alert('Изменения сохранены');
+            })
+            .catch((err) => console.error(err))
+    }
+
     const logout = async () => {
         let csrfToken = await getCSRF();
         console.log(csrfToken);
@@ -222,7 +250,7 @@ export function Profile(){
     }, []);
 
     useEffect(()=>{
-        if (mode != 'Collection'){
+        if (mode != 'Collection' && mode !== 'SettingsPrivate'){
             return;
         }
         const queryParameters = new URLSearchParams(window.location.search);
@@ -236,13 +264,22 @@ export function Profile(){
                 if (response.data.status !== 'ok') {
                     alert(response.data.message);
                     return;
-                }
-                
+                }  
                 setCollections(response.data.data);
                 if (response.data.data.length > 0) {
                     setChosenCollection(response.data.data[0].collection_id);
                 }
             })
+        if (mode == 'SettingsPrivate'){
+            axios.get(serverUrl + "/api/get_my_private_settings/", { withCredentials: true })
+            .then((response) => {
+                if (response.data.status !== 'ok') {
+                    alert(response.data.message);
+                    return;
+                }
+                setPrivateSettings(response.data.data);
+            })
+        }
     },[mode])
 
     useEffect(()=>{
@@ -448,6 +485,45 @@ const get_countries = async () => {
                                 }
                             </div>
                         </>
+                        }
+                        {
+                            mode === 'SettingsPrivate' && isMyAccount &&
+                            <>
+                                <div className={styles.profileInfoRow} style={{'marginTop':'30px','fontSize':'24px'}}>
+                                    <div>
+                                        {privateSettings !== null && privateSettings.show_fullname ? <input type='checkbox' name='show_fullname' id='showFullname' defaultChecked/> :<input type='checkbox' name='show_fullname' id='showFullname'/>} Показывать полное имя
+                                    </div>
+                                </div>
+                                <div className={styles.profileInfoRow} style={{'marginTop':'30px','fontSize':'24px'}}>
+                                    <div>
+                                        {privateSettings !== null && privateSettings.show_birth_date ? <input type='checkbox' name='show_birth_date' id='showBirthdate' defaultChecked/> :<input type='checkbox' name='show_birth_date' id='showBirthdate'/>} Показывать дату рождения
+                                    </div>
+                                </div>
+                                <div className={styles.profileInfoRow} style={{'marginTop':'50px','fontSize':'24px'}}>
+                                    <div>
+                                        <select className={styles.selectCatalog} id='selectCollection' onChange={() => setChosenCollection(document.getElementById('selectCollection').value)}>
+                                        { collections.map((item)=>(
+                                            <option value={item.collection_id}>{item.collection_name}</option>
+                                        ))}
+                                        </select>
+                                        {
+                                            chosenCollection !== null && collections.map((item)=>{
+                                                if (item.collection_id == chosenCollection){
+                                                    if (item.can_see_other){
+                                                        return (<><input type='checkbox' name='can_see_other' id='canSeeOther' defaultChecked /> Показывать коллекцию </>)
+                                                    }
+                                                    return (<><input type='checkbox' name='can_see_other' id='canSeeOther'/> Показывать коллекцию </>)
+                                                    
+                                                }
+                                                return (<></>)
+                                            })
+                                        }
+                                        <div className={styles.profileInfoRow} style={{'marginTop':'30px','fontSize':'24px'}}>
+                                            <button onClick={() => changePrivateSettings()} className={styles.settingsButton}>Сохранить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
                         }
                     </div>
                 </div>
