@@ -233,7 +233,9 @@ def get_items_from_collection(request:HttpRequest):
             return Response({'status':'error','message':'Коллекция не принадлежит пользователю'})\
         
         collection_items = CollectionItem.objects.filter(user_collection=user_collection)
-        items_unit = set([item.item for item in collection_items])[offset:offset+limit]
+        items_unit = set([item.item for item in collection_items])
+        total = len(items_unit)
+        items_unit = items_unit[offset:offset+limit]
         response_data = []
         for item in items_unit:
             item_data = {}
@@ -253,7 +255,7 @@ def get_items_from_collection(request:HttpRequest):
                 qualities_counters[quality] = quality_item[0].count
             item_data['qualities_counters'] = qualities_counters
             response_data.append(item_data)
-        return Response({'status':'ok','data':response_data})
+        return Response({'status':'ok','data':{'items':response_data,'total':total}})
                 
     except Exception as e:
         print(e)
