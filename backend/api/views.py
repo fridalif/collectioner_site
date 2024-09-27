@@ -229,8 +229,13 @@ def get_items_from_collection(request:HttpRequest):
         
         try:
             user_collection = UserCollection.objects.get(user=user,collection=collection)
+            if not user_collection.can_see_other:
+                if not is_int(request.session.get('user_id')):
+                    return Response({'status':'error','message':'Пользователь не авторизован'})
+                if int(user.user.id) != int(request.session.get('user_id')) and  not User.objects.get(id=int(request.session.get('user_id'))).is_superuser:
+                    return Response({'status':'error','message':'Коллекция не принадлежит пользователю'})
         except UserCollection.DoesNotExist:
-            return Response({'status':'error','message':'Коллекция не принадлежит пользователю'})\
+            return Response({'status':'error','message':'Коллекция не принадлежит пользователю'})
         
         collection_items = CollectionItem.objects.filter(user_collection=user_collection)
         items_unit = set([item.item for item in collection_items])
