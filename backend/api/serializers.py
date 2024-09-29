@@ -29,7 +29,7 @@ class CustomUserSerializer(ModelSerializer):
     email = CharField(source='user.email')
     country = CharField(source='country.name', allow_null=True)
     avatar_url = CharField(source='avatar.url')
-    birth_date = DateField(source='birth_date',format='%d.%m.%Y', allow_null=True)
+    birth_date = DateField(format='%d.%m.%Y', allow_null=True)
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'email','city', 'fullname', 'birth_date','country','avatar_url','languages', 'about_me', 'show_my_collection', 'show_fullname', 'show_birth_date']
