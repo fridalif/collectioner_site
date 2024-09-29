@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage, Collection, CollectionItem, UserCollection
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer, CustomUserListSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -438,6 +438,30 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
             UserCollection(user=user, collection=collection).save()
             return Response({'status':'ok','data':user.user.username})
         return Response({'status':'error','message':'Неверная ссылка активации'})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Неизвестная ошибка'})
+
+@api_view(['GET'])
+def get_users_list(request: HttpRequest) -> Response:
+    try:
+        query = request.GET.get('query')
+        limit = request.GET.get('limit')
+        if not is_int(limit) or int(limit)<=0:
+            limit = 30
+        else:
+            limit = int(limit)
+        offset = request.GET.get('offset')
+        if not is_int(offset) or int(offset)<0:
+            offset = 0
+        else:
+            offset = int(offset)
+        users = CustomUser.objects.all()
+        if query is not None:
+            users = users.filter(user__username__icontains=query)
+        total = len(users)
+        users = users[offset:offset+limit]
+        return Response({'status':'ok','data':CustomUserListSerializer(users,many=True).data,'total':total})
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
