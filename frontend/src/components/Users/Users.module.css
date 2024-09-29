@@ -36,3 +36,23 @@
     cursor: pointer;
     z-index: 1000;
 }
+
+.usersTable{
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    width:800px;
+    display: flex;
+    flex-direction: column;
+    height: 680px;
+    overflow-y: scroll;
+    background-color: yellow;
+}
+
+.usersTableRow{
+    display: flex;
+    width: 800px;
+    height: 60px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}

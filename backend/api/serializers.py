@@ -15,6 +15,14 @@ class ItemListSerializer(ModelSerializer):
         model = Item
         fields = ['id','name']
 
+class CustomUserListSerializer(ModelSerializer):
+    username = CharField(source='user.username')
+    flag = CharField(source='country.flag.url', allow_null=True)
+    country = CharField(source='country.name', allow_null=True)
+    class Meta:
+        model = CustomUser
+        fields = ['id','username','country','flag']
+
 class CustomUserSerializer(ModelSerializer):
     username = CharField(source='user.username')
     email = CharField(source='user.email')

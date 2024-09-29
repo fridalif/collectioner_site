@@ -10,6 +10,11 @@ export function Users(){
                 <input type="text" placeholder="Искать пользователя..." className={styles.searchFieldInput} />
                 <IoMdSearch className={styles.secondHeaderSearchfieldImg} />
             </div>
+            <div className={styles.usersTable}>
+                <div className={styles.usersTableRow}>
+                    
+                </div>
+            </div>
         </div>
     );
 }
