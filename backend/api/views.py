@@ -459,8 +459,9 @@ def get_users_list(request: HttpRequest) -> Response:
         users = CustomUser.objects.all()
         if query is not None:
             users = users.filter(user__username__icontains=query)
+        total = len(users)
         users = users[offset:offset+limit]
-        return Response({'status':'ok','data':CustomUserListSerializer(users,many=True).data})
+        return Response({'status':'ok','data':CustomUserListSerializer(users,many=True).data,'total':total})
     except Exception as e:
         print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})

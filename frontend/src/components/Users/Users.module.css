@@ -46,7 +46,8 @@
     flex-direction: column;
     height: 680px;
     overflow-y: scroll;
-    background-color: yellow;
+    font-size:24px;
+    font-family: "Sofia-Sans";
 }
 
 .usersTableRow{
@@ -54,5 +55,11 @@
     width: 800px;
     height: 60px;
     margin-bottom: 10px;
+    justify-content: space-between;
     border-bottom: 1px solid black;
+}
+
+.usersTableRow:hover{
+    color:orange;
+    cursor: pointer;
 }
