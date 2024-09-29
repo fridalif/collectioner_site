@@ -25,6 +25,12 @@ export function Header({isLoggedIn}){
             <div className={styles.headerNode}>
                 О нас
             </div>
+            { isLoggedIn && 
+            <div className={styles.headerNode}>
+                <a href='/add_item' className={styles.headerLink}>
+                    Добавить предмет  
+                </a> 
+            </div> }
         </header>
     )
 }

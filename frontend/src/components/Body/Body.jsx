@@ -8,6 +8,7 @@ import {Profile} from '../Profile/Profile.jsx';
 import { Catalog } from '../Catalog/Catalog.jsx';
 import { Item } from '../Item/Item.jsx'
 import { Users } from '../Users/Users.jsx'
+import { AddItem } from '../AddItem/AddItem.jsx'
 
 export function Body({isLoggedIn, mode}){
 
@@ -35,7 +36,12 @@ export function Body({isLoggedIn, mode}){
             {
                 mode == 'Item' && <div className={styles.bodyContent}><Item isLoggedIn={isLoggedIn} /></div>
             }
-            { mode == 'Users' && <div className={styles.bodyContent}><Users /></div> }
+            { 
+                mode == 'Users' && <div className={styles.bodyContent}><Users /></div> 
+            }
+            {
+                mode == 'AddItem' && <div className={styles.bodyContent}><AddItem /></div>
+            }
         </div>
     )
 }
