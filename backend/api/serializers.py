@@ -19,9 +19,10 @@ class CustomUserListSerializer(ModelSerializer):
     username = CharField(source='user.username')
     flag = CharField(source='country.flag.url', allow_null=True)
     country = CharField(source='country.name', allow_null=True)
+    avatar_url = CharField(source='avatar.url')
     class Meta:
         model = CustomUser
-        fields = ['id','username','country','flag']
+        fields = ['id','username','country','flag','avatar_url']
 
 class CustomUserSerializer(ModelSerializer):
     username = CharField(source='user.username')

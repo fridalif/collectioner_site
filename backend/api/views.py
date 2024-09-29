@@ -445,6 +445,7 @@ def activate_user(request: HttpRequest, hash: str) -> Response:
 @api_view(['GET'])
 def get_users_list(request: HttpRequest) -> Response:
     try:
+        query = request.GET.get('query')
         limit = request.GET.get('limit')
         if not is_int(limit) or int(limit)<=0:
             limit = 30
@@ -455,7 +456,10 @@ def get_users_list(request: HttpRequest) -> Response:
             offset = 0
         else:
             offset = int(offset)
-        users = CustomUser.objects.all()[offset:offset+limit]
+        users = CustomUser.objects.all()
+        if query is not None:
+            users = users.filter(user__username__icontains=query)
+        users = users[offset:offset+limit]
         return Response({'status':'ok','data':CustomUserListSerializer(users,many=True).data})
     except Exception as e:
         print(e)
