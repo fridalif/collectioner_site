@@ -77,6 +77,15 @@ export function AddItem(){
                     }
                 </select>
             </div>
+            <div className={styles.usersTableRow}>
+                <input className={styles.input} type="text" placeholder='Название'/>
+                <input className={styles.input} type="text" placeholder='Год'/>
+                <select className={styles.selecter}>
+                    <option>Категория</option>
+                    <option value='mark'>Марка</option>
+                    <option value='philatel'>Филателистический продукт</option>
+                </select>
+            </div>
         </div>
     )
 
