@@ -15,7 +15,7 @@ export default function CatalogIndex(){
     })
     return (
         <>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} />
             <Body isLoggedIn={isLoggedIn} mode={mode}/>
         </>
     )

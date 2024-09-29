@@ -17,7 +17,7 @@ export default function Home(){
     })
     return (
         <>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} />
             <Body isLoggedIn={isLoggedIn} mode={mode}/>
         </>
     )

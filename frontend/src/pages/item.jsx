@@ -15,7 +15,7 @@ export default function ItemPage(){
     })
     return (
         <>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} />
             <Body isLoggedIn={isLoggedIn} mode={mode}/>
         </>
     )

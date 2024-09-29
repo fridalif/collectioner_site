@@ -17,7 +17,7 @@ export default function Users(){
     })
     return (
         <>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} />
             <Body isLoggedIn={isLoggedIn} mode={mode}/>
         </>
     )

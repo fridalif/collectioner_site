@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 
 
-export function Header(){
+export function Header({isLoggedIn}){
     return(
         <header className={styles.header}>
             <div className={styles.headerNode}>

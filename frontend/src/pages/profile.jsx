@@ -18,7 +18,7 @@ export default function Profile(){
     })
     return (
         <>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} />
             <Body isLoggedIn={isLoggedIn} mode={mode}/>
         </>
     )
