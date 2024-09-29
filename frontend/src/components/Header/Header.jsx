@@ -18,7 +18,9 @@ export function Header(){
                 </a>
             </div>
             <div className={styles.headerNode}>
-                Пользователи
+                <a href='/users' className={styles.headerLink}>
+                    Пользователи
+                </a>
             </div>
             <div className={styles.headerNode}>
                 О нас

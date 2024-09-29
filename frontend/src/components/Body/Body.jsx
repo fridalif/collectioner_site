@@ -7,6 +7,7 @@ import {LoginForm} from '../LoginForm/LoginForm.jsx';
 import {Profile} from '../Profile/Profile.jsx';
 import { Catalog } from '../Catalog/Catalog.jsx';
 import { Item } from '../Item/Item.jsx'
+import { Users } from '../Users/Users.jsx'
 
 export function Body({isLoggedIn, mode}){
 
@@ -34,6 +35,7 @@ export function Body({isLoggedIn, mode}){
             {
                 mode == 'Item' && <div className={styles.bodyContent}><Item isLoggedIn={isLoggedIn} /></div>
             }
+            { mode == 'Users' && <div className={styles.bodyContent}><Users /></div> }
         </div>
     )
 }
