@@ -1,5 +1,7 @@
 import styles from './Users.module.css'
 import { IoMdSearch } from "react-icons/io";
+import { useState, useEffect } from 'react'
+
 
 export function Users(){
     return(
