@@ -195,7 +195,7 @@ class Item(models.Model):
     height = models.FloatField(verbose_name='Высота', null=True, blank=True)
     width = models.FloatField(verbose_name='Ширина', null=True, blank=True)
 
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False, verbose_name='Активировано')
 
     
     def __str__(self):

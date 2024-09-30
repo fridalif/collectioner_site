@@ -270,7 +270,7 @@ def get_item_image_urls(request:HttpRequest)->Response:
     try:
         items_ids = request.GET.getlist('items_ids[]')
         if len(items_ids) == 0:
-            return Response({'status':'error','message':'Не указаны id предметов'})
+            return Response({'status':'ok','data':[]})
         item_images = ItemImage.objects.filter(item__id__in=items_ids)
         if request.GET.get('only_main') is not None:
             item_images = item_images.filter(is_main_image=True)
@@ -647,7 +647,7 @@ def add_new_item(request:HttpRequest) -> Response:
             images.append(data.get('file5'))
         if len(images) == 0:
             return Response({'status':'error','message':'Загрузите хотя бы 1 изображение'})
-        item = Item(history_moment=history_moment, name=name, category=category)
+        item = Item(histrory_moment=history_moment, name=name, category=category)
         year = data.get('year')
         if is_int(year) and int(year)>=0:
             item.year = int(year)
@@ -743,9 +743,9 @@ def add_new_item(request:HttpRequest) -> Response:
                 item.press = press_object
         designer_surname = data.get('designer_surname')
         designer_name = data.get('designer_name') 
-        if designer_name is not None and designer_surname is not None and designer_surname.replace('<','')!='' and designer_name.replacer('<','')!='':
+        if designer_name is not None and designer_surname is not None and designer_surname.replace('<','')!='' and designer_name.replace('<','')!='':
             designer_name = designer_name.replace('<','')
-            designer_surname = designer_surname.replacer('<','')
+            designer_surname = designer_surname.replace('<','')
             designer_filtered = Designer.objects.filter(name=designer_name,surname=designer_surname)  
             if len(designer_filtered)!=0:
                 item.designer = designer_filtered[0]
