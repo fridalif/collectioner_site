@@ -671,11 +671,117 @@ def add_new_item(request:HttpRequest) -> Response:
                 format_object = Format(name=format)
                 format_object.save()
                 item.format = format_object
-
-
+        stamp = data.get('stamp')
+        if stamp is not None and stamp.replace('<','')!='':
+            stamp = stamp.replace('<','')
+            filtered_stamp = Stamp.objects.filter(name=stamp)
+            if len(filtered_stamp)!=0:
+                item.stamp = filtered_stamp[0]
+            else:
+                stamp_object = Stamp(name=stamp)
+                stamp_object.save()
+                item.stamp = stamp_object
+        color = data.get('color')
+        if color is not None and color.replace('<','')!='':
+            color = color.replace('<','')
+            filtered_color = Color.objects.filter(name=color)
+            if len(filtered_color)!=0:
+                item.color = filtered_color[0]
+            else:
+                color_object = Color(name=color)
+                color_object.save()
+                item.color = color_object
+        glue = data.get('glue')
+        if glue is not None and glue.replace('<','')!='':
+            glue = glue.replace('<','')
+            filtered_glue = Glue.objects.filter(name=glue)
+            if len(filtered_glue)!=0:
+                item.glue = filtered_glue[0]
+            else:
+                glue_object = Glue(name=glue)
+                glue_object.save()
+                item.glue = glue_object
+        theme = data.get('theme')
+        if theme is not None and theme.replace('<','')!='':
+            theme = theme.replace('<','')
+            filtered_theme = Theme.objects.filter(name=theme)
+            if len(filtered_theme)!=0:
+                item.theme = filtered_theme[0]
+            else:
+                theme_object = Theme(name=theme)
+                theme_object.save()
+                item.theme = theme_object
+        watermark = data.get('watermark')
+        if watermark is not None and watermark.replace('<','')!='':
+            watermark = watermark.replace('<','')
+            filtered_watermark = Watermark.objects.filter(name=watermark)
+            if len(filtered_watermark)!=0:
+                item.watermark = filtered_watermark[0]
+            else:
+                watermark_object = Watermark(name=watermark)
+                watermark_object.save()
+                item.watermark = watermark_object
+        currency = data.get('currency')
+        if currency is not None and currency.replace('<','')!='':
+            currency = currency.replace('<','')
+            filtered_currency = Currency.objects.filter(name=currency)
+            if len(filtered_currency)!=0:
+                item.currency = filtered_currency[0]
+            else:
+                currency_object = Currency(name=currency)
+                currency_object.save()
+                item.currency = currency_object
+        press = data.get('pressure')
+        if press is not None and press.replace('<','')!='':
+            press = press.replace('<','')
+            filtered_press = Press.objects.filter(name=press)
+            if len(filtered_press)!=0:
+                item.press = filtered_press[0]
+            else:
+                press_object = Press(name=press)
+                press_object.save()
+                item.press = press_object
+        designer_surname = data.get('designer_surname')
+        designer_name = data.get('designer_name') 
+        if designer_name is not None and designer_surname is not None and designer_surname.replace('<','')!='' and designer_name.replacer('<','')!='':
+            designer_name = designer_name.replace('<','')
+            designer_surname = designer_surname.replacer('<','')
+            designer_filtered = Designer.objects.filter(name=designer_name,surname=designer_surname)  
+            if len(designer_filtered)!=0:
+                item.designer = designer_filtered[0]
+            else:
+                designer_object = Designer(name=designer_name, surname=designer_surname)
+                designer_object.save()
+                item.designer = designer_object
+        catalog = data.get('catalogure')
+        if catalog is not None and catalog.replace('<','')!='':
+            catalog = catalog.replace('<','')
+            filtered_catalog = Catalog.objects.filter(name=catalog)
+            if len(filtered_catalog)!=0:
+                item.catalog = filtered_catalog[0]
+            else:
+                catalog_object = Catalog(name=catalog)
+                catalog_object.save()
+                item.catalog = catalog_object
+        nominal = data.get('nominal')
+        if is_float(nominal):
+            item.nominal = float(nominal)
+        width = data.get('width')
+        if is_float(width):
+            item.width = float(width)
+        height = data.get('height')
+        if is_float(height):
+            item.height = height
+        item.save()
         
+        item_image_main = ItemImage(item=item,image=images[0],is_main_image=True)
+        item_image_main.save()
+        for image in images[1::]:
+            item_image = ItemImage(item=item,image=image)
+            item_image.save()
         return Response({'status':'ok'})
-    except:
+    except Exception as e:
+        print(e)
         return Response({'status':'error','message':'Неизвестная ошибка'})
 
 
