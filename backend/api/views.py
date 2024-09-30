@@ -614,16 +614,10 @@ def change_private_settings(request:HttpRequest) -> Response:
 @api_view(['POST'])
 def add_new_item(request:HttpRequest) -> Response:
     try:
-        if not request.user.is_superuser:
-            return Response({'status':'error','message':'Доступ запрещён'})
         data = request.data
-        try:
-            serializer = ItemSerializer(data=data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response({'status':'ok','data':serializer.data})
-        except:
-            return Response({'status':'error','message':'Не удалось добавить предмет'})
+        print(data)
+        print(request.FILES)
+        return Response({'status':'ok'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
 

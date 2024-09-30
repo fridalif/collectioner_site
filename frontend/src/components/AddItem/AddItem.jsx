@@ -15,7 +15,9 @@ export function AddItem(){
     const [ file3, setFile3 ] = useState(null);
     const [ file4, setFile4 ] = useState(null);
     const [ file5, setFile5 ] = useState(null);
+    const [isCsrf, setIsCsrf] = useState(null);
     
+    useEffect(()=>{getCSRF()},[])
 
     useEffect(()=>{
         setCountry(null);
@@ -58,9 +60,10 @@ export function AddItem(){
 
     const getCSRF = async () => {
         let csrfToken = '';
-        await axios.get(serverUrl + 'api/get_csrf/', { withCredentials: true })
+        await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
         .then((res) => {
             csrfToken = res.headers.get('X-CSRFToken');
+            setIsCsrf(csrfToken);
             return csrfToken;
         })
         .catch((err) => console.error(err))
@@ -69,21 +72,22 @@ export function AddItem(){
 
     const addNewItem = async () => {
         let csrfToken = await getCSRF();
+
         const formData = new FormData();
         if (file1){
-            formData.append('file1', file1);
+            formData.append('file1', document.getElementById('fileInput1').files[0]);
         }
         if (file2){
-            formData.append('file2', file2);
+            formData.append('file2', document.getElementById('fileInput2').files[0]);
         }
         if (file3){
-            formData.append('file3', file3);
+            formData.append('file3', document.getElementById('fileInput3').files[0]);
         }
         if (file4){
-            formData.append('file4', file4);
+            formData.append('file4', document.getElementById('fileInput4').files[0]);
         }
         if (file5){
-            formData.append('file5', file5);
+            formData.append('file5', document.getElementById('fileInput5').files[0]);
         }
         if (historyMoment === null || historyMoment === '') {
             alert('Не выбран исторический момент');
@@ -130,10 +134,10 @@ export function AddItem(){
         formData.append('width', itemWidth);
         formData.append('height', itemHeight);
         formData.append('catalog', itemCatalog);
-        axios.post(serverUrl + "api/add_item/", formData, {
+        axios.post(serverUrl + "/api/add_new_item/", formData, {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'multipart/form-data',
               "X-CSRFToken": csrfToken,
             }
         })
