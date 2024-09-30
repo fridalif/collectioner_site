@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 
 
-export function Header({isLoggedIn}){
+export function Header({isLoggedIn, isSuperuser}){
     return(
         <header className={styles.header}>
             <div className={styles.headerNode}>
@@ -29,6 +29,12 @@ export function Header({isLoggedIn}){
             <div className={styles.headerNode}>
                 <a href='/add_item' className={styles.headerLink}>
                     Добавить предмет  
+                </a> 
+            </div> }
+            { isSuperuser && 
+            <div className={styles.headerNode}>
+                <a href='/admin-panel-collectioner/' className={styles.headerLink}>
+                    Админ-панель  
                 </a> 
             </div> }
         </header>
