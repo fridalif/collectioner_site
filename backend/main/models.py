@@ -195,7 +195,9 @@ class Item(models.Model):
     height = models.FloatField(verbose_name='Высота', null=True, blank=True)
     width = models.FloatField(verbose_name='Ширина', null=True, blank=True)
 
-    user_counter = models.IntegerField(default=0,auto_created=True,verbose_name='В наличии у пользователей')
+    is_active = models.BooleanField(default=False)
+
+    
     def __str__(self):
         return f'{self.name}({self.year})'
     

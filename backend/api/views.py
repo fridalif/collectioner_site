@@ -74,7 +74,7 @@ def get_items(request:HttpRequest, id=None)->Response:
     try:
         if id is not None:
             try:
-                item = Item.objects.get(id=id)
+                item = Item.objects.get(id=id, is_active=True)
                 return Response({'status':'ok', 'data':ItemSerializer(item).data})
             except Item.DoesNotExist:
                 return Response({'status':'error', 'message':'Нет предмета с таким id'})
@@ -95,7 +95,7 @@ def get_items(request:HttpRequest, id=None)->Response:
         else:
             offset = int(offset)
         try:
-            items = Item.objects.all()
+            items = Item.objects.filter(is_active=True)
         except:
             return Response({'status':'error', 'message':'Не удалось получить предметы'})
 
