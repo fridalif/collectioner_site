@@ -55,6 +55,90 @@ export function AddItem(){
         })
         .catch((err) => console.error(err))
     },[country])
+
+    const getCSRF = async () => {
+        let csrfToken = '';
+        await axios.get(serverUrl + 'api/get_csrf/', { withCredentials: true })
+        .then((res) => {
+            csrfToken = res.headers.get('X-CSRFToken');
+            return csrfToken;
+        })
+        .catch((err) => console.error(err))
+        return csrfToken;
+    }
+
+    const addNewItem = async () => {
+        let csrfToken = await getCSRF();
+        const formData = new FormData();
+        if (file1){
+            formData.append('file1', file1);
+        }
+        if (file2){
+            formData.append('file2', file2);
+        }
+        if (file3){
+            formData.append('file3', file3);
+        }
+        if (file4){
+            formData.append('file4', file4);
+        }
+        if (file5){
+            formData.append('file5', file5);
+        }
+        if (historyMoment === null || historyMoment === '') {
+            alert('Не выбран исторический момент');
+            return;
+        }
+        formData.append('history_moment', historyMoment);
+        let itemName = document.getElementById('itemName').value;
+        if (itemName === '') {
+            alert('Не указано название');
+            return;
+        }
+        formData.append('name', itemName);
+        let itemYear = document.getElementById('itemYear').value;
+        let itemCategory = document.getElementById('itemCategory').value;
+        let itemEmission = document.getElementById('itemEmission').value;
+        let itemFormat = document.getElementById('itemFormat').value;
+        let itemStamp = document.getElementById('itemStamp').value;
+        let itemColor = document.getElementById('itemColor').value;
+        let itemGlue = document.getElementById('itemGlue').value;
+        let itemTheme = document.getElementById('itemTheme').value;
+        let itemWatermark = document.getElementById('itemWatermark').value;
+        let itemCurrency = document.getElementById('itemCurrency').value;
+        let itemPressure = document.getElementById('itemPress').value;
+        let itemDesignerSurname = document.getElementById('itemDesignerSurname').value;
+        let itemDesignerName = document.getElementById('itemDesignerName').value;
+        let itemNominal = document.getElementById('itemNominal').value;
+        let itemWidth = document.getElementById('itemWidth').value;
+        let itemHeight = document.getElementById('itemHeight').value;
+        let itemCatalog = document.getElementById('itemCatalog').value;
+        formData.append('year', itemYear);
+        formData.append('category', itemCategory);
+        formData.append('emission', itemEmission);
+        formData.append('format', itemFormat);
+        formData.append('stamp', itemStamp);
+        formData.append('color', itemColor);
+        formData.append('glue', itemGlue);
+        formData.append('theme', itemTheme);
+        formData.append('watermark', itemWatermark);
+        formData.append('currency', itemCurrency);
+        formData.append('pressure', itemPressure);
+        formData.append('designer_surname', itemDesignerSurname);
+        formData.append('designer_name', itemDesignerName);
+        formData.append('nominal', itemNominal);
+        formData.append('width', itemWidth);
+        formData.append('height', itemHeight);
+        formData.append('catalog', itemCatalog);
+        axios.post(serverUrl + "api/add_item/", formData, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken,
+            }
+        })
+    }
+
     return(
         <div className={styles.content}>
             <div className={styles.usersTableRowHeader}>
@@ -100,7 +184,7 @@ export function AddItem(){
             </div>
             <div className={styles.usersTableRow}>
                 <input className={styles.input} type="text" placeholder='Цвет' id='itemColor'/>
-                <input className={styles.input} type="text" placeholder='Клей' id='itemKey'/>
+                <input className={styles.input} type="text" placeholder='Клей' id='itemGlue'/>
                 <input className={styles.input} type="text" placeholder='Типография' id='itemPress'/>
             </div>
             <div className={styles.usersTableRow}>
@@ -140,7 +224,7 @@ export function AddItem(){
                     <input type="file" id="fileInput5" hidden onChange={(e) => setFile5(e.target.files[0])}/>
                 </div>
             </div>
-            <div className={styles.usersTableRow} style={{justifyContent: 'center'}}>
+            <div className={styles.usersTableRow} style={{justifyContent: 'center'}} onClick={()=>addNewItem()}>
                 <div className={styles.settingsButton}>
                     Добавить
                 </div>
