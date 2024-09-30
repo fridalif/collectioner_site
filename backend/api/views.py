@@ -615,8 +615,65 @@ def change_private_settings(request:HttpRequest) -> Response:
 def add_new_item(request:HttpRequest) -> Response:
     try:
         data = request.data
-        print(data)
-        print(request.FILES)
+        user_id = request.session.get('user_id')
+        if not is_int(user_id):
+            return Response({'status':'error', 'message':'Пользователь не авторизован'})
+        history_moment_id = data.get('history_moment')
+        if not is_int(history_moment_id):
+            return Response({'status':'error', 'message':'Не указан исторический момент'})
+        try:
+            history_moment = HistroryMoment.objects.get(id=int(history_moment_id))
+        except HistroryMoment.DoesNotExist:
+            return Response({'status':'error', 'message':'Исторический момент не найден'})
+        name = data.get('name')
+        if name is None or name.replace('<','')=='':
+            return Response({'status':'error','message':'Не указано название предмета'})
+        name = name.replace('<','')
+        if len(Item.objects.filter(name=name)) != 0:
+            return Response({'status':'error','message':'Такой предмет уже существует'})
+        category = data.get('category')
+        if category is None:
+            category = 'mark'
+        images = []
+        if data.get('file1') is not None:
+            images.append(data.get('file1'))
+        if data.get('file2') is not None:
+            images.append(data.get('file2'))
+        if data.get('file3') is not None:
+            images.append(data.get('file3'))
+        if data.get('file4') is not None:
+            images.append(data.get('file4'))
+        if data.get('file5') is not None:
+            images.append(data.get('file5'))
+        if len(images) == 0:
+            return Response({'status':'error','message':'Загрузите хотя бы 1 изображение'})
+        item = Item(history_moment=history_moment, name=name, category=category)
+        year = data.get('year')
+        if is_int(year) and int(year)>=0:
+            item.year = int(year)
+        emission = data.get('emission')
+        if emission is not None and emission.replace('<','')!='':
+            emission = emission.replace('<','')
+            filtered_emission = Emission.objects.filter(name=emission)
+            if len(filtered_emission)!=0:
+                item.emission = filtered_emission[0]
+            else:
+                emission_object = Emission(name=emission)
+                emission_object.save()
+                item.emission = emission_object
+        format = data.get('format')
+        if format is not None and format.replace('<','')!='':
+            format = format.replace('<','')
+            filtered_format = Format.objects.filter(name=format)
+            if len(filtered_format)!=0:
+                item.format = filtered_format[0]
+            else:
+                format_object = Format(name=format)
+                format_object.save()
+                item.format = format_object
+
+
+        
         return Response({'status':'ok'})
     except:
         return Response({'status':'error','message':'Неизвестная ошибка'})
