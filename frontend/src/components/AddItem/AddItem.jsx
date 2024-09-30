@@ -10,6 +10,13 @@ export function AddItem(){
     const [historyMoments, setHistoryMoments] = useState([]);
     const [historyMoment, setHistoryMoment] = useState(null);
     const [country, setCountry ] = useState(null);
+    const [ file1, setFile1 ] = useState(null);
+    const [ file2, setFile2 ] = useState(null);
+    const [ file3, setFile3 ] = useState(null);
+    const [ file4, setFile4 ] = useState(null);
+    const [ file5, setFile5 ] = useState(null);
+    
+
     useEffect(()=>{
         setCountry(null);
         if (worldPart === null) {
@@ -78,13 +85,65 @@ export function AddItem(){
                 </select>
             </div>
             <div className={styles.usersTableRow}>
-                <input className={styles.input} type="text" placeholder='Название'/>
-                <input className={styles.input} type="text" placeholder='Год'/>
-                <select className={styles.selecter}>
+                <input className={styles.input} type="text" placeholder='Название' id='itemName'/>
+                <input className={styles.input} type="text" placeholder='Год' id='itemYear'/>
+                <select className={styles.selecter} id='itemCategory'>
                     <option>Категория</option>
                     <option value='mark'>Марка</option>
                     <option value='philatel'>Филателистический продукт</option>
                 </select>
+            </div>
+            <div className={styles.usersTableRow}>
+                <input className={styles.input} type="text" placeholder='Эмиссия' id='itemEmission'/>
+                <input className={styles.input} type="text" placeholder='Формат' id='itemFormat'/>
+                <input className={styles.input} type="text" placeholder='Штамп' id='itemStamp'/>
+            </div>
+            <div className={styles.usersTableRow}>
+                <input className={styles.input} type="text" placeholder='Цвет' id='itemColor'/>
+                <input className={styles.input} type="text" placeholder='Клей' id='itemKey'/>
+                <input className={styles.input} type="text" placeholder='Типография' id='itemPress'/>
+            </div>
+            <div className={styles.usersTableRow}>
+                <input className={styles.input} type="text" placeholder='Водяной знак' id='itemWatermark'/>
+                <input className={styles.input} type="text" placeholder='Валюта' id='itemCurrency'/>
+                <input className={styles.input} type="text" placeholder='Тема' id='itemTheme'/>
+            </div>
+            <div className={styles.usersTableRow}>
+                <input className={styles.input} type="text" placeholder='Фамилия дизайнера' id='itemDesignerSurname'/>
+                <input className={styles.input} type="text" placeholder='Имя дизайнера' id='itemDesignerName'/>
+                <input className={styles.input} type="text" placeholder='Номинал' id='itemNominal'/>
+            </div>
+            <div className={styles.usersTableRow}>
+                <input className={styles.input} type="text" placeholder='Высота' id='itemHeight'/>
+                <input className={styles.input} type="text" placeholder='Ширина' id='itemWidth'/>
+                <input className={styles.input} type="text" placeholder='Каталог' id='itemCatalog'/>
+            </div>
+            <div className={styles.usersTableRow} style={{justifyContent: 'center'}}>
+                <div className={file1 === null ? styles.fileInput : styles.fileInputActive} id='fileInputBlock1' onClick={() => document.getElementById('fileInput1').click()}>
+                    Фото
+                    <input type="file" id="fileInput1" hidden onChange={(e) => setFile1(e.target.files[0])}/>
+                </div>
+                <div className={file2 === null ? styles.fileInput : styles.fileInputActive} id='fileInputBlock2' onClick={() => document.getElementById('fileInput2').click()}>
+                    Фото
+                    <input type="file" id="fileInput2" hidden onChange={(e) => setFile2(e.target.files[0])}/>
+                </div>
+                <div className={file3 === null ? styles.fileInput : styles.fileInputActive} id='fileInputBlock3' onClick={() => document.getElementById('fileInput3').click()}>
+                    Фото
+                    <input type="file" id="fileInput3" hidden onChange={(e) => setFile3(e.target.files[0])}/>
+                </div>
+                <div className={file4 === null ? styles.fileInput : styles.fileInputActive} id='fileInputBlock4' onClick={() => document.getElementById('fileInput4').click()}>
+                    Фото
+                    <input type="file" id="fileInput4" hidden  onChange={(e) => setFile4(e.target.files[0])}/>
+                </div>
+                <div className={file5 === null ? styles.fileInput : styles.fileInputActive} id='fileInputBlock5' onClick={() => document.getElementById('fileInput5').click()}>
+                    Фото
+                    <input type="file" id="fileInput5" hidden onChange={(e) => setFile5(e.target.files[0])}/>
+                </div>
+            </div>
+            <div className={styles.usersTableRow} style={{justifyContent: 'center'}}>
+                <div className={styles.settingsButton}>
+                    Добавить
+                </div>
             </div>
         </div>
     )

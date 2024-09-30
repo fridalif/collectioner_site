@@ -20,7 +20,7 @@
 }
 .selecter{
     width: 307px;
-    height: 50px;
+    height: 40px;
     margin-left: 30px;
     font-size: 16px;
     border-radius:5px;
@@ -32,15 +32,15 @@
 .usersTableRow{
     display: flex;
     width: 1200px;
-    height: 60px;
-    margin-left:30px;
+    height: 40px;
     align-items: center;
-    margin-top: 30px;;
+    justify-content: center;
+    margin-top: 30px;
 }
 
 .input{
     margin-left:30px;
-    height: 50px;
+    height: 40px;
     display: flex;
     border-radius: 5px;
     width: 300px;
@@ -51,4 +51,56 @@
 .input:focus{
     box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
     outline: none;
+}
+
+.fileInput{
+    height: 70px;
+    width: 70px;
+    margin-left: 30px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: white;
+    border: 2px dashed black;
+    font-size:14px;
+    cursor: pointer;
+}
+.fileInput:hover{
+    border: 2px dashed orange;
+}
+
+.fileInputActive{
+    height: 70px;
+    width: 70px;
+    margin-left: 30px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: green;
+    color:white;
+    border: 2px dashed green;
+    font-size:14px;
+}
+
+.settingsButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    font-size:24px;
+    color:white;
+    font-family: "Sofia-Sans";
+    height: 50px;
+    background-color: #8A817C;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+.settingsButton:hover{
+    cursor: pointer;
+    background-color: #463F3A;
 }
