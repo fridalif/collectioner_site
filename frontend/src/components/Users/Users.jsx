@@ -43,7 +43,7 @@ export function Users(){
 
     return(
         <div className={styles.content}>
-            {message!=='' && <MessageBoxError message={message}/>}
+            {message!=='' && <MessageBoxError message={message} displayed={true}/>}
             <div className={styles.searchField}>
                 <input type="text" placeholder="Искать пользователя..." className={styles.searchFieldInput} id='searchUsers'/>
                 <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getInfoWithQuery()}/>

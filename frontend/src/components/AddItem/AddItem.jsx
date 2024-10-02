@@ -146,7 +146,7 @@ export function AddItem(){
 
     return(
         <div className={styles.content}>
-            {messages!=='' && <MessageBoxError message={messages}/>}
+            {messages!=='' && <MessageBoxError message={messages} displayed={true}/>}
             <div className={styles.usersTableRowHeader}>
                 Заполните известную Вам информацию
             </div>

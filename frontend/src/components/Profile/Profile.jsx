@@ -329,8 +329,8 @@ const get_countries = async () => {
     }
     return(
         <div className={styles.profileContainerHeight}>
-            { message !== '' && message !== 'Изменения сохранены' && message !== 'Коллекция создана' && <MessageBoxError message={message}/>}
-            { message == 'Изменения сохранены' || message == 'Коллекция создана' && <MessageBoxGood message={message}/>}
+            { message !== '' && message !== 'Изменения сохранены' && message !== 'Коллекция создана' && <MessageBoxError message={message} displayed={true}/>}
+            { message == 'Изменения сохранены' || message == 'Коллекция создана' && <MessageBoxGood message={message} displayed={true}/>}
             <div className={styles.profileContainerWidth}>
                 <div className={styles.profileBlock}>
                     <div className={styles.sideBar}>

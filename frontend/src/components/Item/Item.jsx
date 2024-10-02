@@ -145,7 +145,7 @@ export function Item({isLoggedIn}){
 
     return(
         <div className={styles.pageBody}>
-            {messages !== '' && <MessageBoxError message={messages}/>}
+            {messages !== '' && <MessageBoxError message={messages} displayed={true}/>}
             <div className={styles.contentContainer}>
                 <div className={styles.contentImagesRow}>
                     <div className={styles.contentMainImage}>

@@ -61,7 +61,7 @@ export function LastAddedMarks(){
 
     return(
         <div className={styles.lastAddedMarksContainer}>
-            { messages !== '' && <MessageBoxError message={messages} /> }
+            { messages !== '' && <MessageBoxError message={messages} displayed={true}/> }
         <div className={styles.lastAddedMarks}>
             <div className={styles.lastAddedMarksTitle}>
                 Последние добавленные марки

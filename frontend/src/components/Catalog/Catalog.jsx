@@ -223,7 +223,7 @@ export function Catalog(){
 
     return(
         <div className={styles.catalogContainer}>
-            {message !== '' && <MessageBoxError message={messages} />}
+            {message !== '' && <MessageBoxError message={messages} displayed={true}/>}
             <div className={styles.catalogSideBar}>
                 <div className={styles.catalogFilters}>
                     <div className={styles.catalogSideBarFilterBlock}>

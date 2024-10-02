@@ -2,8 +2,8 @@ import styles from './MessageBox.module.css';
 import { ImCross } from "react-icons/im";
 import { useState } from 'react';
 
-export function MessageBoxGood({message}){
-    const [ display, setDisplay ] = useState(true);
+export function MessageBoxGood({message, displayed}){
+    const [ display, setDisplay ] = useState(displayed);
 
     return(
         display &&
@@ -17,8 +17,8 @@ export function MessageBoxGood({message}){
 }
 
 
-export function MessageBoxError({message}){
-    const [ display, setDisplay ] = useState(true);
+export function MessageBoxError({message,displayed}){
+    const [ display, setDisplay ] = useState(displayed);
     return(
         display &&
         <div className={styles.messageBoxError}>

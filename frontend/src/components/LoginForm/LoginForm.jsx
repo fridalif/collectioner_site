@@ -4,7 +4,7 @@ import { LoginFields, RegisterFields  } from "../LoginFields/LoginFields";
 import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 
 const serverUrl  = 'http://127.0.0.1:8080/';
 const loginToRegister = (elem) => {
@@ -94,8 +94,8 @@ export function LoginForm({isLoggedIn}){
 
     return (
         <div className={styles.loginContainerHeight}>
-            { message !== '' && message !== 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxError message={message}/> }
-            { message === 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxGood message={message}/> }
+            { message !== '' && message !== 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxError message={message} displayed={true}/> }
+            { message === 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxGood message={message} displayed={true}/> }
             <div className={styles.loginContainerWidth}>
                 <div className={styles.loginBlock}>
                     <div className={styles.titleAboutLogin}>
