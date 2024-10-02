@@ -11,7 +11,7 @@
     width: 1000px;
     height: 800px;
     background-color: white;
-    border-radius: 10px;
+
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 .contentImagesRow{
@@ -79,7 +79,7 @@
     font-size: 16px;
     margin-top:20px;
     font-family: 'Sofia-Sans';
-    border-radius: 10px;
+
     background-color: white;
 }
 
