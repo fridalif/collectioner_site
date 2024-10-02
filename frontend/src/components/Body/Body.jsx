@@ -9,12 +9,14 @@ import { Catalog } from '../Catalog/Catalog.jsx';
 import { Item } from '../Item/Item.jsx'
 import { Users } from '../Users/Users.jsx'
 import { AddItem } from '../AddItem/AddItem.jsx'
+import { MessageBoxGood, MessageBoxError } from '../MessageBox/MessageBox';
 
 export function Body({isLoggedIn, mode}){
 
     return(
         <div className={styles.body}>
             <SecondHeader isLoggedIn={isLoggedIn}/>
+            <MessageBoxGood message="hello" />
             { mode =='Home' &&
                 <div className={styles.bodyContent}>
                     <WelcomeMessage />
