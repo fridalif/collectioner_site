@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
 import { IoMdSearch } from "react-icons/io";
+import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
@@ -16,7 +17,7 @@ export function Catalog(){
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
-
+    const [ messages, setMessages ] = useState([]);
     useEffect(()=>{
         const queryParameters = new URLSearchParams(window.location.search)
         let searchQuery_var = queryParameters.get("search_query")
@@ -31,7 +32,7 @@ export function Catalog(){
                 return;
             }
             else {
-                alert(response.data.message);
+                setMessages(response.data.message);
             }
         })
         .catch((err) => console.error(err))    
@@ -50,7 +51,7 @@ export function Catalog(){
                 setCountries(response.data.data);
             }
             else {
-                alert(response.data.message);
+                setMessages(response.data.message);
             }
         })
         .catch((err) => console.error(err))
@@ -70,7 +71,7 @@ export function Catalog(){
                 return;
             }
             else {
-                alert(response.data.message);
+                setMessages(response.data.message);
             }
         })
         .catch((err) => console.error(err))
@@ -178,7 +179,7 @@ export function Catalog(){
                     axios.get(`${serverUrl}/api/get_item_image_urls/`, {params: {items_ids: items_ids, only_main: true}})
                         .then(response_images => {
                             if (response_images.data.status !== 'ok'){
-                                alert(response_images.data.message);
+                                setMessages(response_images.data.message);
                                 return;
                             }
                             for (let i = 0; i < response.data.data.length; i++){
@@ -196,7 +197,7 @@ export function Catalog(){
                     return;
                 }
                 else {
-                    alert(response.data.message);
+                    setMessages(response.data.message);
                 }
             })
             .catch((err) => console.error(err))
@@ -222,6 +223,7 @@ export function Catalog(){
 
     return(
         <div className={styles.catalogContainer}>
+            {message !== '' && <MessageBoxError message={messages} />}
             <div className={styles.catalogSideBar}>
                 <div className={styles.catalogFilters}>
                     <div className={styles.catalogSideBarFilterBlock}>

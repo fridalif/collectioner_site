@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import { CiLock } from "react-icons/ci";
 import { FaPlusCircle } from "react-icons/fa";
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
-
+import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 const serverUrl  = 'http://127.0.0.1:8080';
 
 export function Profile(){
@@ -32,12 +32,13 @@ export function Profile(){
     let countryField = useRef();
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ privateSettings, setPrivateSettings ] = useState(null);
+    const [ message, setMessage ] = useState('');
 
     const addCollection = async () => {
         let csrfToken = await getCSRF();
         let collectionName = document.getElementById('collectionName').value;
         if (collectionName === '') {
-            alert('Название коллекции не может быть пустым');
+            setMessage('Название коллекции не может быть пустым');
             return;
         }
         let data = {
@@ -53,11 +54,11 @@ export function Profile(){
             })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
                     return;
                 }
                 setCollections([...collections, response.data.data]);
-                alert('Коллекция создана');
+                setMessage('Коллекция создана');
             })
             .catch((err) => console.error(err));
     }
@@ -72,7 +73,7 @@ export function Profile(){
             .get(result_url, { withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
                     window.location.href = '/';
                     return;
                 }
@@ -122,7 +123,7 @@ export function Profile(){
             }
             else {
                 if (res.message!=='Не указана картинка'){
-                    alert(res.message)
+                    setMessage(res.message)
                 }
             }
         })
@@ -176,7 +177,7 @@ export function Profile(){
               }})
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
                     return;
                 }
                 var responseData = response.data.data;
@@ -188,7 +189,7 @@ export function Profile(){
                 setBirth_date(responseData.birth_date);
                 setLanguages(responseData.languages);
                 setAbout(responseData.about);
-                alert('Изменения сохранены');
+                setMessage('Изменения сохранены');
             })
             .catch((err) => console.error(err))
     }
@@ -212,10 +213,10 @@ export function Profile(){
               }})
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
                     return;
                 }
-                alert('Изменения сохранены');
+                setMessage('Изменения сохранены');
             })
             .catch((err) => console.error(err))
     }
@@ -231,7 +232,7 @@ export function Profile(){
         })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
 
                     return;
                 }
@@ -262,7 +263,7 @@ export function Profile(){
         axios.get(result_url, { withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
                     return;
                 }  
                 setCollections(response.data.data);
@@ -274,7 +275,7 @@ export function Profile(){
             axios.get(serverUrl + "/api/get_my_private_settings/", { withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
                     return;
                 }
                 setPrivateSettings(response.data.data);
@@ -298,7 +299,7 @@ export function Profile(){
         axios.get(result_url, { withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessage(response.data.message);
                     return;
                 }
                 console.log(response.data.data)
@@ -320,7 +321,7 @@ const get_countries = async () => {
                 countryField.current.innerHTML = contriesHTML;
             }
             else {
-                alert(response.message);
+                setMessage(response.message);
                 return [];
             }
         })
@@ -328,6 +329,8 @@ const get_countries = async () => {
     }
     return(
         <div className={styles.profileContainerHeight}>
+            { message !== '' && message !== 'Изменения сохранены' && message !== 'Коллекция создана' && <MessageBoxError message={message}/>}
+            { message == 'Изменения сохранены' || message == 'Коллекция создана' && <MessageBoxGood message={message}/>}
             <div className={styles.profileContainerWidth}>
                 <div className={styles.profileBlock}>
                     <div className={styles.sideBar}>

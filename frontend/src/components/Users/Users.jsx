@@ -2,12 +2,14 @@ import styles from './Users.module.css'
 import { IoMdSearch } from "react-icons/io";
 import { useState, useEffect } from 'react'
 import axios from 'axios';
+import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 
 const serverUrl = 'http://127.0.0.1:8080';
 export function Users(){
     const [ users, setUsers ] = useState([]);
     const [ offset, setOffset ] = useState(0);
     const [ total, setTotal ] = useState(0);
+    const [ message, setMessage ] = useState('');
     const limit = 30;
 
     const getInfoWithQuery = async ()=>{
@@ -16,7 +18,7 @@ export function Users(){
         .get(`${serverUrl}/api/get_users_list/?offset=${offset}&limit=${limit}&query=${query}`, { withCredentials: true })
         .then((response) => {
             if(response.data.status !== 'ok'){
-                alert(response.data.message);
+                setMessage(response.data.message);
                 return;
             }
             if(users.length > 0){
@@ -41,6 +43,7 @@ export function Users(){
 
     return(
         <div className={styles.content}>
+            {message!=='' && <MessageBoxError message={message}/>}
             <div className={styles.searchField}>
                 <input type="text" placeholder="Искать пользователя..." className={styles.searchFieldInput} id='searchUsers'/>
                 <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getInfoWithQuery()}/>

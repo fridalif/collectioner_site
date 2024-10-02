@@ -2,13 +2,14 @@ import styles from './LastAddedMarks.module.css'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
-
+import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function LastAddedMarks(){
     const [ lastAddedMarks, setLastAddedMarks ] = useState([])
     const [ startFrom, setStartFrom ] = useState(0)
+    const [ messages, setMessages ] = useState('');
 
     useEffect(async () => {
         axios
@@ -24,7 +25,7 @@ export function LastAddedMarks(){
                     axios.get(`${serverUrl}/api/get_item_image_urls/`, {params: {items_ids: items_ids, only_main: true}})
                         .then(response_images => {
                             if (response_images.data.status !== 'ok'){
-                                alert(response_images.data.message);
+                                setMessages(response_images.data.message);
                                 return;
                             }
                             for (let i = 0; i < response.data.length; i++){
@@ -40,7 +41,7 @@ export function LastAddedMarks(){
                         .catch(error => console.error(error))    
                     return;
                 }
-                alert(response.message);
+                setMessages(response.message);
             })
             .catch(error => console.error(error))
         },
@@ -60,6 +61,7 @@ export function LastAddedMarks(){
 
     return(
         <div className={styles.lastAddedMarksContainer}>
+            { messages !== '' && <MessageBoxError message={messages} /> }
         <div className={styles.lastAddedMarks}>
             <div className={styles.lastAddedMarksTitle}>
                 Последние добавленные марки

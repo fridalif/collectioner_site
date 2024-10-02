@@ -2,6 +2,7 @@ import styles from './Item.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { HiOutlinePlus, HiOutlineMinus } from "react-icons/hi2";
+import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 
 const serverUrl = 'http://127.0.0.1:8080';
 export function Item({isLoggedIn}){
@@ -15,7 +16,7 @@ export function Item({isLoggedIn}){
     const [ itemsCounter, setItemsCounter ] = useState(0);
     const [ itemIdForGettingCounter, setItemIdForGettingCounter ] = useState(-1);
     const [isCsrf, setIsCsrf] = useState(null);
-
+    const [messages, setMessages ] = useState('');
     const getCSRF = async () => {
         await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
         .then((res) => {
@@ -36,7 +37,7 @@ export function Item({isLoggedIn}){
         axios.get(`${serverUrl}/api/get_item_image_urls/`, {params: {items_ids: [itemId]}})
         .then(response_images => {
             if (response_images.data.status !== 'ok'){
-                alert(response_images.data.message);
+                setMessages(response_images.data.message);
                 return;
             }
             console.log(response_images.data.data);
@@ -46,7 +47,7 @@ export function Item({isLoggedIn}){
         axios.get(`${serverUrl}/api/get_items/${itemId}/`, { withCredentials: true })
         .then((response) => {
             if (response.data.status !== 'ok') {
-                alert(response.data.message);
+                setMessages(response.data.message);
                 return;
             }
             console.log(response.data.data);
@@ -61,7 +62,7 @@ export function Item({isLoggedIn}){
             axios.get(`${serverUrl}/api/get_user_collections/`, { withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessages(response.data.message);
                     return;
                 }
                 console.log(response.data.data);
@@ -79,7 +80,7 @@ export function Item({isLoggedIn}){
             axios.get(`${serverUrl}/api/get_collection_quality_count/`, {params: {collection_id: selectedCollection, quality: quality, item_id: itemIdForGettingCounter}, withCredentials: true })
             .then((response) => {
                 if (response.data.status !== 'ok') {
-                    alert(response.data.message);
+                    setMessages(response.data.message);
                     return;
                 }
                 console.log(response.data.data);
@@ -110,9 +111,9 @@ export function Item({isLoggedIn}){
                 setItemsCounter(res.data.counter);
                 return;
             }
-            alert(res.message);
+            setMessages(res.message);
         })
-        .catch((err) => alert('Произошла непредвиденная ошибка'))
+        .catch((err) => setMessages('Произошла непредвиденная ошибка'))
     }
 
     const removeItem = async () => {
@@ -136,14 +137,15 @@ export function Item({isLoggedIn}){
                 setItemsCounter(res.data.counter);
                 return;
             }
-            alert(res.message);
+            setMessages(res.message);
         })
-        .catch((err) => alert('Произошла непредвиденная ошибка'))
+        .catch((err) => setMessages('Произошла непредвиденная ошибка'))
     }
 
 
     return(
         <div className={styles.pageBody}>
+            {messages !== '' && <MessageBoxError message={messages}/>}
             <div className={styles.contentContainer}>
                 <div className={styles.contentImagesRow}>
                     <div className={styles.contentMainImage}>

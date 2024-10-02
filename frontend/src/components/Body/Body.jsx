@@ -16,7 +16,6 @@ export function Body({isLoggedIn, mode}){
     return(
         <div className={styles.body}>
             <SecondHeader isLoggedIn={isLoggedIn}/>
-            <MessageBoxGood message="hello" />
             { mode =='Home' &&
                 <div className={styles.bodyContent}>
                     <WelcomeMessage />

@@ -1,7 +1,7 @@
 import styles from './AddItem.module.css'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function AddItem(){
@@ -16,6 +16,7 @@ export function AddItem(){
     const [ file4, setFile4 ] = useState(null);
     const [ file5, setFile5 ] = useState(null);
     const [isCsrf, setIsCsrf] = useState(null);
+    const [ messages, setMessages ] = useState('');
     
     useEffect(()=>{getCSRF()},[])
 
@@ -32,7 +33,7 @@ export function AddItem(){
                 setCountries(response.data.data);
             }
             else {
-                alert(response.data.message);
+                setMessages(response.data.message);
             }
         })
         .catch((err) => console.error(err))
@@ -52,7 +53,7 @@ export function AddItem(){
                 return;
             }
             else {
-                alert(response.data.message);
+                setMessages(response.data.message);
             }
         })
         .catch((err) => console.error(err))
@@ -90,13 +91,13 @@ export function AddItem(){
             formData.append('file5', document.getElementById('fileInput5').files[0]);
         }
         if (historyMoment === null || historyMoment === '') {
-            alert('Не выбран исторический момент');
+            setMessages('Не выбран исторический момент');
             return;
         }
         formData.append('history_moment', historyMoment);
         let itemName = document.getElementById('itemName').value;
         if (itemName === '') {
-            alert('Не указано название');
+            setMessages('Не указано название');
             return;
         }
         formData.append('name', itemName);
@@ -145,6 +146,7 @@ export function AddItem(){
 
     return(
         <div className={styles.content}>
+            {messages!=='' && <MessageBoxError message={messages}/>}
             <div className={styles.usersTableRowHeader}>
                 Заполните известную Вам информацию
             </div>
