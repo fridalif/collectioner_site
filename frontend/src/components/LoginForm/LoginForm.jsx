@@ -20,6 +20,7 @@ export function LoginForm({isLoggedIn}){
     const [mode, setMode] = useState('login');
     const [isCsrf, setIsCsrf] = useState(null);
     const [message, setMessage] = useState('');
+    const [messageCounter, setMessageCounter] = useState(0);
     useEffect(() => {
         getCSRF();
     }, []);
@@ -56,8 +57,9 @@ export function LoginForm({isLoggedIn}){
                 return;
             }
             setMessage(res.message);
+            setMessageCounter(messageCounter + 1);
         })
-        .catch((err) => setMessage('Произошла непредвиденная ошибка'))
+        .catch((err) => {setMessage('Произошла непредвиденная ошибка');setMessageCounter(messageCounter + 1);})
     }
     const registerAsync = async () => {
         let csrfToken = await getCSRF()
@@ -68,10 +70,12 @@ export function LoginForm({isLoggedIn}){
         }
         if (data.password !== document.getElementById('retypePassword').value) {
             setMessage('Пароли не совпадают');
+            setMessageCounter(messageCounter + 1);
             return;
         }
         if (data.username == '' || data.password == '' || data.fullname == '' || data.email == '' || data.date_of_birth == '' || data.country == '') {
             setMessage('Заполните все обязательные поля');
+            setMessageCounter(messageCounter + 1);
             return;
         }
         axios.post(serverUrl + "api/register/", data, {
@@ -85,17 +89,18 @@ export function LoginForm({isLoggedIn}){
             res = res.data;
             if (res.status === 'ok') {
                 setMessage('Подтвердите регистрацию, перейдя по ссылке в письме');
+                setMessageCounter(messageCounter + 1);
                 return;
             }
             setMessage(res.message);
         })
-        .catch((err) => setMessage('Произошла непредвиденная ошибка'))
+        .catch((err) => {setMessage('Произошла непредвиденная ошибка');setMessageCounter(messageCounter + 1);})
     }
 
     return (
         <div className={styles.loginContainerHeight}>
-            { message !== '' && message !== 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxError message={message} displayed={true}/> }
-            { message === 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxGood message={message} displayed={true}/> }
+            { message !== '' && message !== 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxError key={messageCounter} message={message} displayed={true}/> }
+            { message === 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxGood key={messageCounter} message={message} displayed={true}/> }
             <div className={styles.loginContainerWidth}>
                 <div className={styles.loginBlock}>
                     <div className={styles.titleAboutLogin}>

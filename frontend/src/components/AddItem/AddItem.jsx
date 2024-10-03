@@ -17,6 +17,7 @@ export function AddItem(){
     const [ file5, setFile5 ] = useState(null);
     const [isCsrf, setIsCsrf] = useState(null);
     const [ messages, setMessages ] = useState('');
+    const [ messageCounter, setMessageCounter ] = useState(0);
     
     useEffect(()=>{getCSRF()},[])
 
@@ -34,6 +35,7 @@ export function AddItem(){
             }
             else {
                 setMessages(response.data.message);
+                setMessageCounter(messageCounter + 1);
             }
         })
         .catch((err) => console.error(err))
@@ -54,6 +56,7 @@ export function AddItem(){
             }
             else {
                 setMessages(response.data.message);
+                setMessageCounter(messageCounter + 1);
             }
         })
         .catch((err) => console.error(err))
@@ -92,12 +95,14 @@ export function AddItem(){
         }
         if (historyMoment === null || historyMoment === '') {
             setMessages('Не выбран исторический момент');
+            setMessageCounter(messageCounter + 1);
             return;
         }
         formData.append('history_moment', historyMoment);
         let itemName = document.getElementById('itemName').value;
         if (itemName === '') {
             setMessages('Не указано название');
+            setMessageCounter(messageCounter + 1);
             return;
         }
         formData.append('name', itemName);
@@ -146,7 +151,7 @@ export function AddItem(){
 
     return(
         <div className={styles.content}>
-            {messages!=='' && <MessageBoxError message={messages} displayed={true}/>}
+            {messages!=='' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
             <div className={styles.usersTableRowHeader}>
                 Заполните известную Вам информацию
             </div>

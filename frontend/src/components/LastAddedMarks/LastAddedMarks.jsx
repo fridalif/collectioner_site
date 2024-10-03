@@ -10,6 +10,7 @@ export function LastAddedMarks(){
     const [ lastAddedMarks, setLastAddedMarks ] = useState([])
     const [ startFrom, setStartFrom ] = useState(0)
     const [ messages, setMessages ] = useState('');
+    const [ messageCounter, setMessageCounter ] = useState(0);
 
     useEffect(async () => {
         axios
@@ -26,6 +27,7 @@ export function LastAddedMarks(){
                         .then(response_images => {
                             if (response_images.data.status !== 'ok'){
                                 setMessages(response_images.data.message);
+                                setMessageCounter(messageCounter + 1);
                                 return;
                             }
                             for (let i = 0; i < response.data.length; i++){
@@ -42,6 +44,7 @@ export function LastAddedMarks(){
                     return;
                 }
                 setMessages(response.message);
+                setMessageCounter(messageCounter + 1);
             })
             .catch(error => console.error(error))
         },
@@ -61,7 +64,7 @@ export function LastAddedMarks(){
 
     return(
         <div className={styles.lastAddedMarksContainer}>
-            { messages !== '' && <MessageBoxError message={messages} displayed={true}/> }
+            { messages !== '' && <MessageBoxError message={messages} key={messageCounter} displayed={true}/> }
         <div className={styles.lastAddedMarks}>
             <div className={styles.lastAddedMarksTitle}>
                 Последние добавленные марки

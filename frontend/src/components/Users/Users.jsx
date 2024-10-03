@@ -11,7 +11,7 @@ export function Users(){
     const [ total, setTotal ] = useState(0);
     const [ message, setMessage ] = useState('');
     const limit = 30;
-
+    const [ messageCounter, setMessageCounter ] = useState(0);
     const getInfoWithQuery = async ()=>{
         let query = document.querySelector('#searchUsers').value;
         axios
@@ -19,6 +19,7 @@ export function Users(){
         .then((response) => {
             if(response.data.status !== 'ok'){
                 setMessage(response.data.message);
+                setMessageCounter(messageCounter + 1);
                 return;
             }
             if(users.length > 0){
@@ -43,7 +44,7 @@ export function Users(){
 
     return(
         <div className={styles.content}>
-            {message!=='' && <MessageBoxError message={message} displayed={true}/>}
+            {message!=='' && <MessageBoxError message={message} key={messageCounter} displayed={true}/>}
             <div className={styles.searchField}>
                 <input type="text" placeholder="Искать пользователя..." className={styles.searchFieldInput} id='searchUsers'/>
                 <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getInfoWithQuery()}/>

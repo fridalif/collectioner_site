@@ -17,7 +17,9 @@ export function Catalog(){
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
-    const [ messages, setMessages ] = useState([]);
+    const [ messages, setMessages ] = useState('');
+    const [ messageCounter, setMessageCounter ] = useState(0);
+
     useEffect(()=>{
         const queryParameters = new URLSearchParams(window.location.search)
         let searchQuery_var = queryParameters.get("search_query")
@@ -33,6 +35,7 @@ export function Catalog(){
             }
             else {
                 setMessages(response.data.message);
+                setMessageCounter(messageCounter + 1);
             }
         })
         .catch((err) => console.error(err))    
@@ -52,6 +55,7 @@ export function Catalog(){
             }
             else {
                 setMessages(response.data.message);
+                setMessageCounter(messageCounter + 1);
             }
         })
         .catch((err) => console.error(err))
@@ -72,6 +76,7 @@ export function Catalog(){
             }
             else {
                 setMessages(response.data.message);
+                setMessageCounter(messageCounter + 1);
             }
         })
         .catch((err) => console.error(err))
@@ -180,6 +185,7 @@ export function Catalog(){
                         .then(response_images => {
                             if (response_images.data.status !== 'ok'){
                                 setMessages(response_images.data.message);
+                                setMessageCounter(messageCounter + 1);
                                 return;
                             }
                             for (let i = 0; i < response.data.data.length; i++){
@@ -198,6 +204,7 @@ export function Catalog(){
                 }
                 else {
                     setMessages(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                 }
             })
             .catch((err) => console.error(err))
@@ -223,7 +230,7 @@ export function Catalog(){
 
     return(
         <div className={styles.catalogContainer}>
-            {message !== '' && <MessageBoxError message={messages} displayed={true}/>}
+            {messages !== '' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
             <div className={styles.catalogSideBar}>
                 <div className={styles.catalogFilters}>
                     <div className={styles.catalogSideBarFilterBlock}>

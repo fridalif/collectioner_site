@@ -17,6 +17,8 @@ export function Item({isLoggedIn}){
     const [ itemIdForGettingCounter, setItemIdForGettingCounter ] = useState(-1);
     const [isCsrf, setIsCsrf] = useState(null);
     const [messages, setMessages ] = useState('');
+    const [ messageCounter, setMessageCounter ] = useState(0);
+
     const getCSRF = async () => {
         await axios.get(serverUrl + '/api/get_csrf/', { withCredentials: true })
         .then((res) => {
@@ -38,6 +40,7 @@ export function Item({isLoggedIn}){
         .then(response_images => {
             if (response_images.data.status !== 'ok'){
                 setMessages(response_images.data.message);
+                setMessageCounter(messageCounter + 1);
                 return;
             }
             console.log(response_images.data.data);
@@ -48,6 +51,7 @@ export function Item({isLoggedIn}){
         .then((response) => {
             if (response.data.status !== 'ok') {
                 setMessages(response.data.message);
+                setMessageCounter(messageCounter + 1);
                 return;
             }
             console.log(response.data.data);
@@ -63,6 +67,7 @@ export function Item({isLoggedIn}){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessages(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
                 console.log(response.data.data);
@@ -81,6 +86,7 @@ export function Item({isLoggedIn}){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessages(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
                 console.log(response.data.data);
@@ -112,8 +118,9 @@ export function Item({isLoggedIn}){
                 return;
             }
             setMessages(res.message);
+            setMessageCounter(messageCounter + 1);
         })
-        .catch((err) => setMessages('Произошла непредвиденная ошибка'))
+        .catch((err) => {setMessages('Произошла непредвиденная ошибка'); setMessageCounter(messageCounter + 1);})
     }
 
     const removeItem = async () => {
@@ -138,14 +145,15 @@ export function Item({isLoggedIn}){
                 return;
             }
             setMessages(res.message);
+            setMessageCounter(messageCounter + 1);
         })
-        .catch((err) => setMessages('Произошла непредвиденная ошибка'))
+        .catch((err) => {setMessages('Произошла непредвиденная ошибка'), setMessageCounter(messageCounter + 1);})
     }
 
 
     return(
         <div className={styles.pageBody}>
-            {messages !== '' && <MessageBoxError message={messages} displayed={true}/>}
+            {messages !== '' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
             <div className={styles.contentContainer}>
                 <div className={styles.contentImagesRow}>
                     <div className={styles.contentMainImage}>

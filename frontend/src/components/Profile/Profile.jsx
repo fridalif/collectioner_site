@@ -33,12 +33,14 @@ export function Profile(){
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ privateSettings, setPrivateSettings ] = useState(null);
     const [ message, setMessage ] = useState('');
+    const [ messageCounter, setMessageCounter ] = useState(0);
 
     const addCollection = async () => {
         let csrfToken = await getCSRF();
         let collectionName = document.getElementById('collectionName').value;
         if (collectionName === '') {
             setMessage('Название коллекции не может быть пустым');
+            setMessageCounter(messageCounter + 1);
             return;
         }
         let data = {
@@ -55,10 +57,12 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
                 setCollections([...collections, response.data.data]);
                 setMessage('Коллекция создана');
+                setMessageCounter(messageCounter + 1);
             })
             .catch((err) => console.error(err));
     }
@@ -74,6 +78,7 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     window.location.href = '/';
                     return;
                 }
@@ -123,7 +128,8 @@ export function Profile(){
             }
             else {
                 if (res.message!=='Не указана картинка'){
-                    setMessage(res.message)
+                    setMessage(res.message);
+                    setMessageCounter(messageCounter + 1);
                 }
             }
         })
@@ -178,6 +184,7 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
                 var responseData = response.data.data;
@@ -190,6 +197,7 @@ export function Profile(){
                 setLanguages(responseData.languages);
                 setAbout(responseData.about);
                 setMessage('Изменения сохранены');
+                setMessageCounetr(messageCounter + 1);
             })
             .catch((err) => console.error(err))
     }
@@ -214,9 +222,11 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
                 setMessage('Изменения сохранены');
+                setMessageCounter(messageCounter + 1);
             })
             .catch((err) => console.error(err))
     }
@@ -233,7 +243,7 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
-
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
 
@@ -264,6 +274,7 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }  
                 setCollections(response.data.data);
@@ -276,6 +287,7 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
                 setPrivateSettings(response.data.data);
@@ -300,6 +312,7 @@ export function Profile(){
             .then((response) => {
                 if (response.data.status !== 'ok') {
                     setMessage(response.data.message);
+                    setMessageCounter(messageCounter + 1);
                     return;
                 }
                 console.log(response.data.data)
@@ -322,6 +335,7 @@ const get_countries = async () => {
             }
             else {
                 setMessage(response.message);
+                setMessageCounter(messageCounter + 1);
                 return [];
             }
         })
@@ -329,8 +343,8 @@ const get_countries = async () => {
     }
     return(
         <div className={styles.profileContainerHeight}>
-            { message !== '' && message !== 'Изменения сохранены' && message !== 'Коллекция создана' && <MessageBoxError message={message} displayed={true}/>}
-            { message == 'Изменения сохранены' || message == 'Коллекция создана' && <MessageBoxGood message={message} displayed={true}/>}
+            { message !== '' && message !== 'Изменения сохранены' && message !== 'Коллекция создана' && <MessageBoxError key={messageCounter} message={message} displayed={true}/>}
+            { message == 'Изменения сохранены' || message == 'Коллекция создана' && <MessageBoxGood key={messageCounter} message={message} displayed={true}/>}
             <div className={styles.profileContainerWidth}>
                 <div className={styles.profileBlock}>
                     <div className={styles.sideBar}>
