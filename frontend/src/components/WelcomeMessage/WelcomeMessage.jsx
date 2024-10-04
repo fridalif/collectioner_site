@@ -3,7 +3,6 @@ import styles from './WelcomeMessage.module.css'
 export function WelcomeMessage(){
 
     return(
-        <div className={styles.welcomeMessageContainer}>
         <div className={styles.welcomeMessage}>
             <div className={styles.welcomeMessageTitle}>
                 Добро пожаловать в мир коллекционирования марок!
@@ -16,7 +15,6 @@ export function WelcomeMessage(){
                 <br />
                 Начните свое путешествие в мир марок прямо сейчас — откройте для себя новые горизонты и создайте свою уникальную коллекцию!
             </div>
-        </div>
         </div>
     )
 }

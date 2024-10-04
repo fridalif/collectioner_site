@@ -4,7 +4,7 @@ import { FaArrowRight } from "react-icons/fa";
 export function Titles(){
 
     return(
-        <div className={styles.titlesContainer}>
+        <>
         <div className={styles.titles}>
             <div className={styles.titlesTitle}>
                 Статьи
@@ -25,7 +25,7 @@ export function Titles(){
                 </div>
             </div>
         </div>
-        </div>
+        </>
     )
 }
 

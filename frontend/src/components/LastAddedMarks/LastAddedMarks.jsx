@@ -63,7 +63,7 @@ export function LastAddedMarks(){
     }
 
     return(
-        <div className={styles.lastAddedMarksContainer}>
+       <>
             { messages !== '' && <MessageBoxError message={messages} key={messageCounter} displayed={true}/> }
         <div className={styles.lastAddedMarks}>
             <div className={styles.lastAddedMarksTitle}>
@@ -110,6 +110,6 @@ export function LastAddedMarks(){
                     </div>
             }
         </div>
-        </div>
+        </>
     )
 }

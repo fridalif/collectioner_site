@@ -2,16 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    top:150px;
-    height: 1080px;
-    width: 1920px;
+    margin-top:150px;
     flex-direction: column;
-}
-.loginContainerWidth{
-    display: flex;
-    width: 1920px;
-    align-items: center;
-    justify-content: center;
 }
 
 .loginBlock{
