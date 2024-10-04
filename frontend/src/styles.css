@@ -2,7 +2,11 @@
     font-family: "Sofia-Sans";
     src: url("./fonts/Inter-Regular.otf");
 }
-
+html{
+    position: absolute;
+    width: 100%;
+    left:-0.4%;
+}
 body{
     position:absolute;
     background-color: #F4F3EE;

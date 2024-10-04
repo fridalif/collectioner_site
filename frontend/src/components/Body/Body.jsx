@@ -32,7 +32,7 @@ export function Body({isLoggedIn, mode}){
                 mode == 'Profile' && <div className={styles.bodyContent}><Profile /></div>
             }
             {
-                mode == 'Catalog' && <div className={styles.bodyContent}><Catalog /></div>
+                mode == 'Catalog' && <div className={styles.bodyContent} style={{width:'100%', }}><Catalog /></div>
             }  
             {
                 mode == 'Item' && <div className={styles.bodyContent}><Item isLoggedIn={isLoggedIn} /></div>
