@@ -1,73 +1,230 @@
-
-.lastAddedMarks{
-    background-color: white;
-    font-size: 24px;
-    font-family: "Sofia-Sans";
-    height: 350px;
-    width:1460px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    display: flex;
-    gap:10px;
+@media screen and (min-width: 1500px){
+    .lastAddedMarks{
+        background-color: white;
+        font-size: 24px;
+        font-family: "Sofia-Sans";
+        height: 350px;
+        width:1460px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        display: flex;
+        gap:10px;
+    }
+    
+    .lastAddedMarksTitle{
+        position:absolute;
+        margin-top:25px;
+        margin-left: 25px;
+        font-size: 28px;
+    }
+    .lastAddedMarksMark{
+        height: 250px;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 200px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;   
+    }
+    
+    .prevButton{
+        height: 250px;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 100px;
+        background-color: #FFFFFF;   
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .prevButtonChosen{
+        height: 250px;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 100px;
+        color: white;
+        background-color: #463F3A;  
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .prevButton:hover{
+        color: white;
+        background-color: #463F3A;
+    }
+    
+    .lastAddedMarksMark:hover{
+        color: orange;
+        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        cursor:pointer;
+    }
+    
+    .lastAddedMarksMarkImg{
+        width:150px;
+        height: 150px;
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+    
+    .lastAddedMarksMarkText{
+        font-size: 20px;
+        width:200px;
+        text-align: center;
+    }    
 }
 
-.lastAddedMarksTitle{
-    position:absolute;
-    margin-top:25px;
-    margin-left: 25px;
-    font-size: 28px;
-}
-.lastAddedMarksMark{
-    height: 250px;
-    margin-top: 75px;
-    margin-left: 25px;
-    width: 200px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    background-color: #FFFFFF;   
+@media screen and (min-width: 1000px) and (max-width: 1500px){
+    .lastAddedMarks{
+        background-color: white;
+        font-size: 20px;
+        padding: 20px;
+        font-family: "Sofia-Sans";
+        height: 250px;
+        width:960px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        gap:10px;
+        display: flex;
+        justify-content: center;
+
+    }
+    
+    .lastAddedMarksTitle{
+        position:absolute;
+        margin-top:25px;
+        width: 960px;
+        margin-left: 25px;
+        font-size: 18px;
+    }
+    .lastAddedMarksMark{
+        height: 150px;
+        margin-top: 75px;
+        margin-left: 15px;
+        width: 120px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;   
+    }
+    
+    .prevButton{
+        height: 150px;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 50px;
+        background-color: #FFFFFF;   
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .prevButtonChosen{
+        height: 150px;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 50px;
+        color: white;
+        background-color: #463F3A;  
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .prevButton:hover{
+        color: white;
+        background-color: #463F3A;
+    }
+    
+    .lastAddedMarksMark:hover{
+        color: orange;
+        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        cursor:pointer;
+    }
+    
+    .lastAddedMarksMarkImg{
+        width:75px;
+        height: 75px;
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+    
+    .lastAddedMarksMarkText{
+        font-size: 18px;
+        width:120px;
+        text-align: center;
+    }    
 }
 
-.prevButton{
-    height: 250px;
-    margin-top: 75px;
-    margin-left: 25px;
-    width: 100px;
-    background-color: #FFFFFF;   
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
-.prevButtonChosen{
-    height: 250px;
-    margin-top: 75px;
-    margin-left: 25px;
-    width: 100px;
-    color: white;
-    background-color: #463F3A;  
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
+@media screen and (max-width: 1000px){
+    .lastAddedMarks{
+        background-color: white;
+        font-size: 20px;
+        padding: 20px;
+        font-family: "Sofia-Sans";
+        height: 250px;
+        width:430px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        gap:10px;
+        display: flex;
+        justify-content: center;
 
-.prevButton:hover{
-    color: white;
-    background-color: #463F3A;
-}
-
-.lastAddedMarksMark:hover{
-    color: orange;
-    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
-    cursor:pointer;
-}
-
-.lastAddedMarksMarkImg{
-    width:150px;
-    height: 150px;
-    margin-top: 25px;
-    margin-left: 25px;
-}
-
-.lastAddedMarksMarkText{
-    font-size: 20px;
-    width:200px;
-    text-align: center;
+    }
+    
+    .lastAddedMarksTitle{
+        position:absolute;
+        margin-top:25px;
+        width: 430px;
+        margin-left: 25px;
+        font-size: 18px;
+    }
+    .lastAddedMarksMark{
+        height: 150px;
+        margin-top: 75px;
+        margin-left: 15px;
+        width: 120px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;   
+    }
+    
+    .prevButton{
+        height: 150px;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 50px;
+        background-color: #FFFFFF;   
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .prevButtonChosen{
+        height: 150px;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 50px;
+        color: white;
+        background-color: #463F3A;  
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .prevButton:hover{
+        color: white;
+        background-color: #463F3A;
+    }
+    
+    .lastAddedMarksMark:hover{
+        color: orange;
+        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        cursor:pointer;
+    }
+    
+    .lastAddedMarksMarkImg{
+        width:75px;
+        height: 75px;
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+    
+    .lastAddedMarksMarkText{
+        font-size: 18px;
+        width:120px;
+        text-align: center;
+    }    
 }

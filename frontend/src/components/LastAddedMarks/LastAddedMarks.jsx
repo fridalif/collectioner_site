@@ -11,8 +11,13 @@ export function LastAddedMarks(){
     const [ startFrom, setStartFrom ] = useState(0)
     const [ messages, setMessages ] = useState('');
     const [ messageCounter, setMessageCounter ] = useState(0);
+    const [ showingItems, setShowingItems ] = useState(5);
 
     useEffect(async () => {
+        if (window.innerWidth <= 1000){
+            setShowingItems(2);
+            console.log('yes');
+        }
         axios
             .get(`${serverUrl}/api/get_items/?offset=0&limit=10`)
             .then(response => {
@@ -45,6 +50,7 @@ export function LastAddedMarks(){
                 }
                 setMessages(response.message);
                 setMessageCounter(messageCounter + 1);
+                
             })
             .catch(error => console.error(error))
         },
@@ -57,7 +63,7 @@ export function LastAddedMarks(){
     }
 
     const nextCard = () => {
-        if (startFrom+5<10){
+        if (startFrom+showingItems<10){
             setStartFrom(startFrom+1);
         }
     }
@@ -69,28 +75,28 @@ export function LastAddedMarks(){
             <div className={styles.lastAddedMarksTitle}>
                 Последние добавленные марки
             </div>
-            { lastAddedMarks.length > 0 && lastAddedMarks.length <=6 && lastAddedMarks.map((mark) => (
+            { lastAddedMarks.length > 0 && lastAddedMarks.length <= showingItems+1 && lastAddedMarks.map((mark) => (
                 <div className={styles.lastAddedMarksMark}>
-                <img src={mark.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                <img src={mark.image_url} alt="mark" className={styles.lastAddedMarksMarkImg} /><br />
                 <div className={styles.lastAddedMarksMarkText} id={mark.id}>
                     {mark.name}
                 </div>
                 </div>
             ))
             }
-            { lastAddedMarks.length > 6 && startFrom==0 &&
+            { lastAddedMarks.length > showingItems+1 && startFrom==0 &&
                     <div className={styles.prevButtonChosen}>
                         <IoIosArrowDropleftCircle />
                     </div>
             }
-            { lastAddedMarks.length > 6 && startFrom>0 &&
+            { lastAddedMarks.length > showingItems+1 && startFrom>0 &&
                     <div className={styles.prevButton} onClick={()=>prevCard()}>
                         <IoIosArrowDropleftCircle />
                     </div>
             }
             {
-                lastAddedMarks.length > 6 && lastAddedMarks.map((mark,index)=>(
-                    startFrom<=index && index<startFrom+5 &&
+                lastAddedMarks.length > showingItems+1 && lastAddedMarks.map((mark,index)=>(
+                    startFrom<=index && index<startFrom+showingItems &&
                     <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${mark.id}`}>
                         <img src={mark.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
                         <div className={styles.lastAddedMarksMarkText} id={mark.id}>
@@ -99,12 +105,12 @@ export function LastAddedMarks(){
                     </div>
                 ))
             }
-            { lastAddedMarks.length > 6 && startFrom+5 < 10 &&
+            { lastAddedMarks.length > showingItems+1 && startFrom+showingItems < 10 &&
                     <div className={styles.prevButton} onClick={()=>nextCard()}>
                         <IoIosArrowDroprightCircle />
                     </div>
             }
-            { lastAddedMarks.length > 6 && startFrom+5 >= 10 &&
+            { lastAddedMarks.length > showingItems+1 && startFrom+showingItems >= 10 &&
                     <div className={styles.prevButtonChosen}>
                         <IoIosArrowDroprightCircle />
                     </div>
