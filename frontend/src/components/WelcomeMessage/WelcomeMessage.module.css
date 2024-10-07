@@ -1,18 +1,63 @@
-
-.welcomeMessage{
-    background-color: white;
-    margin-top:70px;
-    font-size: 24px;
-    padding: 20px;
-    font-family: "Sofia-Sans";
-    width:1460px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+@media screen and (min-width: 1500px){
+    .welcomeMessage{
+        background-color: white;
+        margin-top:70px;
+        font-size: 24px;
+        padding: 20px;
+        font-family: "Sofia-Sans";
+        width:1460px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    .welcomeMessageTitle{
+        font-size: 28px;
+    }
+    
+    .welcomeMessageText{
+        font-size: 20px;
+    }
+    
 }
 
-.welcomeMessageTitle{
-    font-size: 28px;
+@media screen and (min-width: 1000px) and (max-width: 1500px){
+    .welcomeMessage{
+        background-color: white;
+        margin-top:70px;
+        font-size: 18px;
+        padding: 20px;
+        font-family: "Sofia-Sans";
+        width:960px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    .welcomeMessageTitle{
+        font-size: 18px;
+    }
+    
+    .welcomeMessageText{
+        font-size: 16px;
+    }
+    
 }
 
-.welcomeMessageText{
-    font-size: 20px;
+
+@media screen and (max-width: 1000px){
+    .welcomeMessage{
+        background-color: white;
+        margin-top:70px;
+        font-size: 16px;
+        padding: 20px;
+        font-family: "Sofia-Sans";
+        width:430px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    .welcomeMessageTitle{
+        font-size: 16px;
+    }
+    
+    .welcomeMessageText{
+        font-size: 14px;
+    }
+    
 }
