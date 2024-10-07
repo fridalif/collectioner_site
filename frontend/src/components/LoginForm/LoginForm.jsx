@@ -12,7 +12,13 @@ const loginToRegister = (elem) => {
 }
 
 const registerToLogin = (elem) => {
-    elem.style.transform = 'translateX(500px)';
+    if (window.innerWidth >= 1500){
+        elem.style.transform = 'translateX(500px)';
+    }
+    if (window.innerWidth >= 1000 && window.innerWidth < 1500){
+        elem.style.transform = 'translateX(480px)';
+    }
+
 }
 
 export function LoginForm({isLoggedIn}){
@@ -21,8 +27,12 @@ export function LoginForm({isLoggedIn}){
     const [isCsrf, setIsCsrf] = useState(null);
     const [message, setMessage] = useState('');
     const [messageCounter, setMessageCounter] = useState(0);
+    const [showText, setShowText] = useState(false);
     useEffect(() => {
         getCSRF();
+        if(window.innerWidth>=1000){
+            setShowText(true);
+        }
     }, []);
 
     const getCSRF = async () => {
@@ -61,6 +71,8 @@ export function LoginForm({isLoggedIn}){
         })
         .catch((err) => {setMessage('Произошла непредвиденная ошибка');setMessageCounter(messageCounter + 1);})
     }
+    
+
     const registerAsync = async () => {
         let csrfToken = await getCSRF()
         const data = {
@@ -103,6 +115,7 @@ export function LoginForm({isLoggedIn}){
             { message === 'Подтвердите регистрацию, перейдя по ссылке в письме' && <MessageBoxGood key={messageCounter} message={message} displayed={true}/> }
             <div className={styles.loginContainerWidth}>
                 <div className={styles.loginBlock}>
+                    {showText &&<>
                     <div className={styles.titleAboutLogin}>
                         <div className={styles.headerAbout}>
                             С возвращением на наш сайт!
@@ -121,6 +134,7 @@ export function LoginForm({isLoggedIn}){
                             Присоединяйтесь к нам и погружайтесь в увлекательный мир марок. Ваши уникальные истории и открытия ждут своего часа!
                         </div>
                     </div>
+                    </>}
                         
                     <div className={styles.loginWindow} ref={loginWindow}>
                         {mode == 'login' ? 
