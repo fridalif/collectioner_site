@@ -1,27 +1,80 @@
-.header{
-    background-color:#463F3A;
-    height: 50px;
-    gap:50px;
-    width: 1fr;
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.headerNode{
-    color: white;
-    font-size: 24px;
-    height: 50px;
-    padding-left:20px;
-    padding-right: 20px;
-    font-family: "Sofia-Sans";
-    align-items: center;
-    display: flex;
+@media  screen and (min-width: 1500px) {
+    .header{
+        background-color:#463F3A;
+        height: 50px;
+        gap:50px;
+        width: 1fr;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .headerNode{
+        color: white;
+        font-size: 24px;
+        height: 50px;
+        padding-left:20px;
+        padding-right: 20px;
+        font-family: "Sofia-Sans";
+        align-items: center;
+        display: flex;
+    }
+}
+@media  screen and (max-width: 1500px) and (min-width: 1000px) {
+    .header{
+        background-color:#463F3A;
+        height: 50px;
+        gap:30px;
+        width: 1fr;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .headerNode{
+        color: white;
+        font-size: 18px;
+        height: 50px;
+        padding-left:10px;
+        padding-right: 10px;
+        font-family: "Sofia-Sans";
+        align-items: center;
+        display: flex;
+    }
+}
+@media  screen and (max-width: 1000px){
+    .header{
+        background-color:#463F3A;
+        height: 50px;
+        width: 1fr;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .headerNode{
+        color: white;
+        font-size: 12px;
+        height: 50px;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: "Sofia-Sans";
+        align-items: center;
+        display: flex;
+    }
 }
 
 .headerNode:hover{

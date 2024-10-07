@@ -20,70 +20,131 @@
     left:0%;
     justify-content: space-between;
 }
-
-.secondHeaderSearchfield{
-    width: 500px;
-    padding-left:200px;
-    height: 50px;
-    display: flex;
-    align-items: center;
+@media screen and (min-width: 1500px){
+    .secondHeaderSearchfield{
+        width: 500px;
+        padding-left:200px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+    .secondHeaderCabinetLink{
+        text-decoration: none;
+        color:#221f1c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .secondHeaderCabinet{
+        padding-right: 200px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        color:#221f1c;
+        font-size: 24px;
+        font-family: "Sofia-Sans";
+        cursor: pointer;
+        font-weight: 200;
+    }
+    .secondHeaderSearchfieldImg{
+        width: 20px;
+        height: 20px;
+        position:absolute;
+        left:670px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    .secondHeaderSearchfieldInput{
+        width: 500px;
+        height: 30px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
 }
-.searchResults{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 500px;
-    height: 300px;
-    background-color: white;
-    border: 1px black solid;
-    overflow-y: scroll;
-    z-index: 1000;
+@media screen and (min-width: 1000px) and (max-width: 1500px){
+    .secondHeaderSearchfield{
+        width: 300px;
+        padding-left:100px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+    .secondHeaderCabinetLink{
+        text-decoration: none;
+        color:#221f1c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .secondHeaderCabinet{
+        padding-right: 100px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        color:#221f1c;
+        font-size: 18px;
+        font-family: "Sofia-Sans";
+        cursor: pointer;
+        font-weight: 200;
+    }
+    .secondHeaderSearchfieldImg{
+        width: 15px;
+        height: 15px;
+        position:absolute;
+        left:370px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    .secondHeaderSearchfieldInput{
+        width: 300px;
+        height: 30px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
 }
-.secondHeaderSearchfieldInput{
-    width: 500px;
-    height: 30px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+@media screen and (max-width: 1000px){
+    .secondHeaderSearchfield{
+        width: 300px;
+        padding-left:30px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+    .secondHeaderCabinetLink{
+        text-decoration: none;
+        color:#221f1c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .secondHeaderCabinet{
+        padding-right: 30px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        color:#221f1c;
+        font-size: 14px;
+        font-family: "Sofia-Sans";
+        cursor: pointer;
+        font-weight: 200;
+    }
+    .secondHeaderSearchfieldImg{
+        width: 10px;
+        height: 10px;
+        position:absolute;
+        left:300px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    .secondHeaderSearchfieldInput{
+        width: 300px;
+        height: 30px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
 }
-
-.secondHeaderSearchResult{
-    width: 500px;
-    height: 30px;
-    background-color: white;
-}
-
-
-.secondHeaderSearchfieldImg{
-    width: 20px;
-    height: 20px;
-    position:absolute;
-    left:670px;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.secondHeaderCabinet{
-    padding-right: 200px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    color:#221f1c;
-    font-size: 24px;
-    font-family: "Sofia-Sans";
-    cursor: pointer;
-    font-weight: 200;
-}
-
 .secondHeaderCabinet:hover{
     color: orange;
 }
 
-.secondHeaderCabinetLink{
-    text-decoration: none;
-    color:#221f1c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .secondHeaderCabinetLink:hover{
     color: orange;
