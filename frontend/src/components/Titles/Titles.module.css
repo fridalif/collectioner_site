@@ -1,75 +1,224 @@
+@media screen and (min-width: 1500px){
+    .titles{
+        background-color: white;
+        font-size: 24px;
+        font-family: "Sofia-Sans";
+        height: 500px;
+        width:1460px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        display: flex;
+        gap:20px;
+    }
 
-.titles{
-    background-color: white;
-    font-size: 24px;
-    font-family: "Sofia-Sans";
-    height: 500px;
-    width:1460px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    display: flex;
-    gap:20px;
-}
-
-.titlesTitle{
-    font-size: 28px;
-    padding-top:20px;
-    padding-left:20px;
-    position: absolute;
-}
+    .titlesTitle{
+        font-size: 28px;
+        padding-top:20px;
+        padding-left:20px;
+        position: absolute;
+    }
 
 
-.titlesArticle{
-    margin-top:75px;
-    margin-left: 25px;
-    width: 400px;
-    height: 400px;
-    display:flex;
-    flex-direction: column;
-    gap:20px;
-    overflow-y: scroll;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    background-color: #FFFFFF;
-}
+    .titlesArticle{
+        margin-top:75px;
+        margin-left: 25px;
+        width: 400px;
+        height: 400px;
+        display:flex;
+        flex-direction: column;
+        gap:20px;
+        overflow-y: scroll;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;
+    }
 
-.titlesArticleHeader{
-    font-size: 20px;
-    margin-top:20px;
-    margin-left:20px;
-    margin-right: 20px;
-    height: 70px;
-    color:orange;
-    text-align: center;
-}
-.titlesArticleHeader:hover{
-    text-decoration: underline;
-}
-.titlesArticleTextContainer{
-    margin-left: 20px;
-    margin-right: 20px;
-    height: 310px;
-}
-.titlesArticleText{
-    font-size: 16px;
-    text-align: left;
-    margin-left: 20px;
-    margin-right: 20px;
-    height: 250px;
-    overflow-y: hidden;
-}
+    .titlesArticleHeader{
+        font-size: 20px;
+        margin-top:20px;
+        margin-left:20px;
+        margin-right: 20px;
+        height: 70px;
+        color:orange;
+        text-align: center;
+    }
+    .titlesArticleHeader:hover{
+        text-decoration: underline;
+    }
+    .titlesArticleTextContainer{
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 310px;
+    }
+    .titlesArticleText{
+        font-size: 16px;
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 250px;
+        overflow-y: hidden;
+    }
 
-.titlesArticleLink{
-    font-size: 16px;
-    color:orange;
-    display: flex;
-    justify-content: flex-end;
-    text-decoration: none;
-    margin-left: 20px;
-    margin-right: 20px;
-    height: 60px;
-    width:300px;
-}
+    .titlesArticleLink{
+        font-size: 16px;
+        color:orange;
+        display: flex;
+        justify-content: flex-end;
+        text-decoration: none;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 60px;
+        width:300px;
+    }
 
-.titlesArticleLink:hover{
-    text-decoration: underline;
+    .titlesArticleLink:hover{
+        text-decoration: underline;
+    }
+}
+@media screen and (max-width: 1500px) and (min-width: 1000px){
+    .titles{
+        background-color: white;
+        font-size: 24px;
+        font-family: "Sofia-Sans";
+        height: 350px;
+        width:960px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        display: flex;
+        gap:20px;
+    }
+
+    .titlesTitle{
+        font-size: 20px;
+        padding-top:20px;
+        padding-left:20px;
+        position: absolute;
+    }
+
+
+    .titlesArticle{
+        margin-top:55px;
+        margin-left: 25px;
+        width: 250px;
+        height: 300px;
+        display:flex;
+        flex-direction: column;
+        gap:20px;
+        overflow-y: scroll;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;
+    }
+
+    .titlesArticleHeader{
+        font-size: 18px;
+        margin-top:10px;
+        margin-left:10px;
+        margin-right: 10px;
+        height: 50px;
+        color:orange;
+        text-align: center;
+    }
+    .titlesArticleHeader:hover{
+        text-decoration: underline;
+    }
+    .titlesArticleTextContainer{
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 230px;
+    }
+    .titlesArticleText{
+        font-size: 16px;
+        text-align: left;
+        height: 175px;
+        overflow-y: hidden;
+    }
+
+    .titlesArticleLink{
+        font-size: 16px;
+        color:orange;
+        display: flex;
+        justify-content: flex-end;
+        text-decoration: none;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 30px;
+        width:200px;
+    }
+
+    .titlesArticleLink:hover{
+        text-decoration: underline;
+    }
+}
+@media screen and (max-width: 1000px){
+    .titles{
+        background-color: white;
+        font-size: 24px;
+        font-family: "Sofia-Sans";
+        height: 350px;
+        width:430px;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        display: flex;
+        gap:20px;
+    }
+
+    .titlesTitle{
+        font-size: 18px;
+        padding-top:20px;
+        padding-left:20px;
+        position: absolute;
+    }
+
+
+    .titlesArticle{
+        margin-top:55px;
+        margin-left: 25px;
+        width: 200px;
+        height: 300px;
+        display:flex;
+        flex-direction: column;
+        gap:20px;
+        overflow-y: scroll;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;
+    }
+
+    .titlesArticleHeader{
+        font-size: 16px;
+        margin-top:10px;
+        margin-left:10px;
+        margin-right: 10px;
+        height: 50px;
+        color:orange;
+        text-align: center;
+    }
+    .titlesArticleHeader:hover{
+        text-decoration: underline;
+    }
+    .titlesArticleTextContainer{
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 230px;
+    }
+    .titlesArticleText{
+        font-size: 14px;
+        text-align: left;
+        height: 175px;
+        overflow-y: hidden;
+    }
+
+    .titlesArticleLink{
+        font-size: 14px;
+        color:orange;
+        display: flex;
+        justify-content: flex-end;
+        text-decoration: none;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 30px;
+        width:150px;
+    }
+
+    .titlesArticleLink:hover{
+        text-decoration: underline;
+    }
 }
