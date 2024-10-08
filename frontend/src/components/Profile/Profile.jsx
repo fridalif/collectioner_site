@@ -405,10 +405,10 @@ const get_countries = async () => {
                         { mode == 'Settings' &&
                         <>
                             <div className={styles.profileAvatarAndName}>
-                                <img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/> <input type="text" placeholder='Никнейм' id='username' style={{width: '300px', height: '30px', fontSize: '20px'}} className={styles.standartInput} defaultValue={username!=null?username:''}/>
+                                <img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/> <input type="text" placeholder='Никнейм' id='username' className={styles.standartInput} defaultValue={username!=null?username:''}/>
                             </div>
-                            <div className={styles.profileInfoRow} style={{'fontSize': '24px','fontFamily': 'Sofia-Sans', 'marginLeft': '40px'}}>
-                                 Изменить аватарку: <input type="file" id="avatar" className={styles.standartInput} style={{'boxShadow': 'none','height': '40px', 'borderRadius':'0px'}}/>
+                            <div className={styles.profileInfoRow}>
+                                Изменить аватарку: <input type="file" id="avatar" className={styles.standartInputImage}/>
                             </div>
 
                             <div className={styles.profileInfo}>
@@ -506,17 +506,17 @@ const get_countries = async () => {
                         {
                             mode === 'SettingsPrivate' && isMyAccount &&
                             <>
-                                <div className={styles.profileInfoRow} style={{'marginTop':'30px','fontSize':'24px'}}>
+                                <div className={styles.profileInfoRow} style={{'marginTop':'50px'}}>
                                     <div>
                                         {privateSettings !== null && privateSettings.show_fullname ? <input type='checkbox' name='show_fullname' id='showFullname' defaultChecked/> :<input type='checkbox' name='show_fullname' id='showFullname'/>} Показывать полное имя
                                     </div>
                                 </div>
-                                <div className={styles.profileInfoRow} style={{'marginTop':'30px','fontSize':'24px'}}>
+                                <div className={styles.profileInfoRow} style={{'marginTop':'50px'}}>
                                     <div>
                                         {privateSettings !== null && privateSettings.show_birth_date ? <input type='checkbox' name='show_birth_date' id='showBirthdate' defaultChecked/> :<input type='checkbox' name='show_birth_date' id='showBirthdate'/>} Показывать дату рождения
                                     </div>
                                 </div>
-                                <div className={styles.profileInfoRow} style={{'marginTop':'50px','fontSize':'24px'}}>
+                                <div className={styles.profileInfoRow} style={{'marginTop':'50px'}}>
                                     <div>
                                         <select className={styles.selectCatalog} id='selectCollection' onChange={() => setChosenCollection(document.getElementById('selectCollection').value)}>
                                         { collections.map((item)=>(
@@ -527,9 +527,9 @@ const get_countries = async () => {
                                             chosenCollection !== null && collections.map((item)=>{
                                                 if (item.collection_id == chosenCollection){
                                                     if (item.can_see_other){
-                                                        return (<><input type='checkbox' name='can_see_other' id='canSeeOther' defaultChecked /> Показывать коллекцию </>)
+                                                        return (<><br/><input type='checkbox' name='can_see_other' id='canSeeOther' defaultChecked /> Показывать коллекцию </>)
                                                     }
-                                                    return (<><input type='checkbox' name='can_see_other' id='canSeeOther'/> Показывать коллекцию </>)
+                                                    return (<><br/><input type='checkbox' name='can_see_other' id='canSeeOther'/> Показывать коллекцию </>)
                                                     
                                                 }
                                                 return (<></>)
