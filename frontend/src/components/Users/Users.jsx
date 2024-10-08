@@ -22,12 +22,7 @@ export function Users(){
                 setMessageCounter(messageCounter + 1);
                 return;
             }
-            if(users.length > 0){
-                setUsers([...users, ...response.data.data]);
-            }
-            else{
-                setUsers(response.data.data);
-            }
+            setUsers(response.data.data);
             setTotal(response.data.total);
             console.log(response.data.data);
         })
@@ -66,7 +61,7 @@ export function Users(){
                     ))
                 }
                 {
-                    users.length > 0 && total>0 && users.length < total &&
+                    users.length > 0 && total>0 && users.length < total && 
                     <div className={styles.usersTableRow} style={{display:'flex',justifyContent:'center',alignItems:'center'}} onClick={() => setOffset(offset+limit)}>
                             Загрузить ещё
                     </div>
