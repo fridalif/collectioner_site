@@ -1,8 +1,9 @@
+@media screen and (min-width: 1000px){
+    
 .pageBody{
     display: flex;
     justify-content: center;
     align-items: center;
-    width:1920px;
     height: 850px;
     margin-top: 50px;
 }
@@ -25,7 +26,10 @@
     width:200px;
     height: 200px;
 }
+.contentHeader{
+    font-size: 24px;
 
+}
 .contentMiniImagesColumn{
     margin-top:100px;
     width:60px;
@@ -95,4 +99,121 @@
 
 .minusButton:active{
     color: red;
+}
+.contentCount{
+    display: flex;
+    font-size: 32px;
+    margin-top: 30px;
+    justify-content: center;
+}
+}
+
+@media screen and (max-width: 1000px){
+
+.pageBody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 850px;
+    margin-top: 50px;
+}
+
+.contentContainer{
+    width: 500px;
+    height: 800px;
+    background-color: white;
+
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.contentImagesRow{
+    display:flex;
+    margin-left: 50px;
+    margin-top: 50px;
+    width: 450px;
+    height: 100px;
+}
+.contentMainImage{
+    width:100px;
+    height: 100px;
+}
+
+.contentMiniImagesColumn{
+    width:60px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contentMiniImage{
+    width: 45px;
+    height: 45px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.contentMiniImage:hover{
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+}
+
+.contentMiniImageChosen{
+    width: 45px;
+    height: 45px;
+    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+}
+.contentCharacteristicAndAddtoCollection{
+    display: flex;
+    width:450px;
+    height: 400px;
+    gap:30px;
+}
+.contentCharacteristics{
+    display:flex;
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 225px;
+    height: 400px;
+    flex-direction: column;
+    gap:10px;
+}
+.contentHeader{
+    font-size: 20px;
+}
+.contentCharacteristicsRow{
+    display:flex;
+    justify-content: space-between;
+    width: 225px;
+    height: 30px;
+    font-family: 'Sofia-Sans';
+    font-size: 14px;
+}
+.selectCollection{
+    width:55%;
+    height: 50px;
+    font-size: 14px;
+    margin-top:20px;
+    font-family: 'Sofia-Sans';
+
+    background-color: white;
+}
+
+.contentCount{
+    display: flex;
+    font-size: 20px;
+    margin-top: 30px;
+    justify-content: center;
+}
+.minusButton{
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.minusButton:hover{
+    cursor: pointer;
+    color: orange;
+}
+
+.minusButton:active{
+    color: red;
+}
+
 }

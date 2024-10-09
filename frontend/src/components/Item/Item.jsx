@@ -157,7 +157,7 @@ export function Item({isLoggedIn}){
             <div className={styles.contentContainer}>
                 <div className={styles.contentImagesRow}>
                     <div className={styles.contentMainImage}>
-                        <img src={imagesList!==null && imagesList.length>0 &&imagesList[currentImage].image_url} style={{width:'200px', height:'200px'}} alt='Нет изображения'/>
+                        <img src={imagesList!==null && imagesList.length>0 &&imagesList[currentImage].image_url} className={styles.contentMainImage} alt='Нет изображения'/>
                     </div>
                     { imagesList!==null &&imagesList.map((element,index)=>{
                         if (index%2==1){
@@ -180,8 +180,10 @@ export function Item({isLoggedIn}){
                 <div className={styles.contentCharacteristicAndAddtoCollection}>
                     <div className={styles.contentCharacteristics}>
                         { characteristics!==null && characteristics.name!==null &&
-                        <div className={styles.contentCharacteristicsRow} style={{fontWeight:'bold', fontSize:'24px'}}>
-                            {characteristics.name}
+                        <div className={styles.contentCharacteristicsRow}>
+                            <div className={styles.contentHeader}>
+                                {characteristics.name}
+                            </div>
                         </div>
                         }
                         { characteristics !== null && characteristics.country_name!==null &&
@@ -341,8 +343,10 @@ export function Item({isLoggedIn}){
                     <div className={styles.contentCharacteristics}>
                         { isLoggedIn && 
                         <>
-                            <div className={styles.contentCharacteristicsRow} style={{fontWeight:'bold', fontSize:'24px'}}>
-                                Добавить в коллекцию
+                            <div className={styles.contentCharacteristicsRow}>
+                                <div className={styles.contentHeader}>
+                                    Добавить в коллекцию
+                                </div>
                             </div>
                             <div className={styles.contentCharacteristicsRow} style={{'height':'50px'}}>
                                 {userCollections !== null &&
@@ -360,8 +364,10 @@ export function Item({isLoggedIn}){
                                 }
                             </div>
                             
-                            <div className={styles.contentCharacteristicsRow} style={{'height':'100px',marginTop:'20px',justifyContent:'center', fontSize:'30px'}}>
-                                <HiOutlineMinus className={styles.minusButton} onClick={() => removeItem()}/><div>{itemsCounter}</div><HiOutlinePlus className={styles.minusButton} onClick={() => addItem()}/>
+                            <div className={styles.contentCharacteristicsRow}>
+                                <div className={styles.contentCount}>
+                                    <HiOutlineMinus className={styles.minusButton} onClick={() => removeItem()}/><div>{itemsCounter}</div><HiOutlinePlus className={styles.minusButton} onClick={() => addItem()}/>
+                                </div>
                             </div>
                         </>
                         }
