@@ -1,3 +1,4 @@
+@media screen and (min-width: 1500px){ 
 .catalogContainer{
     display: flex;
     width:1420px;
@@ -7,7 +8,6 @@
 
 .catalogSideBar{
     display: flex;
-
     margin-top: 5px;
     flex-direction: column;
     justify-content: space-between;
@@ -19,12 +19,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1420px;
+    width: 1170px;
     gap:50px;
 }
 
 .catalogContentRow{
-    width:1420px;
+    width:1170ppx;
     height: 250px;
     display: flex;
     gap:20px;
@@ -36,7 +36,7 @@
     position:absolute;
     left:940px;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 200;
 }
 
 .secondHeaderSearchfieldInput{
@@ -47,7 +47,7 @@
 
 
 .catalogContentRowSearch{
-    width:1420px;
+    width:1170px;
     height: 50px;
     margin-top: 50px;
     margin-left: 50px;
@@ -184,4 +184,390 @@
 
 .inputFromToField{
     width:70px;
+}
+}
+
+@media screen and (max-width: 1500px) and (min-width: 1000px){
+     
+    .catalogContainer{
+        display: flex;
+        width:1000px;
+        position:absolute;
+        margin-top: 50px;
+    }
+    
+    .catalogSideBar{
+        display: flex;
+        margin-top: 5px;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 860px;
+        width:150px;
+        gap:10px;
+    }
+    .catalogContent{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 850px;
+        gap:50px;
+    }
+    
+    .catalogContentRow{
+        width:850px;
+        height: 250px;
+        display: flex;
+        gap:20px;
+
+    }
+    
+    .secondHeaderSearchfieldImg{
+        width: 30px;
+        height: 40px;
+        position:absolute;
+        left:640px;
+        cursor: pointer;
+        z-index: 200;
+    }
+    
+    .secondHeaderSearchfieldInput{
+        width: 500px;
+        height: 30px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    
+    .catalogContentRowSearch{
+        width:850px;
+        height: 50px;
+        margin-top: 50px;
+        margin-left: 50px;
+        display: flex;
+        gap:20px;
+        align-items: flex-end;
+    }
+    
+    .paginationRow{
+        display: flex;
+        justify-content: center;
+        width: 800px;
+        height: 50px;
+    }
+    
+    .paginationCell{
+        background-color: #8A817C;
+        height: 50px;
+        width: 50px;
+        color:white;
+        font-family: 'Sofia-Sans';
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .paginationCell:hover{
+        background-color: #221f1c;
+        
+    }
+    
+    .paginationCellChosen{
+        background-color: #221f1c;
+        height: 50px;
+        width: 50px;
+        color:white;
+        font-family: 'Sofia-Sans';
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .lastAddedMarksMark{
+        height: 200px;
+        margin-left: 25px;
+        width: 150px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;
+        cursor: pointer;   
+    }
+    
+    
+    .lastAddedMarksMark:hover{
+        color: orange;
+        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+    }
+    
+    .lastAddedMarksMarkImg{
+        width:100px;
+        height: 100px;
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+    
+    .lastAddedMarksMarkText{
+        font-size: 20px;
+        width:150px;
+        text-align: center;
+    }
+    
+    
+    .catalogFilters{
+        display: flex;
+        margin-top: 20px;
+        flex-direction: column;
+        height: 790px;
+        width:150px;
+        gap:20px;
+        font-size: 18px;
+        overflow: scroll;
+    }
+    
+    .catalogCommitFilters{
+        background-color: #463F3A;
+        height: 50px;
+        width: 150px;
+        color:white;
+        font-family: 'Sofia-Sans';
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .catalogCommitFilters:hover{
+        background-color: #221f1c;
+    }
+    
+    .catalogSideBarTitle{
+        font-family: 'Sofia-Sans';
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 50px;
+    }
+    
+    .catalogSideBarFilterBlock{
+        font-family: 'Sofia-Sans';
+        font-size:18px;
+        width:150px;
+    }
+    
+    .selecter{
+        width: 150px;
+        height: 30px;
+        font-size: 16px;
+        font-family: 'Sofia-Sans';
+    }
+    
+    .inputFromTo{
+        width: 140px;
+        height: 30px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .inputFrom{
+        width: 70px;
+    }
+    
+    .inputFromToField{
+        width:70px;
+    }
+}
+
+
+@media screen and (max-width: 1000px){
+     
+    .catalogContainer{
+        display: flex;
+        width:600px;
+        position:absolute;
+        margin-top: 50px;
+    }
+    
+    .catalogSideBar{
+        display: flex;
+        margin-top: 5px;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 860px;
+        width:150px;
+        gap:10px;
+    }
+    .catalogContent{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 850px;
+        gap:50px;
+    }
+    
+    .catalogContentRow{
+        width:450px;
+        height: 250px;
+        display: flex;
+        gap:20px;
+
+    }
+    
+    .secondHeaderSearchfieldImg{
+        width: 30px;
+        height: 40px;
+        position:absolute;
+        left:510px;
+        cursor: pointer;
+        z-index: 200;
+    }
+    
+    .secondHeaderSearchfieldInput{
+        width: 350px;
+        height: 30px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    
+    .catalogContentRowSearch{
+        width:450px;
+        height: 50px;
+        margin-top: 50px;
+        margin-left: 50px;
+        display: flex;
+        gap:20px;
+        align-items: flex-end;
+    }
+    
+    .paginationRow{
+        display: flex;
+        justify-content: center;
+        width: 400px;
+        height: 25px;
+    }
+    
+    .paginationCell{
+        background-color: #8A817C;
+        height: 25px;
+        width: 25px;
+        color:white;
+        font-family: 'Sofia-Sans';
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .paginationCell:hover{
+        background-color: #221f1c;
+        
+    }
+    
+    .paginationCellChosen{
+        background-color: #221f1c;
+        height: 25px;
+        width: 25px;
+        color:white;
+        font-family: 'Sofia-Sans';
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .lastAddedMarksMark{
+        height: 200px;
+        margin-left: 25px;
+        width: 150px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        background-color: #FFFFFF;
+        cursor: pointer;   
+    }
+    
+    
+    .lastAddedMarksMark:hover{
+        color: orange;
+        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+    }
+    
+    .lastAddedMarksMarkImg{
+        width:100px;
+        height: 100px;
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+    
+    .lastAddedMarksMarkText{
+        font-size: 20px;
+        width:150px;
+        text-align: center;
+    }
+    
+    
+    .catalogFilters{
+        display: flex;
+        margin-top: 20px;
+        flex-direction: column;
+        height: 790px;
+        width:150px;
+        gap:20px;
+        font-size: 18px;
+        overflow: scroll;
+    }
+    
+    .catalogCommitFilters{
+        background-color: #463F3A;
+        height: 50px;
+        width: 150px;
+        color:white;
+        font-family: 'Sofia-Sans';
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .catalogCommitFilters:hover{
+        background-color: #221f1c;
+    }
+    
+    .catalogSideBarTitle{
+        font-family: 'Sofia-Sans';
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 50px;
+    }
+    
+    .catalogSideBarFilterBlock{
+        font-family: 'Sofia-Sans';
+        font-size:18px;
+        width:150px;
+    }
+    
+    .selecter{
+        width: 150px;
+        height: 30px;
+        font-size: 16px;
+        font-family: 'Sofia-Sans';
+    }
+    
+    .inputFromTo{
+        width: 140px;
+        height: 30px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .inputFrom{
+        width: 70px;
+    }
+    
+    .inputFromToField{
+        width:70px;
+    }
 }

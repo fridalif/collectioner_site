@@ -19,8 +19,12 @@ export function Catalog(){
     const [totalItems, setTotalItems] = useState(0);
     const [ messages, setMessages ] = useState('');
     const [ messageCounter, setMessageCounter ] = useState(0);
+    const [ itemsCounterPage, setItemsCounterPage ] = useState(4);
 
     useEffect(()=>{
+        if (window.innerWidth<=1000){
+            setItemsCounterPage(2);
+        }
         const queryParameters = new URLSearchParams(window.location.search)
         let searchQuery_var = queryParameters.get("search_query")
         if (searchQuery_var) {
@@ -84,8 +88,12 @@ export function Catalog(){
 
     const getItems = ()=> {
         let resultUrl = serverUrl + '/api/get_items/'
-        let offset = (currentPage-1)*12;
-        let limit = 12;
+        let offset = (currentPage-1)*8;
+        let limit = 8;
+        if (window.innerWidth <= 1000){
+            offset = (currentPage-1)*4;
+            limit = 4;
+        }
         resultUrl += `?offset=${offset}&limit=${limit}`
         if (historyMoment!==null && historyMoment!==''){
             resultUrl += `&history_moment=${historyMoment}`;
@@ -217,7 +225,7 @@ export function Catalog(){
     
 
     const nextPage = () => {
-        if (currentPage<Math.trunc(totalItems/12)+1){
+        if (currentPage<Math.trunc(totalItems/(itemsCounterPage*2))+1){
             setCurrentPage(currentPage+1);
         }
     }
@@ -420,7 +428,7 @@ export function Catalog(){
                 <div className={styles.catalogContentRow}>
                     {
                         items.map((item,index)=>{
-                            if (index<6){
+                            if (index<itemsCounterPage){
                             return(
                                 <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${item.id}`}>
                                     <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
@@ -437,7 +445,7 @@ export function Catalog(){
                 <div className={styles.catalogContentRow}>
                     {
                         items.map((item,index)=>{
-                            if (index>=6){
+                            if (index>=itemsCounterPage){
                             return(
                                 <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${item.id}`}>
                                     <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
@@ -452,12 +460,12 @@ export function Catalog(){
                     
                 </div>
                 <div className={styles.paginationRow}>
-                    { totalItems>12  &&
+                    { totalItems>itemsCounterPage*2  &&
                         <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => prevPage()}>
                             <IoIosArrowDropleftCircle />
                         </div>
                     }
-                    {totalItems>12 &&
+                    {totalItems>itemsCounterPage*2 &&
                         <>
                             <div className={currentPage == 1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(1)}>
                                 1
@@ -468,7 +476,7 @@ export function Catalog(){
                         </>
                     }
                     {
-                        currentPage-2 > 2 &&
+                        currentPage-2 > 3 &&
                         <>
                             <div className={styles.paginationCell}>
                                 ...
@@ -479,25 +487,25 @@ export function Catalog(){
                         </>
                     }
                     {
-                        currentPage-1 > 2 &&
+                        currentPage-1 > 3 &&
                         <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage-1)}>
                             {currentPage-1}
                         </div>
                     }
                     {
-                        currentPage > 2 && currentPage < Math.trunc(totalItems/12) &&
+                        currentPage > 2 && currentPage < Math.trunc(totalItems/(itemsCounterPage*2)) &&
                         <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage)}>
                             {currentPage}
                         </div>
                     }
                     {
-                        currentPage+1 < Math.trunc(totalItems/12) &&
+                        currentPage+1 < Math.trunc(totalItems/(itemsCounterPage*2)) && currentPage > 2 &&
                         <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage+1)}>
                             {currentPage+1}
                         </div>
                     }
                     {
-                        currentPage+2 < Math.trunc(totalItems/12) &&
+                        currentPage+2 < Math.trunc(totalItems/(itemsCounterPage*2)) && currentPage > 2 &&
                         <>
                             <div className={styles.paginationCell} onClick={() => setCurrentPage(currentPage+2)}>
                                 {currentPage+2}
@@ -508,24 +516,24 @@ export function Catalog(){
                         </>
                     }
                     {
-                        totalItems>36 && totalItems<=48 &&
+                        totalItems>(itemsCounterPage*2*2) && totalItems<=(itemsCounterPage*2*3) &&
                         <div className={currentPage == 3 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(3)}>
                             3
                         </div>
                     }
-                    {totalItems>48 &&
+                    {totalItems>(itemsCounterPage*2*3) &&
                         <>
-                            <div className={currentPage == Math.trunc(totalItems/12) ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/12))}>
-                                {Math.trunc(totalItems/12)}
+                            <div className={currentPage == Math.trunc(totalItems/(itemsCounterPage*2)) ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/(itemsCounterPage*2)))}>
+                                {Math.trunc(totalItems/(itemsCounterPage*2))}
                             </div>
-                            <div className={currentPage == Math.trunc(totalItems/12)+1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/12)+1)}>
-                                {Math.trunc(totalItems/12)+1}
+                            <div className={currentPage == Math.trunc(totalItems/(itemsCounterPage*2))+1 ? styles.paginationCellChosen : styles.paginationCell} onClick={() => setCurrentPage(Math.trunc(totalItems/(itemsCounterPage*2))+1)}>
+                                {Math.trunc(totalItems/(itemsCounterPage*2))+1}
                             </div>
                         </>
                     }
 
-                    { totalItems>12  &&
-                        <div className={currentPage == (Math.trunc(totalItems/12)+1) ?styles.paginationCellChosen : styles.paginationCell} onClick={() => nextPage()}>
+                    { totalItems>itemsCounterPage*2  &&
+                        <div className={currentPage == (Math.trunc(totalItems/(itemsCounterPage*2))+1) ?styles.paginationCellChosen : styles.paginationCell} onClick={() => nextPage()}>
                             <IoIosArrowDroprightCircle />
                         </div>
                     }
