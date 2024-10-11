@@ -1,10 +1,11 @@
+@media screen and (min-width: 1500px){
 .messageBoxGood{
     display: flex;
     background-color: lightgreen;
     color:white;
-    font-size:20px;
+    font-size:14px;
     height: 200px;
-    width: 400px;
+    width: 300px;
     font-family: "Sofia-Sans";
     position:fixed;
     top:120px;
@@ -16,12 +17,12 @@
     display: flex;
     background-color: rgb(206, 67, 67);
     color:white;
-    font-size:20px;
+    font-size:14px;
     height: 200px;
-    width: 400px;
+    width: 300px;
     font-family: "Sofia-Sans";
     position:fixed;
-    top:200px;
+    top:120px;
     z-index: 1000;
     left:755px;
 }
@@ -36,7 +37,101 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    left: 370px;
+    left: 270px;
     bottom: 170px;
     cursor: pointer;
 }
+}
+
+
+@media screen and (max-width: 1500px) and (min-width: 1000px){
+    .messageBoxGood{
+        display: flex;
+        background-color: lightgreen;
+        color:white;
+        font-size:14px;
+        height: 200px;
+        width: 300px;
+        font-family: "Sofia-Sans";
+        position:fixed;
+        top:120px;
+        z-index: 1000;
+        left:455px;
+    }
+    
+    .messageBoxError{
+        display: flex;
+        background-color: rgb(206, 67, 67);
+        color:white;
+        font-size:14px;
+        height: 200px;
+        width: 300px;
+        font-family: "Sofia-Sans";
+        position:fixed;
+        top:120px;
+        z-index: 1000;
+        left:455px;
+    }
+    
+    .messageHeader{
+        margin: 30px 30px 30px 30px;
+    }
+    
+    .closeButton{
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        left: 270px;
+        bottom: 170px;
+        cursor: pointer;
+    }
+}
+
+
+@media screen and (max-width: 1000px){
+        .messageBoxGood{
+            display: flex;
+            background-color: lightgreen;
+            color:white;
+            font-size:14px;
+            height: 200px;
+            width: 300px;
+            font-family: "Sofia-Sans";
+            position:fixed;
+            top:120px;
+            z-index: 1000;
+            left:100px;
+        }
+        
+        .messageBoxError{
+            display: flex;
+            background-color: rgb(206, 67, 67);
+            color:white;
+            font-size:14px;
+            height: 200px;
+            width: 300px;
+            font-family: "Sofia-Sans";
+            position:fixed;
+            top:120px;
+            z-index: 1000;
+            left:100px;
+        }
+        
+        .messageHeader{
+            margin: 30px 30px 30px 30px;
+        }
+        
+        .closeButton{
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            left: 270px;
+            bottom: 170px;
+            cursor: pointer;
+        }
+    }
+    
