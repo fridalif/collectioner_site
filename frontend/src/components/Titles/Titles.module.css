@@ -1,7 +1,7 @@
 @media screen and (min-width: 1500px){
     .titles{
         background-color: white;
-        font-size: 24px;
+        font-size: 18px;
         font-family: "Sofia-Sans";
         height: 500px;
         width:1460px;
@@ -12,7 +12,7 @@
     }
 
     .titlesTitle{
-        font-size: 28px;
+        font-size: 20px;
         padding-top:20px;
         padding-left:20px;
         position: absolute;
@@ -33,7 +33,7 @@
     }
 
     .titlesArticleHeader{
-        font-size: 20px;
+        font-size: 18px;
         margin-top:20px;
         margin-left:20px;
         margin-right: 20px;
@@ -77,7 +77,7 @@
 @media screen and (max-width: 1500px) and (min-width: 1000px){
     .titles{
         background-color: white;
-        font-size: 24px;
+        font-size: 14px;
         font-family: "Sofia-Sans";
         height: 350px;
         width:960px;
@@ -88,7 +88,7 @@
     }
 
     .titlesTitle{
-        font-size: 20px;
+        font-size: 18px;
         padding-top:20px;
         padding-left:20px;
         position: absolute;
@@ -154,15 +154,16 @@
         font-size: 24px;
         font-family: "Sofia-Sans";
         height: 350px;
-        width:430px;
+        width:360px;
         padding: 20px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
         display: flex;
         gap:20px;
+        margin-bottom: 20px;
     }
 
     .titlesTitle{
-        font-size: 18px;
+        font-size: 14px;
         padding-top:20px;
         padding-left:20px;
         position: absolute;
@@ -171,19 +172,19 @@
 
     .titlesArticle{
         margin-top:55px;
-        margin-left: 25px;
-        width: 200px;
+        margin-left: 5px;
+        width: 150px;
         height: 300px;
         display:flex;
         flex-direction: column;
-        gap:20px;
+        gap:10px;
         overflow-y: scroll;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
         background-color: #FFFFFF;
     }
 
     .titlesArticleHeader{
-        font-size: 16px;
+        font-size: 14px;
         margin-top:10px;
         margin-left:10px;
         margin-right: 10px;
@@ -195,19 +196,19 @@
         text-decoration: underline;
     }
     .titlesArticleTextContainer{
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-left: 5px;
+        margin-right: 5px;
         height: 230px;
     }
     .titlesArticleText{
-        font-size: 14px;
+        font-size: 10px;
         text-align: left;
         height: 175px;
         overflow-y: hidden;
     }
 
     .titlesArticleLink{
-        font-size: 14px;
+        font-size: 10px;
         color:orange;
         display: flex;
         justify-content: flex-end;
@@ -215,7 +216,7 @@
         margin-left: 20px;
         margin-right: 20px;
         height: 30px;
-        width:150px;
+        width:120px;
     }
 
     .titlesArticleLink:hover{

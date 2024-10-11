@@ -384,7 +384,7 @@
      
     .catalogContainer{
         display: flex;
-        width:600px;
+        width:360px;
         position:absolute;
         margin-top: 50px;
     }
@@ -395,19 +395,19 @@
         flex-direction: column;
         justify-content: space-between;
         height: 860px;
-        width:150px;
+        width:80px;
         gap:10px;
     }
     .catalogContent{
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 850px;
+        width: 260px;
         gap:50px;
     }
     
     .catalogContentRow{
-        width:450px;
+        width:260px;
         height: 250px;
         display: flex;
         gap:20px;
@@ -415,23 +415,23 @@
     }
     
     .secondHeaderSearchfieldImg{
-        width: 30px;
+        width: 20px;
         height: 40px;
         position:absolute;
-        left:510px;
+        left:320px;
         cursor: pointer;
         z-index: 200;
     }
     
     .secondHeaderSearchfieldInput{
-        width: 350px;
+        width: 260px;
         height: 30px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     }
     
     
     .catalogContentRowSearch{
-        width:450px;
+        width:260px;
         height: 50px;
         margin-top: 50px;
         margin-left: 50px;
@@ -443,7 +443,7 @@
     .paginationRow{
         display: flex;
         justify-content: center;
-        width: 400px;
+        width: 200px;
         height: 25px;
     }
     
@@ -478,7 +478,7 @@
     .lastAddedMarksMark{
         height: 200px;
         margin-left: 25px;
-        width: 150px;
+        width: 120px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
         background-color: #FFFFFF;
         cursor: pointer;   
@@ -494,12 +494,12 @@
         width:100px;
         height: 100px;
         margin-top: 25px;
-        margin-left: 25px;
+        margin-left: 10px;
     }
     
     .lastAddedMarksMarkText{
-        font-size: 20px;
-        width:150px;
+        font-size: 14px;
+        width:120px;
         text-align: center;
     }
     
@@ -509,7 +509,7 @@
         margin-top: 20px;
         flex-direction: column;
         height: 790px;
-        width:150px;
+        width:100px;
         gap:20px;
         font-size: 18px;
         overflow: scroll;
@@ -518,11 +518,12 @@
     .catalogCommitFilters{
         background-color: #463F3A;
         height: 50px;
-        width: 150px;
+        width: 90px;
         color:white;
         font-family: 'Sofia-Sans';
-        font-size: 18px;
+        font-size: 14px;
         display: flex;
+        text-align: center;
         justify-content: center;
         align-items: center;
     }
@@ -533,41 +534,41 @@
     
     .catalogSideBarTitle{
         font-family: 'Sofia-Sans';
-        font-size: 30px;
+        font-size: 18px;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 150px;
+        width: 90px;
         height: 50px;
     }
     
     .catalogSideBarFilterBlock{
         font-family: 'Sofia-Sans';
-        font-size:18px;
-        width:150px;
+        font-size:14px;
+        width:90px;
     }
     
     .selecter{
-        width: 150px;
+        width: 90px;
         height: 30px;
-        font-size: 16px;
+        font-size: 10px;
         font-family: 'Sofia-Sans';
     }
     
     .inputFromTo{
-        width: 140px;
+        width: 90px;
         height: 30px;
-        font-size: 16px;
+        font-size: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
     
     .inputFrom{
-        width: 70px;
+        width: 45px;
     }
     
     .inputFromToField{
-        width:70px;
+        width:45px;
     }
 }
