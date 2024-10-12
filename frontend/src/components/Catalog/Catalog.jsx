@@ -4,6 +4,7 @@ import axios from 'axios';
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
 import { IoMdSearch } from "react-icons/io";
 import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
@@ -20,7 +21,17 @@ export function Catalog(){
     const [ messages, setMessages ] = useState('');
     const [ messageCounter, setMessageCounter ] = useState(0);
     const [ itemsCounterPage, setItemsCounterPage ] = useState(4);
+    const size = useWindowSize();
 
+    useEffect(() => {
+        console.log(size);
+        if (size.width <= 1000){
+            setItemsCounterPage(2);
+        }
+        else{
+            setItemsCounterPage(4);
+        }
+    }, [size]);
     useEffect(()=>{
         if (window.innerWidth<=1000){
             setItemsCounterPage(2);
@@ -92,7 +103,6 @@ export function Catalog(){
         let limit = 8;
         if (window.innerWidth <= 1000){
             offset = (currentPage-1)*4;
-            limit = 4;
         }
         resultUrl += `?offset=${offset}&limit=${limit}`
         if (historyMoment!==null && historyMoment!==''){
@@ -447,7 +457,7 @@ export function Catalog(){
                 <div className={styles.catalogContentRow}>
                     {
                         items.map((item,index)=>{
-                            if (index>=itemsCounterPage){
+                            if (index>=itemsCounterPage && index<itemsCounterPage*2){
                             return(
                                 <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${item.id}`}>
                                     <div className={styles.lastAddedMarksMarkImgField}>

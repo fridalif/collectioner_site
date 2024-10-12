@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
 import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
-
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function LastAddedMarks(){
@@ -12,7 +12,17 @@ export function LastAddedMarks(){
     const [ messages, setMessages ] = useState('');
     const [ messageCounter, setMessageCounter ] = useState(0);
     const [ showingItems, setShowingItems ] = useState(5);
+    const size = useWindowSize();
 
+    useEffect(() => {
+        console.log(size);
+        if (size.width <= 1000){
+            setShowingItems(2);
+        }
+        else{
+            setShowingItems(5);
+        }
+    }, [size]);
     useEffect(async () => {
         if (window.innerWidth <= 1000){
             setShowingItems(2);
