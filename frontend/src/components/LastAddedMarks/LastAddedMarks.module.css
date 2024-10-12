@@ -146,12 +146,20 @@
     }
     
     .lastAddedMarksMarkImg{
-        width:75px;
+        width: auto;
+        height: auto;
+        max-width: 75px;
+        max-height: 75px;
+    }
+    .lastAddedMarksMarkImgField{
+        width: 75px;
         height: 75px;
         margin-top: 25px;
         margin-left: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    
     .lastAddedMarksMarkText{
         font-size: 18px;
         width:120px;
@@ -224,12 +232,20 @@
     }
     
     .lastAddedMarksMarkImg{
-        width:75px;
+        max-width: 75px;
+        max-height: 75px;
+        height: auto;
+        width:auto;
+    }
+    .lastAddedMarksMarkImgField{
+        width: 75px;
         height: 75px;
         margin-top: 25px;
         margin-left: 25px;
-    }
-    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }   
     .lastAddedMarksMarkText{
         font-size: 14px;
         width:120px;

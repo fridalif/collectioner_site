@@ -80,10 +80,21 @@
     }
     
     .profileAvatar{
-        width:100px;
-        height: 100px;
+        max-width:100px;
+        max-height: 100px;
+        width:auto;
+        height: auto;
+    
     }
     
+    .profileAvatarContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 100px;
+    }
+
     .profileInfo{
         display: flex;
         align-items: flex-start;
@@ -169,9 +180,21 @@
     }
     
     .lastAddedMarksMarkImg{
-        height: 200px;
-        width: 200px;
+        max-height: 150px;
+        max-width: 150px;
+        width: auto;
+        height: auto;
     }
+
+    .lastAddedMarksMarkImgField{
+        width: 200px;
+        height: 200px;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .lastAddedMarksMarkName{
         font-size: 20px;
     }
@@ -335,7 +358,16 @@
     }
     
     .profileAvatar{
-        width:100px;
+        max-width:100px;
+        max-height: 100px;
+        height: auto;
+        width:auto;
+    }
+    .profileAvatarContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
         height: 100px;
     }
     
@@ -424,9 +456,20 @@
     }
     
     .lastAddedMarksMarkImg{
-        height: 200px;
-        width: 200px;
+        max-height: 150px;
+        max-width: 150px;
+        height: auto;
+        width: auto;
     }
+    .lastAddedMarksMarkImgField{
+        width: 200px;
+        height: 200px;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .lastAddedMarksMarkName{
         font-size: 20px;
     }
@@ -595,7 +638,17 @@
     }
     
     .profileAvatar{
-        width:50px;
+        max-width:50px;
+        max-height: 50px;
+        height: auto;
+        width:auto;
+    }
+
+    .profileAvatarContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
         height: 50px;
     }
     
@@ -684,9 +737,21 @@
     }
     
     .lastAddedMarksMarkImg{
-        height: 50px;
-        width: 50px;
+        max-height: 45px;
+        max-width: 45px;
+        height: auto;
+        width: auto;
     }
+    
+    .lastAddedMarksMarkImgField{
+        width: 50px;
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
     .lastAddedMarksMarkName{
         font-size: 10px;
     }

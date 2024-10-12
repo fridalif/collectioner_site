@@ -431,7 +431,9 @@ export function Catalog(){
                             if (index<itemsCounterPage){
                             return(
                                 <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${item.id}`}>
-                                    <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                                    <div className={styles.lastAddedMarksMarkImgField}>
+                                        <img src={item.image_url} width={150} height={150} alt="mark" className={styles.lastAddedMarksMarkImg} />
+                                    </div>
                                     <div className={styles.lastAddedMarksMarkText} id={item.id}>
                                         {item.name}
                                     </div>
@@ -448,7 +450,9 @@ export function Catalog(){
                             if (index>=itemsCounterPage){
                             return(
                                 <div className={styles.lastAddedMarksMark} onClick={()=>window.location.href=`/item?item_id=${item.id}`}>
-                                    <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                                    <div className={styles.lastAddedMarksMarkImgField}>
+                                        <img src={item.image_url} alt="mark" width={150} height={150} className={styles.lastAddedMarksMarkImg} /><br />
+                                    </div>
                                     <div className={styles.lastAddedMarksMarkText} id={item.id}>
                                         {item.name}
                                     </div>

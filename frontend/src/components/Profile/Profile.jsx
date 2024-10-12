@@ -374,7 +374,7 @@ const get_countries = async () => {
                         { mode == 'Profile' &&
                         <>
                             <div className={styles.profileAvatarAndName}>
-                                <img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/> {username}
+                                <div className={styles.profileAvatarContainer}><img src={serverUrl+avatar} className={styles.profileAvatar} alt="avatar"/></div> {username}
                             </div>
                             <div className={styles.profileInfo}>
                                 <div className={styles.profileInfoRow}>
@@ -472,7 +472,7 @@ const get_countries = async () => {
                                             console.log(collectionItems[index]);
                                             return(
                                                 <div className={styles.lastAddedMarksMark} onClick={() => window.location.href='/item?item_id='+collectionItems[index].id}>
-                                                    {collectionItems[index].image && <img src={collectionItems[index].image} className={styles.lastAddedMarksMarkImg}/>}
+                                                    {collectionItems[index].image && <div className={styles.lastAddedMarksMarkImgField}><img src={collectionItems[index].image} className={styles.lastAddedMarksMarkImg}/> </div>}
                                                     <div className={styles.lastAddedMarksMarkName}>{collectionItems[index].name}</div>
                                                     <div>
                                                         Низкое: {collectionItems[index].qualities_counters.bad}
