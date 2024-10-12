@@ -156,7 +156,7 @@ export function Item({isLoggedIn}){
             {messages !== '' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
             <div className={styles.contentContainer}>
                 <div className={styles.contentImagesRow}>
-                    <div className={styles.contentMainImage}>
+                    <div className={styles.contentMainImageContainer}>
                         <img src={imagesList!==null && imagesList.length>0 &&imagesList[currentImage].image_url} className={styles.contentMainImage} alt='Нет изображения'/>
                     </div>
                     { imagesList!==null &&imagesList.map((element,index)=>{
