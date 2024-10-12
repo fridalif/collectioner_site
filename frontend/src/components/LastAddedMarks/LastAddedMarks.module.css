@@ -60,12 +60,20 @@
     }
     
     .lastAddedMarksMarkImg{
-        width:150px;
+        max-width: 150px;
+        height: auto;
+        width: auto;
+        max-height: 150px;
+    }
+    .lastAddedMarksMarkImgField{
+        width: 150px;
         height: 150px;
         margin-top: 25px;
         margin-left: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    
     .lastAddedMarksMarkText{
         font-size: 18px;
         width:200px;
