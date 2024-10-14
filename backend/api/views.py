@@ -66,8 +66,8 @@ def get_titles(request, item_id=None):
         if not is_int(offset) or int(offset)<0:
             offset = 0
         offset = int(offset)
-
         titles = Title.objects.all().order_by('-id')[offset:offset+limit]
+        return Response({'status':'ok', 'data':TitleSerializer(titles, many=True).data, 'total':len(Title.objects.all())})
     except Exception as e:
         print(e)
         return Response({'status':'error', 'message':'Неизвестная ошибка'})
