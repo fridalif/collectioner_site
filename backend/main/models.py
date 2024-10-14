@@ -254,3 +254,15 @@ class CollectionItem(models.Model):
         verbose_name = 'Предмет в коллекции'
         verbose_name_plural = 'Предметы в коллекции'
         db_table = 'collection_item'
+
+class Title(models.Model):
+    header = models.CharField(max_length=100, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+
+    def __str__(self):
+        return self.header
+    
+    class Meta:
+        verbose_name = 'Заголовок'
+        verbose_name_plural = 'Заголовки'
+        db_table = 'title'

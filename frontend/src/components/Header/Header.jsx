@@ -10,7 +10,9 @@ export function Header({isLoggedIn, isSuperuser}){
                 </a>
             </div>
             <div className={styles.headerNode}>
-                Новости
+                <a href='/news' className={styles.headerLink}>
+                    Новости
+                </a>
             </div>
             <div className={styles.headerNode}>
                 <a href='/catalog' className={styles.headerLink}>

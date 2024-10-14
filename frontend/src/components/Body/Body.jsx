@@ -43,6 +43,7 @@ export function Body({isLoggedIn, mode}){
             {
                 mode == 'AddItem' && <div className={styles.bodyContent}><AddItem /></div>
             }
+            { mode == 'News' && <div className={styles.bodyContent}>News</div> }
         </div>
     )
 }

@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage, Collection, CollectionItem, UserCollection
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer, CustomUserListSerializer
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer, CustomUserListSerializer, TitleSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -47,6 +47,23 @@ def validate_model_ids(model, ids)->List:
     GET
 """
 
+def get_titles(request):
+    try:
+        limit = request.GET.get('limit')
+        offset = request.GET.get('offset')
+        if not is_int(limit) or int(limit)<=0:
+            limit = 10
+        limit = int(limit)
+        if not is_int(offset) or int(offset)<0:
+            offset = 0
+        offset = int(offset)
+
+        titles = Title.objects.all().order_by('-id')[offset:offset+limit]
+    except Exception as e:
+        print(e)
+        return Response({'status':'error', 'message':'Неизвестная ошибка'})
+    
+@api_view(['GET'])
 def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set'})
     response['X-CSRFToken'] = get_token(request)

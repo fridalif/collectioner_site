@@ -179,7 +179,7 @@ export function Profile(){
         await axios
             .post(serverUrl + "/api/change_other_user_info/", data, { withCredentials: true , headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": isCsrf,
+                "X-CSRFToken": csrfToken,
               }})
             .then((response) => {
                 if (response.data.status !== 'ok') {

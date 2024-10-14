@@ -16,6 +16,7 @@ export function AddItem(){
     const [ file4, setFile4 ] = useState(null);
     const [ file5, setFile5 ] = useState(null);
     const [isCsrf, setIsCsrf] = useState(null);
+    const [ isGoodMessage, setIsGoodMessage ] = useState(false);
     const [ messages, setMessages ] = useState('');
     const [ messageCounter, setMessageCounter ] = useState(0);
     
@@ -147,11 +148,26 @@ export function AddItem(){
               "X-CSRFToken": csrfToken,
             }
         })
+        .then((response) => {
+            if (response.data.status === 'ok') {
+                setMessages('Новый предмет отправлен на рассмотрение администратору!');
+                setMessageCounter(messageCounter + 1);
+                setIsGoodMessage(true);
+                return;
+            }
+            else {
+                setMessages(response.data.message);
+                setMessageCounter(messageCounter + 1);
+                setIsGoodMessage(false);
+            }
+        })
+        .catch((err) => console.error(err))
     }
 
     return(
         <div className={styles.content}>
-            {messages!=='' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
+            {messages!=='' && !isGoodMessage &&<MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
+            {messages!=='' && isGoodMessage &&<MessageBoxGood key={messageCounter} message={messages} displayed={true}/>}
             <div className={styles.usersTableRowHeader}>
                 Заполните известную Вам информацию
             </div>
