@@ -103,9 +103,10 @@
 }
 @media screen and (max-width: 1000px){
     .secondHeaderSearchfield{
-        width: 300px;
+        width: 200px;
         padding-left:10px;
-        height: 50px;
+        height: 30px;
+        margin-top: 10px;
         display: flex;
         align-items: center;
     }
@@ -122,7 +123,7 @@
         display: flex;
         align-items: center;
         color:#221f1c;
-        font-size: 14px;
+        font-size: 10px;
         font-family: "Sofia-Sans";
         cursor: pointer;
         font-weight: 200;
@@ -131,21 +132,21 @@
         width: 10px;
         height: 10px;
         position:absolute;
-        left:280px;
+        left:180px;
         cursor: pointer;
         z-index: 1000;
     }
     .secondHeaderSearchfieldInput{
-        width: 300px;
-        height: 30px;
+        width: 200px;
+        height: 20px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     }
 }
 .secondHeaderCabinet:hover{
-    color: orange;
+    color: #EB6E50;
 }
 
 
 .secondHeaderCabinetLink:hover{
-    color: orange;
+    color: #EB6E50;
 }

@@ -47,7 +47,7 @@
 }
 
 .input:focus{
-    box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+    box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
     outline: none;
 }
 
@@ -65,7 +65,7 @@
     cursor: pointer;
 }
 .fileInput:hover{
-    border: 2px dashed orange;
+    border: 2px dashed #EB6E50;
 }
 
 .fileInputActive{
@@ -151,7 +151,7 @@
     }
     
     .input:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         outline: none;
     }
     
@@ -169,7 +169,7 @@
         cursor: pointer;
     }
     .fileInput:hover{
-        border: 2px dashed orange;
+        border: 2px dashed #EB6E50;
     }
     
     .fileInputActive{

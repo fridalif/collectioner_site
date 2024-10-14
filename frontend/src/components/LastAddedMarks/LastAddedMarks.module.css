@@ -54,8 +54,8 @@
     }
     
     .lastAddedMarksMark:hover{
-        color: orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color: #EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         cursor:pointer;
     }
     
@@ -140,8 +140,8 @@
     }
     
     .lastAddedMarksMark:hover{
-        color: orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color: #EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         cursor:pointer;
     }
     
@@ -174,7 +174,7 @@
         padding: 20px;
         font-family: "Sofia-Sans";
         height: 250px;
-        width:360px;
+        width:100%;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
         gap:10px;
         display: flex;
@@ -226,8 +226,8 @@
     }
     
     .lastAddedMarksMark:hover{
-        color: orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color: #EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         cursor:pointer;
     }
     

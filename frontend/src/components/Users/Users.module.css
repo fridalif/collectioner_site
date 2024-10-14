@@ -58,7 +58,7 @@
 }
 
 .usersTableRow:hover{
-    color:orange;
+    color:#EB6E50;
     cursor: pointer;
 }
 }
@@ -123,7 +123,7 @@
     }
     
     .usersTableRow:hover{
-        color:orange;
+        color:#EB6E50;
         cursor: pointer;
     }
 }

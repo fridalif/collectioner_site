@@ -200,8 +200,8 @@
     }
     
     .lastAddedMarksMark:hover{
-        color: orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color: #EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         cursor:pointer;
     }
     .settingsButton{
@@ -241,7 +241,7 @@
         font-size: 18px;
     }
     .standartInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;;
     }
     
     .addCatalogInput{
@@ -255,7 +255,7 @@
     }
     
     .addCatalogInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;;
     }
     
     .addCatalogButton{
@@ -268,7 +268,7 @@
     
     .addCatalogButton:hover{
         cursor: pointer;
-        color:orange;
+        color:#EB6E50;
     }
     
     .selectCatalog{
@@ -475,8 +475,8 @@
     }
     
     .lastAddedMarksMark:hover{
-        color: orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color: #EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         cursor:pointer;
     }
     .settingsButton{
@@ -517,7 +517,7 @@
     }
     
     .standartInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;;
     }
     
     .addCatalogInput{
@@ -531,7 +531,7 @@
     }
     
     .addCatalogInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;;
     }
     
     .addCatalogButton{
@@ -544,7 +544,7 @@
     
     .addCatalogButton:hover{
         cursor: pointer;
-        color:orange;
+        color:#EB6E50;
     }
     
     .selectCatalog{
@@ -757,8 +757,8 @@
     }
     
     .lastAddedMarksMark:hover{
-        color: orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color: #EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         cursor:pointer;
     }
     .settingsButton{
@@ -799,7 +799,7 @@
     }
     
     .standartInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;;
     }
     
     .addCatalogInput{
@@ -813,7 +813,7 @@
     }
     
     .addCatalogInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;;
     }
     
     .addCatalogButton{
@@ -826,7 +826,7 @@
     
     .addCatalogButton:hover{
         cursor: pointer;
-        color:orange;
+        color:#EB6E50;
     }
     
     .selectCatalog{

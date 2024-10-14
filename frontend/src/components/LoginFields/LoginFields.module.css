@@ -20,7 +20,7 @@
     }
     
     .loginInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         outline: none;
     }
     .registerInputContainer{
@@ -40,7 +40,7 @@
     }
     .loginForgotPass:hover{
         cursor: pointer;
-        color:orange;
+        color:#EB6E50;
     }
     .registerInput{
         margin-top: 15px;
@@ -54,7 +54,7 @@
     }
     
     .registerInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         outline: none;
     }
     
@@ -95,7 +95,7 @@
     }
     
     .registerInputCheckbox:checked{
-        color: orange;
+        color: #EB6E50;
     }
 }
 
@@ -121,7 +121,7 @@
     }
     
     .loginInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         outline: none;
     }
     .registerInputContainer{
@@ -141,7 +141,7 @@
     }
     .loginForgotPass:hover{
         cursor: pointer;
-        color:orange;
+        color:#EB6E50;
     }
     .registerInput{
         margin-top: 15px;
@@ -155,7 +155,7 @@
     }
     
     .registerInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         outline: none;
     }
     
@@ -196,7 +196,7 @@
     }
     
     .registerInputCheckbox:checked{
-        color: orange;
+        color: #EB6E50;
     }
 }
 
@@ -223,7 +223,7 @@
     }
     
     .loginInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         outline: none;
     }
     .registerInputContainer{
@@ -243,7 +243,7 @@
     }
     .loginForgotPass:hover{
         cursor: pointer;
-        color:orange;
+        color:#EB6E50;
     }
     .registerInput{
         margin-top: 15px;
@@ -257,7 +257,7 @@
     }
     
     .registerInput:focus{
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
         outline: none;
     }
     
@@ -298,6 +298,6 @@
     }
     
     .registerInputCheckbox:checked{
-        color: orange;
+        color: #EB6E50;
     }
 }

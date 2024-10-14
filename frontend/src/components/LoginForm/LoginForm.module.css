@@ -61,8 +61,8 @@
     }
     
     .loginText:hover{
-        color:orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color:#EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
     }
     
     .titleAboutLogin{
@@ -170,8 +170,8 @@
     }
     
     .loginText:hover{
-        color:orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color:#EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
     }
     
     .titleAboutLogin{
@@ -280,8 +280,8 @@
     }
     
     .loginText:hover{
-        color:orange;
-        box-shadow: orange 0px 3px 6px, orange 0px 3px 6px;
+        color:#EB6E50;
+        box-shadow: #EB6E50 0px 3px 6px, #EB6E50 0px 3px 6px;
     }
     
     .titleAboutLogin{
