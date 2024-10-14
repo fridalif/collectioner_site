@@ -46,9 +46,18 @@ def validate_model_ids(model, ids)->List:
 """
     GET
 """
-
-def get_titles(request):
+@api_view(['GET'])
+def get_titles(request, item_id=None):
     try:
+        if item_id is not None:
+            try:
+                title = Title.objects.get(id=id)
+                return Response({'status':'ok', 'data':TitleSerializer(title).data})
+            except Title.DoesNotExist:
+                return Response({'status':'error', 'message':'Нет названия с таким id'})
+            except Exception as e:
+                print(e)
+                return Response({'status':'error', 'message':'Неизвестная ошибка'})
         limit = request.GET.get('limit')
         offset = request.GET.get('offset')
         if not is_int(limit) or int(limit)<=0:
