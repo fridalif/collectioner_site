@@ -1,29 +1,66 @@
 import styles from './Titles.module.css'
 import { FaArrowRight } from "react-icons/fa";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { MessageBoxError } from '../MessageBox/MessageBox';
+
+const serverUrl  = 'http://127.0.0.1:8080';
 
 export function Titles(){
+    const [ titles, setTitles ] = useState([]);
+    const [ message, setMessage ] = useState('');
+    const [ messageCounter, setMessageCounter ] = useState(0);
+    const size = useWindowSize();
+    const [ counterPerPage, setCounterPerPage ] = useState(3);
 
+    useEffect(() => {
+        axios
+        .get(`${serverUrl}/api/get_titles/?limit=3`)
+        .then((response) => {
+            if(response.data.status !== 'ok'){
+                setMessage(response.data.message);
+                setMessageCounter(messageCounter + 1);
+                return;
+            }
+            setTitles(response.data.data);
+        })
+    }, [])
+
+    useEffect(() => {
+        if (size.width <= 550){
+            setCounterPerPage(2);
+            return
+        }
+        setCounterPerPage(3);
+    }, [size])
     return(
         <>
+        {message && <MessageBoxError message={message} displayed={messageCounter > 0} />}
         <div className={styles.titles}>
             <div className={styles.titlesTitle}>
                 Статьи
             </div>
-            <div className={styles.titlesArticle}>
-                <div className={styles.titlesArticleHeader}>
-                    Загадочная марка: "Летучая мышь" из Гренады
-                </div>
-                <div className={styles.titlesArticleTextContainer}>
-                    <div className={styles.titlesArticleText}>
-                        Одной из самых уникальных и загадочных марок в мире является "Летучая мышь", выпущенная в 1970 году в Гренаде. Эта марка привлекла внимание коллекционеров благодаря своему необычному дизайну и интересной истории.
-                        <br />
-                        Марка изображает летучую мышь, которая является символом ночи и таинственности. Дизайнеры использовали яркие цвета, чтобы подчеркнуть детали, такие как крылья и глаза животного. Интересно, что на марке также присутствует изображение тропического леса, что подчеркивает естественную среду обитания летучих мышей.
-                        <br />
-                        В 1970-х годах Гренада активно развивала свою почтовую систему и стремилась привлечь внимание к своей культуре и природе. Выпуск марки с изображением летучей мыши стал частью программы по охране окружающей среды и сохранению биоразнообразия. В то время многие виды летучих мышей находились под угрозой исчезновения из-за уничтожения их естественной среды обитания.
+            {titles.map((title, index) => {
+                if (index > counterPerPage-1){
+                    return(<></>);
+                }
+                return(
+                    <div className={styles.titlesArticle} key={index}>
+                        <div className={styles.titlesArticleHeader}>
+                            {title.header}
+                        </div>
+                        <div className={styles.titlesArticleTextContainer}>
+                            <div className={styles.titlesArticleText}>
+                                {title.text}
+                            </div>
+                            <a href={`/title/${title.id}`} className={styles.titlesArticleLink}>
+                                Читать далее<FaArrowRight/>
+                            </a>
+                        </div>
                     </div>
-                    <a href='.' className={styles.titlesArticleLink}> Читать далее <FaArrowRight /> </a>
-                </div>
-            </div>
+                )
+            })}
         </div>
         </>
     )
