@@ -7,7 +7,62 @@
         flex-direction: column;
         align-items: center;
         gap: 50px;
-        background-color: yellow;
+    }
+    .newsRow{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        width: 1420px;
+        height: 400px;
+    }
+    .titlesArticle{
+        margin-top:15px;
+        background-color: white;
+        width: 400px;
+        height: 400px;
+        display:flex;
+        flex-direction: column;
+        gap:20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    .titlesArticleHeader{
+        font-size: 18px;
+        margin-top:20px;
+        margin-left:20px;
+        margin-right: 20px;
+        height: 70px;
+        color:#EB6E50;
+        text-align: center;
+    }
+    .titlesArticleTextContainer{
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 310px;
+    }
+    .titlesArticleText{
+        font-size: 16px;
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 250px;
+        overflow-y: hidden;
+    }
+
+    .titlesArticleLink{
+        font-size: 16px;
+        color:#EB6E50;
+        display: flex;
+        justify-content: flex-end;
+        text-decoration: none;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 60px;
+        width:300px;
+    }
+
+    .titlesArticleLink:hover{
+        text-decoration: underline;
     }   
 }
 
@@ -20,19 +75,137 @@
         flex-direction: column;
         align-items: center;
         gap: 50px;
-        background-color: yellow;
+    }
+    .newsRow{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        width: 1000px;
+        height: 400px;
+    }
+    .titlesArticle{
+        margin-top:15px;
+        background-color: white;
+        width: 400px;
+        height: 400px;
+        display:flex;
+        flex-direction: column;
+        gap:20px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    .titlesArticleHeader{
+        font-size: 16px;
+        margin-top:20px;
+        margin-left:20px;
+        margin-right: 20px;
+        height: 70px;
+        color:#EB6E50;
+        text-align: center;
+    }
+    .titlesArticleTextContainer{
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 310px;
+    }
+    .titlesArticleText{
+        font-size: 14px;
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 250px;
+        overflow-y: hidden;
+    }
+
+    .titlesArticleLink{
+        font-size: 14px;
+        color:#EB6E50;
+        display: flex;
+        justify-content: flex-end;
+        text-decoration: none;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 60px;
+        width:300px;
+    }
+
+    .titlesArticleLink:hover{
+        text-decoration: underline;
     }   
-}
+}      
+
 
 @media screen and (max-width: 1000px){
     .newsContainer{
         display: flex;
         width: 360px;
         position: absolute;
-        margin-top: 50px;
         flex-direction: column;
         align-items: center;
         gap: 50px;
-        background-color: yellow;
+        margin-top: 50px;
     }   
+    .newsRow{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        width: 360px;
+        height: 400px;
+    }
+    .titlesArticle{
+        margin-top:15px;
+        background-color: white;
+        width: 350px;
+        height: 400px;
+        display:flex;
+        flex-direction: column;
+        gap:10px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    .titlesArticleHeader{
+        font-size: 14px;
+        margin-top:20px;
+        margin-left:20px;
+        margin-right: 20px;
+        height: 70px;
+        color:#EB6E50;
+        text-align: center;
+    }
+    .titlesArticleTextContainer{
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 310px;
+    }
+    .titlesArticleText{
+        font-size: 12px;
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 250px;
+
+        overflow-y: hidden;
+    }
+
+    .titlesArticleLink{
+        font-size: 12px;
+        color:#EB6E50;
+        display: flex;
+        justify-content: flex-end;
+        text-decoration: none;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 60px;
+        width:300px;
+    }
+
+    .titlesArticleLink:hover{
+        text-decoration: underline;
+    }      
 }
+
+.titlesArticleHeader:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+

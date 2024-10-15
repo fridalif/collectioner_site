@@ -263,6 +263,6 @@ class Title(models.Model):
         return self.header
     
     class Meta:
-        verbose_name = 'Заголовок'
-        verbose_name_plural = 'Заголовки'
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
         db_table = 'title'
