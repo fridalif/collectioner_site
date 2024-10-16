@@ -51,7 +51,7 @@ def get_titles(request, item_id=None):
     try:
         if item_id is not None:
             try:
-                title = Title.objects.get(id=id)
+                title = Title.objects.get(id=int(item_id))
                 return Response({'status':'ok', 'data':TitleSerializer(title).data})
             except Title.DoesNotExist:
                 return Response({'status':'error', 'message':'Нет названия с таким id'})

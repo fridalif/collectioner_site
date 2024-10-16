@@ -54,7 +54,7 @@ export function Titles(){
                             <div className={styles.titlesArticleText}>
                                 {title.text}
                             </div>
-                            <a href={`/title/${title.id}`} className={styles.titlesArticleLink}>
+                            <a href={`/title?id=${title.id}`} className={styles.titlesArticleLink}>
                                 Читать далее<FaArrowRight/>
                             </a>
                         </div>

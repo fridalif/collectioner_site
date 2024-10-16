@@ -10,6 +10,7 @@ import { Item } from '../Item/Item.jsx'
 import { Users } from '../Users/Users.jsx'
 import { AddItem } from '../AddItem/AddItem.jsx'
 import { News } from '../News/News.jsx'
+import { Title } from '../Title/Title.jsx'
 import { MessageBoxGood, MessageBoxError } from '../MessageBox/MessageBox';
 
 export function Body({isLoggedIn, mode}){
@@ -45,6 +46,7 @@ export function Body({isLoggedIn, mode}){
                 mode == 'AddItem' && <div className={styles.bodyContent}><AddItem /></div>
             }
             { mode == 'News' && <div className={styles.bodyContent}><News /></div> }
+            { mode == 'Title' && <div className={styles.bodyContent}><Title /></div> }
         </div>
     )
 }

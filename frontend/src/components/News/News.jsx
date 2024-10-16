@@ -69,7 +69,7 @@ export function News(){
                                     <div className={styles.titlesArticleText}>
                                         {item.text}
                                     </div>
-                                    <a href={`/title/${news[index].id}`} className={styles.titlesArticleLink}>
+                                    <a href={`/title?id=${news[index].id}`} className={styles.titlesArticleLink}>
                                         Читать далее <FaArrowRight /> 
                                     </a>
                                 </div>
@@ -84,7 +84,7 @@ export function News(){
                                         <div className={styles.titlesArticleText}>
                                             {news[index+1].text}
                                         </div>
-                                        <a href={`/title/${news[index+1].id}`} className={styles.titlesArticleLink}>
+                                        <a href={`/title?id=${news[index+1].id}`} className={styles.titlesArticleLink}>
                                             Читать далее <FaArrowRight /> 
                                         </a>
                                     </div>
@@ -99,7 +99,7 @@ export function News(){
                                         <div className={styles.titlesArticleText}>
                                             {news[index+2].text}
                                         </div>
-                                        <a href={`/title/${news[index+2].id}`} className={styles.titlesArticleLink}>
+                                        <a href={`/title?id=${news[index+2].id}`} className={styles.titlesArticleLink}>
                                             Читать далее <FaArrowRight /> 
                                         </a>
                                     </div>

@@ -1,0 +1,96 @@
+@media screen and (max-width: 1500px) and (min-width: 1000px){
+    .titleContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top:100px;
+        width: 1000px;
+        height: 700px;
+        gap: 20px;
+        background-color: white;
+        overflow-y: scroll;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    .titleHeader{
+        font-size: 24px;
+        font-family: "Sofia-Sans";
+        color: #EB6E50;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .titleText{
+        font-size: 16px;
+        font-family: "Sofia-Sans";
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }    
+}
+
+@media screen and (min-width: 1500px){
+    .titleContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top:100px;
+        width: 1500px;
+        height: 700px;
+        gap: 20px;
+        background-color: white;
+        overflow-y: scroll;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    .titleHeader{
+        font-size: 32px;
+        font-family: "Sofia-Sans";
+        color: #EB6E50;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .titleText{
+        font-size: 20px;
+        font-family: "Sofia-Sans";
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }    
+}
+
+
+@media screen and (max-width: 1000px){
+    .titleContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top:100px;
+        width: 100%;
+        height: 700px;
+        gap: 20px;
+        background-color: white;
+        overflow-y: scroll;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    .titleHeader{
+        font-size: 18px;
+        font-family: "Sofia-Sans";
+        color: #EB6E50;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .titleText{
+        font-size: 12px;
+        font-family: "Sofia-Sans";
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }    
+}
