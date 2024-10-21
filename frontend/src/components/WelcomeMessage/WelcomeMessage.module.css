@@ -1,4 +1,25 @@
-@media screen and (min-width: 1500px){
+@media screen and (min-width: 1700px){
+    .welcomeMessage{
+        background-color: white;
+        margin-top:70px;
+        font-size: 20px;
+        padding: 20px;
+        font-family: "Sofia-Sans";
+        width:90%;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+    
+    .welcomeMessageTitle{
+        font-size: 24px;
+    }
+    
+    .welcomeMessageText{
+        font-size: 18px;
+    }
+    
+}
+
+@media screen and (min-width: 1500px) and (max-width: 1700px){
     .welcomeMessage{
         background-color: white;
         margin-top:70px;
