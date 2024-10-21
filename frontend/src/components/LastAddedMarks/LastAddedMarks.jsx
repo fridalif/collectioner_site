@@ -17,7 +17,12 @@ export function LastAddedMarks(){
     useEffect(() => {
         console.log(size);
         if (size.width <= 1000){
-            setShowingItems(2);
+            let pageCounter = Math.floor((size.width-140) / 135);
+            setShowingItems(pageCounter);
+        }
+        else if (size.width >= 1500){
+            let pageCounter = Math.floor((size.width-250) / 255);
+            setShowingItems(pageCounter);
         }
         else{
             setShowingItems(5);

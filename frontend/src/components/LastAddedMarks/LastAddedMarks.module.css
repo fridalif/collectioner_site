@@ -4,7 +4,7 @@
         font-size: 18px;
         font-family: "Sofia-Sans";
         height: 350px;
-        width:1460px;
+        width:90%;
         padding: 20px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
         display: flex;
@@ -174,7 +174,7 @@
         padding: 20px;
         font-family: "Sofia-Sans";
         height: 250px;
-        width:100%;
+        width:90%;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
         gap:10px;
         display: flex;
@@ -185,7 +185,7 @@
     .lastAddedMarksTitle{
         position:absolute;
         margin-top:25px;
-        width: 360px;
+        width: 90%;
         margin-left: 25px;
         font-size: 14px;
     }
