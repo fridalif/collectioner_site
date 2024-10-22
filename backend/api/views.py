@@ -319,6 +319,12 @@ def get_countries(request:HttpRequest,id=None)->Response:
                 return Response({'status':'error','message':'Неизвестная ошибка'})
             
         world_part = request.GET.get('world_part')
+        if world_part == 'all':
+            try:
+                countries = Country.objects.filter()
+                return Response({'status':'ok','data':CountrySerializer(countries,many=True).data})
+            except: 
+                return Response({'status':'error','message':'Ошибка получения стран'})
         if world_part is not None:
             try:
                 countries = Country.objects.filter(world_part=world_part)

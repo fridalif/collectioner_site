@@ -26,10 +26,13 @@ export function Catalog(){
     useEffect(() => {
         console.log(size);
         if (size.width <= 1000){
-            setItemsCounterPage(2);
+            setItemsCounterPage(Math.floor((size.width-80)/150));
+        }
+        else if(size.width >= 1500){
+            setItemsCounterPage(Math.floor((size.width-80)/250));
         }
         else{
-            setItemsCounterPage(4);
+            setItemsCounterPage(Math.floor((size.width-80)/200));
         }
     }, [size]);
     useEffect(()=>{
@@ -65,7 +68,6 @@ export function Catalog(){
         axios.get(serverUrl + '/api/get_countries/?world_part=' + worldPart, { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
-                console.log(response.data.data);
                 setCountries(response.data.data);
             }
             else {
@@ -99,13 +101,13 @@ export function Catalog(){
 
     const getItems = ()=> {
         let resultUrl = serverUrl + '/api/get_items/'
-        let offset = (currentPage-1)*8;
-        let limit = 8;
+        let offset = (currentPage-1)*12;
+        let limit = 12;
         if (window.innerWidth <= 1000){
             offset = (currentPage-1)*4;
         }
         resultUrl += `?offset=${offset}&limit=${limit}`
-        if (historyMoment!==null && historyMoment!==''){
+        /*if (historyMoment!==null && historyMoment!==''){
             resultUrl += `&history_moment=${historyMoment}`;
         }
         else if (country!==null && country!==''){
@@ -185,8 +187,8 @@ export function Catalog(){
         }
         if (nominalLe !== ''){
             resultUrl += `&nominal_le=${nominalLe}`;
-        }
-        console.log(resultUrl);
+        }*/
+
         axios.get(resultUrl, { withCredentials: true })
             .then((response) => {
                 if (response.data.status === 'ok' && response.data.data.length === 0) {
@@ -249,188 +251,20 @@ export function Catalog(){
     return(
         <div className={styles.catalogContainer}>
             {messages !== '' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
-            <div className={styles.catalogSideBar}>
-                <div className={styles.catalogFilters}>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Часть света:<br />
-                        <form>
-                            <input type='radio' name='world_part' value='eu' onClick={()=>setWorldPart('eu')}/> Европа <br />
-                            <input type='radio' name='world_part' value='as' onClick={()=>setWorldPart('as')}/> Азия <br />
-                            <input type='radio' name='world_part' value='af' onClick={()=>setWorldPart('af')}/> Африка <br />
-                            <input type='radio' name='world_part' value='am' onClick={()=>setWorldPart('am')}/> Америка <br />
-                            <input type='radio' name='world_part' value='ok' onClick={()=>setWorldPart('ok')}/> Океания <br />
-                        </form>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Страна:<br />
-                        <select id='selectCountry' className={styles.selecter} onChange={()=>setCountry(document.getElementById('selectCountry').value)}>
-                            <option value=''>{worldPart !== null ? <>Страна</> : <>Выберите часть света</>}</option>
-                            {countries !== null && countries.map((new_country)=>{return <option value={new_country.id}>{new_country.name}</option>})}
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Исторический этап: <br />
-                        <select id='selectHistoryMoment' className={styles.selecter} onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
-                            <option value=''>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
-                            {historyMoments !== null && historyMoments.map((historyMoment)=>{return <option value={historyMoment.id}>{historyMoment.name}</option>})}
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Категория: <br />
-                        <select id='selectCategory' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            <option value='mark'> Марка </option>
-                            <option value='philatel'>Филателистический продукт</option>
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Год: <br />
-                        <div className={styles.inputFromTo}>
-                            <div className={styles.inputFrom}>От <input type="number" className={styles.inputFromToField} id='year_ge'/></div>
-                            <div className={styles.inputFrom}>До <input type="number" className={styles.inputFromToField} id='year_le'/></div>
-                        </div>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Эмиссия: <br />
-                        <select id='selectEmission' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {filters && filters.emissions && filters.emissions.map((item)=>{
-                                return(
-                                    <option key={item.id} value={item.id}>{item.name}</option>
-                                )
-                            })}
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Формат: <br />
-                        <select id='selectFormat' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.formats && filters.formats.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Печать: <br />
-                        <select id='selectStamp' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.stamps && filters.stamps.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Цвет: <br />
-                        <select id='selectColor' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.colors && filters.colors.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Клей: <br />
-                        <select id='selectGlue' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.glues && filters.glues.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Типография: <br />
-                        <select id='selectPress' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.press && filters.press.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Водяной знак: <br />
-                        <select id='selectWatermark' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.watermarks && filters.watermarks.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Валюта: <br />
-                        <select id='selectCurrency' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.currencies && filters.currencies.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Тема: <br />
-                        <select id='selectTheme' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.themes && filters.themes.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Каталог: <br />
-                        <select id='selectCatalog' className={styles.selecter}>
-                            <option value=''> Все </option>
-                            {
-                                filters && filters.catalogs && filters.catalogs.map((item)=>{
-                                    return(
-                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className={styles.catalogSideBarFilterBlock}>
-                        Номинал: <br />
-                        <div className={styles.inputFromTo}>
-                            <div className={styles.inputFrom}>От <input type="text" className={styles.inputFromToField} id='nominal_ge'/></div>
-                            <div className={styles.inputFrom}>До <input type="text" className={styles.inputFromToField} id='nominal_le'/></div>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.catalogCommitFilters} onClick={() => getItems()}>
-                    Применить фильтры
-                </div>
-            </div>
+            
             <div className={styles.catalogContent}>
+                <div className={styles.catalogContentRowFilter}>
+                    <form>
+                        <input type='radio' name='world_part' value='all' onClick={()=>setWorldPart('all')} defaultChecked/> Все
+                        <input type='radio' name='world_part' value='eu' onClick={()=>setWorldPart('eu')}/> Европа
+                        <input type='radio' name='world_part' value='as' onClick={()=>setWorldPart('as')}/> Азия
+                        <input type='radio' name='world_part' value='am' onClick={()=>setWorldPart('am')}/> Америка
+                        <input type='radio' name='world_part' value='af' onClick={()=>setWorldPart('af')}/> Африка
+                        <input type='radio' name='world_part' value='oc' onClick={()=>setWorldPart('oc')}/> Океания 
+                    </form>
+                    <input type='text' placeholder='Страна' className={styles.countryInput}/>
+                    <select className={styles.historySelector}></select>
+                </div>
                 <div className={styles.catalogContentRowSearch}>
                     <input type="text" value={searchQuery} placeholder="Искать в каталоге..." className={styles.secondHeaderSearchfieldInput} onChange={(e)=>setSearchQuery(e.target.value)}/>
                     <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getItems()}/>

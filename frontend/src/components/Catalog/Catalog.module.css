@@ -1,7 +1,6 @@
 @media screen and (min-width: 1500px){ 
 .catalogContainer{
     display: flex;
-    width:1420px;
     position:absolute;
     margin-top: 50px;
 }
@@ -19,14 +18,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1170px;
-    gap:50px;
+    gap:20px;
 }
 
 .catalogContentRow{
-    width:1170ppx;
     height: 250px;
     display: flex;
+    justify-content: center;
     gap:20px;
 }
 
@@ -34,9 +32,23 @@
     width: 30px;
     height: 40px;
     position:absolute;
-    left:940px;
+    margin-left:650px;
     cursor: pointer;
     z-index: 200;
+}
+
+.countryInput{
+    width: 150px;
+    margin-left:50px;
+    height: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
+}
+
+.historySelector{
+    width: 150px;
+    height: 34px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; 
 }
 
 .secondHeaderSearchfieldInput{
@@ -46,11 +58,18 @@
 }
 
 
-.catalogContentRowSearch{
-    width:1170px;
-    height: 50px;
+.catalogContentRowFilter{
+    height: 10px;
     margin-top: 50px;
-    margin-left: 50px;
+    display: flex;
+    font-family: 'Sofia-Sans';
+    font-size: 18px;
+    gap:5px;
+    align-items: center;
+}
+
+.catalogContentRowSearch{
+    height: 50px;
     display: flex;
     gap:20px;
     align-items: flex-end;
@@ -59,7 +78,7 @@
 .paginationRow{
     display: flex;
     justify-content: center;
-    width: 800px;
+    width: 1420px;
     height: 50px;
 }
 
@@ -199,7 +218,6 @@
      
     .catalogContainer{
         display: flex;
-        width:1000px;
         position:absolute;
         margin-top: 50px;
     }
@@ -222,7 +240,6 @@
     }
     
     .catalogContentRow{
-        width:850px;
         height: 250px;
         display: flex;
         gap:20px;
@@ -233,9 +250,23 @@
         width: 30px;
         height: 40px;
         position:absolute;
-        left:640px;
+        margin-left: 460px;
         cursor: pointer;
         z-index: 200;
+    }
+
+    .countryInput{
+        width: 100px;
+        margin-left:50px;
+        height: 30px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
+    }
+    
+    .historySelector{
+        width: 100px;
+        height: 34px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; 
     }
     
     .secondHeaderSearchfieldInput{
@@ -244,11 +275,19 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     }
     
+
+    .catalogContentRowFilter{
+        height: 10px;
+        margin-top: 50px;
+        display: flex;
+        font-family: 'Sofia-Sans';
+        font-size: 14px;
+        gap:5px;
+        align-items: center;
+    }
     
     .catalogContentRowSearch{
-        width:850px;
         height: 50px;
-        margin-top: 50px;
         margin-left: 50px;
         display: flex;
         gap:20px;
@@ -331,7 +370,6 @@
     
     .catalogFilters{
         display: flex;
-        margin-top: 20px;
         flex-direction: column;
         height: 790px;
         width:150px;
@@ -402,7 +440,6 @@
      
     .catalogContainer{
         display: flex;
-        width:360px;
         position:absolute;
         margin-top: 50px;
     }
@@ -420,12 +457,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 260px;
         gap:50px;
     }
     
     .catalogContentRow{
-        width:260px;
         height: 250px;
         display: flex;
         gap:20px;
@@ -436,8 +471,8 @@
         width: 20px;
         height: 40px;
         position:absolute;
-        left:320px;
         cursor: pointer;
+        margin-left: 230px;
         z-index: 200;
     }
     
@@ -447,11 +482,21 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     }
     
+    .catalogContentRowFilter form input {
+        width:10px;
+        height: 10px;
+    }
+    .catalogContentRowFilter{
+        height: 10px;
+        margin-top: 50px;
+        display: flex;
+        font-family: 'Sofia-Sans';
+        font-size: 8px;
+        align-items: center;
+    }
     
     .catalogContentRowSearch{
-        width:260px;
         height: 50px;
-        margin-top: 50px;
         margin-left: 50px;
         display: flex;
         gap:20px;
@@ -513,6 +558,23 @@
         max-height: 100px;
         width: auto;
         height: auto;
+    }
+
+    .countryInput{
+        width: 50px;
+        margin-left:5px;
+        height: 20px;
+        font-size: 8px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
+    }
+    
+    .historySelector{
+        width: 50px;
+        height: 20px;
+        margin-left:5px;
+        font-size: 8px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; 
     }
 
     .lastAddedMarksMarkImgField{
