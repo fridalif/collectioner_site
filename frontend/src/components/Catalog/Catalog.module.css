@@ -43,6 +43,21 @@
     height: 30px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
 }
+.helpVariant{
+    height: 30px;
+}
+.helpVariant:hover{
+    cursor: pointer;
+    background-color: #EB6E50;
+    color:white
+}
+.helpBar{
+    width: 156px;
+    margin-left:50px;
+    background-color: white;
+    position:absolute;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
+}
 
 .historySelector{
     width: 150px;

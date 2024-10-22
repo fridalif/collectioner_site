@@ -9,22 +9,23 @@ import { useWindowSize } from "@uidotdev/usehooks";
 const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
     const [searchQuery, setSearchQuery] = useState(null);
-    const [worldPart, setWorldPart] = useState(null);
+    const [worldPart, setWorldPart] = useState('all');
     const [country, setCountry ] = useState(null);
     const [historyMoment, setHistoryMoment] = useState(null);
     const [filters, setFilters] = useState(null);
     const [countries, setCountries] = useState([]);
     const [historyMoments, setHistoryMoments] = useState([]);
+    const size = useWindowSize();
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
     const [ messages, setMessages ] = useState('');
     const [ messageCounter, setMessageCounter ] = useState(0);
     const [ itemsCounterPage, setItemsCounterPage ] = useState(4);
-    const size = useWindowSize();
+    const [ countryChosen, setCountryChosen ] = useState(false);
+    const [ helpVariants, setHelpVariants ] = useState([]);
 
     useEffect(() => {
-        console.log(size);
         if (size.width <= 1000){
             setItemsCounterPage(Math.floor((size.width-80)/150));
         }
@@ -101,13 +102,20 @@ export function Catalog(){
 
     const getItems = ()=> {
         let resultUrl = serverUrl + '/api/get_items/'
-        let offset = (currentPage-1)*12;
-        let limit = 12;
+        let itemsPerPage = 0
         if (window.innerWidth <= 1000){
-            offset = (currentPage-1)*4;
+            itemsPerPage = Math.floor((window.innerWidth-80)/150);
         }
+        else if(window.innerWidth >= 1500){
+            itemsPerPage = Math.floor((window.innerWidth-80)/250);
+        }
+        else{
+            itemsPerPage = Math.floor((window.innerWidth-80)/200);
+        }
+        let offset = (currentPage-1)*itemsPerPage*2;
+        let limit = itemsPerPage*2;
         resultUrl += `?offset=${offset}&limit=${limit}`
-        /*if (historyMoment!==null && historyMoment!==''){
+        if (historyMoment!==null && historyMoment!==''){
             resultUrl += `&history_moment=${historyMoment}`;
         }
         else if (country!==null && country!==''){
@@ -127,7 +135,7 @@ export function Catalog(){
             }
         }
 
-        let category = document.getElementById('selectCategory').value;
+        /*let category = document.getElementById('selectCategory').value;
         if (category !== ''){
             resultUrl += `&category=${category}`;
         }
@@ -248,6 +256,27 @@ export function Catalog(){
         }
     }
 
+    const settingHelpVariants = (countrySubStr) => {
+        if ( countryChosen === true){
+            setCountryChosen(false);
+        }
+        let helpVarsArr = [];
+        countries.forEach(country => {
+            if (helpVarsArr.length >= 3){
+                return;
+            }
+            if (country.name.includes(countrySubStr)){
+                helpVarsArr.push(country);
+            }
+        })
+        setHelpVariants(helpVarsArr);
+        console.log(helpVarsArr);
+    }
+    const setCountryCallback = (countryId, countryName) => {
+        setCountry(countryId);
+        setCountryChosen(true);
+        document.getElementById('countryInput').value = countryName;
+    }
     return(
         <div className={styles.catalogContainer}>
             {messages !== '' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
@@ -262,8 +291,20 @@ export function Catalog(){
                         <input type='radio' name='world_part' value='af' onClick={()=>setWorldPart('af')}/> Африка
                         <input type='radio' name='world_part' value='oc' onClick={()=>setWorldPart('oc')}/> Океания 
                     </form>
-                    <input type='text' placeholder='Страна' className={styles.countryInput}/>
-                    <select className={styles.historySelector}></select>
+                    <div>
+                        <input onMouseOut={()=>setCountryChosen(true)} type='text' placeholder='Страна' id='countryInput' className={styles.countryInput} onChange={(e)=>settingHelpVariants(e.target.value)}/>
+                        {countryChosen == false && <div className={styles.helpBar} id="helpBar" >
+                            {helpVariants.map((helpVariant)=>{
+                                return <div className={styles.helpVariant} key={helpVariant.id} onClick={()=>setCountryCallback(helpVariant.id, helpVariant.name)}>
+                                    {helpVariant.name}
+                                </div>
+                            })}
+                        </div>}
+                    </div>
+                    <select className={styles.historySelector} id='selectHistoryMoment' onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
+                        <option value=''>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
+                        {historyMoments !== null && historyMoments.map((historyMoment)=>{return <option value={historyMoment.id}>{historyMoment.name}</option>})}
+                    </select>
                 </div>
                 <div className={styles.catalogContentRowSearch}>
                     <input type="text" value={searchQuery} placeholder="Искать в каталоге..." className={styles.secondHeaderSearchfieldInput} onChange={(e)=>setSearchQuery(e.target.value)}/>
