@@ -21,6 +21,19 @@
     gap:20px;
 }
 
+.filtersMenu{
+    position:fixed;
+    height: 800px;
+    width: 400px;
+    margin-top: 10px;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .catalogContentRow{
     height: 250px;
     display: flex;
@@ -72,22 +85,64 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
+.showFiltersButton{
+    width: 150px;
+    height: 30px;
+    background-color: #463F3A;
+    color:white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-family: 'Sofia-Sans';
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; 
+}
+.showFiltersButton:hover{
+    cursor: pointer;
+    background-color: #EB6E50;
+}
+
+.catalogContentRowFilterHeader{
+    height: 30px;
+    margin-top: 25px;
+    margin-right: 25px;
+    display: flex;
+    font-family: 'Sofia-Sans';
+    font-size: 18px;
+    gap:5px;
+    width:100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.crossIco{
+    width: 20px;
+    height: 20px;
+}
+
+.crossIco:hover{
+    cursor: pointer;
+    color:#EB6E50;
+}
 
 .catalogContentRowFilter{
-    height: 10px;
-    margin-top: 50px;
+    height: 30px;
+    margin-top: 15px;
     display: flex;
     font-family: 'Sofia-Sans';
     font-size: 18px;
     gap:5px;
     align-items: center;
+    justify-content: flex-start;
 }
+
+
 
 .catalogContentRowSearch{
     height: 50px;
     display: flex;
     gap:20px;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .paginationRow{
@@ -175,7 +230,8 @@
 .catalogCommitFilters{
     background-color: #463F3A;
     height: 50px;
-    width: 250px;
+    margin-top:20px;
+    width: 200px;
     color:white;
     font-family: 'Sofia-Sans';
     font-size: 20px;

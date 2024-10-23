@@ -5,6 +5,7 @@ import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons
 import { IoMdSearch } from "react-icons/io";
 import { MessageBoxError, MessageBoxGood } from '../MessageBox/MessageBox.jsx';
 import { useWindowSize } from "@uidotdev/usehooks";
+import { ImCross } from "react-icons/im";
 
 const serverUrl  = 'http://127.0.0.1:8080';
 export function Catalog(){
@@ -24,6 +25,22 @@ export function Catalog(){
     const [ itemsCounterPage, setItemsCounterPage ] = useState(4);
     const [ countryChosen, setCountryChosen ] = useState(false);
     const [ helpVariants, setHelpVariants ] = useState([]);
+    const [ showFilters, setShowFilters ] = useState(false);
+    const [emission, setEmissions] = useState(null);
+    const [format, setFormat] = useState(null);
+    const [stamp, setStamp] = useState(null);
+    const [color, setColor] = useState(null);
+    const [glue, setGlue] = useState(null);
+    const [press, setPress] = useState(null);
+    const [watermark, setWatermark] = useState(null);
+    const [currency, setCurrency] = useState(null);
+    const [theme, setTheme] = useState(null);
+    const [catalog, setCatalog] = useState(null);
+    const [nominalGe, setNominalGe] = useState(null);
+    const [nominalLe, setNominalLe] = useState(null);
+    const [yearLe, setYearsLe] = useState(null);
+    const [yearGe, setYearsGe] = useState(null);
+    const [category, setCategory] = useState(null);
 
     useEffect(() => {
         if (size.width <= 1000){
@@ -155,67 +172,53 @@ export function Catalog(){
             }
         }
 
-        /*let category = document.getElementById('selectCategory').value;
-        if (category !== ''){
+        if (category !== null){
             resultUrl += `&category=${category}`;
         }
-        let yearGe = document.getElementById('year_ge').value;
-        let yearLe = document.getElementById('year_le').value;
-        if (yearGe !== ''){
+
+        if (yearGe !== null){
             resultUrl += `&year_ge=${yearGe}`;
         }
-        if (yearLe !== ''){
+        if (yearLe !== null){
             resultUrl += `&year_le=${yearLe}`;
         }
-        let emission = document.getElementById('selectEmission').value;
-        let format = document.getElementById('selectFormat').value;
-        let stamp = document.getElementById('selectStamp').value;
-        let color = document.getElementById('selectColor').value;
-        let glue = document.getElementById('selectGlue').value;
-        let press = document.getElementById('selectPress').value;
-        let watermark = document.getElementById('selectWatermark').value;
-        let currency = document.getElementById('selectCurrency').value;
-        let theme = document.getElementById('selectTheme').value;
-        let catalog = document.getElementById('selectCatalog').value;
-        let nominalGe = document.getElementById('nominal_ge').value;
-        let nominalLe = document.getElementById('nominal_le').value;
 
-        if (emission !== ''){
+        if (emission !== null){
             resultUrl += `&emissions=${emission}`;
         }
-        if (format !== ''){
+        if (format !== null){
             resultUrl += `&formats=${format}`;
         }
-        if (stamp !== ''){
+        if (stamp !== null){
             resultUrl += `&stamps=${stamp}`;
         }
-        if (color !== ''){
+        if (color !== null){
             resultUrl += `&colors=${color}`;
         }
-        if (glue !== ''){
+        if (glue !== null){
             resultUrl += `&glues=${glue}`;
         }
-        if (press !== ''){
+        if (press !== null){
             resultUrl += `&press=${press}`;
         }
-        if (watermark !== ''){
+        if (watermark !== null){
             resultUrl += `&watermarks=${watermark}`;
         }
-        if (currency !== ''){
+        if (currency !== null){
             resultUrl += `&currencies=${currency}`;
         }
-        if (theme !== ''){
+        if (theme !== null){
             resultUrl += `&themes=${theme}`;
         }
-        if (catalog !== ''){
+        if (catalog !== null){
             resultUrl += `&catalogs=${catalog}`;
         }
-        if (nominalGe !== ''){
+        if (nominalGe !== null){
             resultUrl += `&nominal_ge=${nominalGe}`;
         }
-        if (nominalLe !== ''){
+        if (nominalLe !== null){
             resultUrl += `&nominal_le=${nominalLe}`;
-        }*/
+        }
 
         axios.get(resultUrl, { withCredentials: true })
             .then((response) => {
@@ -263,7 +266,92 @@ export function Catalog(){
         getItems();
     },[currentPage])
     
+    const commitFilters = () => {
+        let categoryLet = document.getElementById('selectCategory').value;
+        if (categoryLet == ''){
+            categoryLet = null;
+        }
+        let yearGeLet = document.getElementById('year_ge').value;
+        let yearLeLet = document.getElementById('year_le').value;
+        if (yearGeLet == ''){
+            yearGeLet = null;
+        }
+        if (yearLeLet == ''){
+            yearLeLet = null;
+        }
+        let emissionLet = document.getElementById('selectEmission').value;
+        if (emissionLet == ''){
+            emissionLet = null;
+        }
+        let formatLet = document.getElementById('selectFormat').value;
+        if (formatLet == ''){
+            formatLet = null;
+        }
+        let stampLet = document.getElementById('selectStamp').value;
+        if (stampLet == ''){
+            stampLet = null;
+        }
+        let colorLet = document.getElementById('selectColor').value;
+        if (colorLet == ''){
+            colorLet = null;
+        }
+        let glueLet = document.getElementById('selectGlue').value;
+        if (glueLet == ''){
+            glueLet = null;
+        }
+        let pressLet = document.getElementById('selectPress').value;
+        if (pressLet == ''){
+            pressLet = null;
+        }
+        let watermarkLet = document.getElementById('selectWatermark').value;
+        if (watermarkLet == ''){
+            watermarkLet = null;
+        }
+        let currencyLet = document.getElementById('selectCurrency').value;
+        if (currencyLet == ''){
+            currencyLet = null;
+        }
+        let themeLet = document.getElementById('selectTheme').value;
+        if (themeLet == ''){
+            themeLet = null;
+        }
+        let catalogLet = document.getElementById('selectCatalog').value;
+        if (catalogLet == ''){
+            catalogLet = null;
+        }
+        let nominalGeLet = document.getElementById('nominal_ge').value;
+        if (nominalGeLet == ''){
+            nominalGeLet = null;
+        }
+        let nominalLeLet = document.getElementById('nominal_le').value;
+        if (nominalLeLet == ''){
+            nominalLeLet = null;
+        }
 
+        setCategory(categoryLet);
+        setYearsGe(yearGeLet);
+        setYearsLe(yearLeLet);
+        setEmissions(emissionLet);
+        setFormat(formatLet);
+        setStamp(stampLet);
+        setColor(colorLet);
+        setGlue(glueLet);
+        setPress(pressLet);
+        setWatermark(watermarkLet);
+        setCurrency(currencyLet);
+        setTheme(themeLet);
+        setCatalog(catalogLet);
+        setNominalGe(nominalGeLet);
+        setNominalLe(nominalLeLet);
+        
+    }
+
+    useEffect(() => {
+        if (showFilters){
+            getItems();
+            setShowFilters(false);
+        }
+    }, [category, yearGe, yearLe, emission, format, stamp, color, glue, press, watermark, currency, theme, catalog, nominalGe, nominalLe])
     const nextPage = () => {
         if (currentPage<Math.trunc(totalItems/(itemsCounterPage*2))+1){
             setCurrentPage(currentPage+1);
@@ -302,6 +390,318 @@ export function Catalog(){
             {messages !== '' && <MessageBoxError key={messageCounter} message={messages} displayed={true}/>}
             
             <div className={styles.catalogContent}>
+                {showFilters &&
+                <div className={styles.filtersMenu}>
+                    <div className={styles.catalogContentRowFilterHeader}>
+                        <ImCross className={styles.crossIco} onClick={()=>setShowFilters(false)}/>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Категория:
+
+                        <select id='selectCategory' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        <option value='mark'> Марка </option>
+
+                        <option value='philatel'>Филателистический продукт</option>
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Год: 
+
+                        <div className={styles.inputFromTo}>
+                            <div className={styles.inputFrom}>От <input type="number" className={styles.inputFromToField} id='year_ge' defaultValue={yearGe}/></div>
+                            <div className={styles.inputFrom}>До <input type="number" className={styles.inputFromToField} id='year_le' defaultValue={yearLe}/></div>
+                        </div>
+
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Эмиссия:
+
+                        <select id='selectEmission' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {filters && filters.emissions && filters.emissions.map((item)=>{
+                            if (emission==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })}
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Формат: 
+
+                        <select id='selectFormat' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.formats && filters.formats.map((item)=>{
+                            if (format==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Печать: 
+
+                        <select id='selectStamp' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.stamps && filters.stamps.map((item)=>{
+                            if (stamp==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Цвет:
+
+                        <select id='selectColor' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.colors && filters.colors.map((item)=>{
+                            if (color==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                        Клей: 
+
+                        <select id='selectGlue' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.glues && filters.glues.map((item)=>{
+                        if (glue==item.id){
+                            return(<option key={item.id} value={item.id} selected>{item.name}</option>)
+                        }
+                        return(
+                        
+                        <option key={item.id} value={item.id} >{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Типография:
+
+                        <select id='selectPress' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+                        
+                        {
+                        
+                        filters && filters.press && filters.press.map((item)=>{
+                            if (press==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Водяной знак:
+
+                        <select id='selectWatermark' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.watermarks && filters.watermarks.map((item)=>{
+                            if (watermark==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Валюта:
+
+                        <select id='selectCurrency' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.currencies && filters.currencies.map((item)=>{
+                            if (currency==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Тема: 
+
+                        <select id='selectTheme' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.themes && filters.themes.map((item)=>{
+                            if (theme==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Каталог: 
+
+                        <select id='selectCatalog' className={styles.selecter}>
+
+                        <option value=''> Все </option>
+
+                        {
+                        
+                        filters && filters.catalogs && filters.catalogs.map((item)=>{
+                            if (catalog==item.id){
+                                return(
+                                <option key={item.id} value={item.id} selected>{item.name}</option>
+                                )
+                            }
+                        return(
+                        
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                        
+                        )
+
+                        })
+
+                        }
+
+                        </select>
+                    </div>
+                    <div className={styles.catalogContentRowFilter}>
+                    Номинал: 
+
+                        <div className={styles.inputFromTo}>
+
+                        <div className={styles.inputFrom}>От <input type="text" className={styles.inputFromToField} id='nominal_ge' defaultValue={nominalGe}/></div>
+
+                        <div className={styles.inputFrom}>До <input type="text" className={styles.inputFromToField} id='nominal_le' defaultValue={nominalLe}/></div>
+
+                        </div>
+                    </div>
+                    <div className={styles.catalogCommitFilters} onClick={() => commitFilters()}>
+
+                        Применить фильтры
+
+                    </div>
+                </div>
+                }
                 <div className={styles.catalogContentRowFilter}>
                     <form>
                         <input type='radio' name='world_part' value='all' onClick={()=>setWorldPart('all')} defaultChecked/> Все
@@ -329,6 +729,9 @@ export function Catalog(){
                 <div className={styles.catalogContentRowSearch}>
                     <input type="text" value={searchQuery} placeholder="Искать в каталоге..." className={styles.secondHeaderSearchfieldInput} onChange={(e)=>setSearchQuery(e.target.value)}/>
                     <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getItems()}/>
+                    <div className={styles.showFiltersButton} onClick={()=>setShowFilters(true)}>
+                        Фильтры
+                    </div>
                 </div>
                 <div className={styles.catalogContentRow}>
                     {
