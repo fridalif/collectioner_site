@@ -276,6 +276,22 @@
         height: 30px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
     }
+
+    .helpVariant{
+        height: 30px;
+    }
+    .helpVariant:hover{
+        cursor: pointer;
+        background-color: #EB6E50;
+        color:white
+    }
+    .helpBar{
+        width: 106px;
+        margin-left:50px;
+        background-color: white;
+        position:absolute;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
+    }
     
     .historySelector{
         width: 100px;
@@ -580,6 +596,24 @@
         margin-left:5px;
         height: 20px;
         font-size: 8px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
+    }
+
+    .helpVariant{
+        height: 20px;
+        font-size: 8px;
+    }
+    .helpVariant:active{
+        cursor: pointer;
+        background-color: #EB6E50;
+        color:white
+    }
+    .helpBar{
+        font-size: 8px;
+        width: 56px;
+        margin-left:5px;
+        background-color: white;
+        position:absolute;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    
     }
     

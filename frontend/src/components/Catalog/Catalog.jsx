@@ -62,10 +62,14 @@ export function Catalog(){
 
     useEffect(()=>{
         setCountry(null);
+        setCurrentPage(1);
+        document.getElementById('countryInput').value = '';
         if (worldPart === null) {
             setCountries(null);
+            getItems();
             return;
         }
+        getItems();
         axios.get(serverUrl + '/api/get_countries/?world_part=' + worldPart, { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
@@ -81,10 +85,13 @@ export function Catalog(){
 
     useEffect(()=>{
         setHistoryMoment(null);
+        setCurrentPage(1);
         if (country === null) {
             setHistoryMoments(null);
+            getItems();
             return;
         }
+        getItems();
         axios.get(serverUrl + '/api/get_history_moments/?country_id=' + country, { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
@@ -100,6 +107,9 @@ export function Catalog(){
         .catch((err) => console.error(err))
     },[country])
 
+    useEffect(()=>{
+        getItems();
+    },[historyMoment])
     const getItems = ()=> {
         let resultUrl = serverUrl + '/api/get_items/'
         let itemsPerPage = 0
@@ -114,14 +124,24 @@ export function Catalog(){
         }
         let offset = (currentPage-1)*itemsPerPage*2;
         let limit = itemsPerPage*2;
+        let country_id = null
+        if (document.getElementById('countryInput').value !== ''){
+            countries.forEach(country => {
+                if (country.name === document.getElementById('countryInput').value){
+                    country_id = country.id
+                    return;
+                }
+            })
+        }
         resultUrl += `?offset=${offset}&limit=${limit}`
         if (historyMoment!==null && historyMoment!==''){
             resultUrl += `&history_moment=${historyMoment}`;
         }
-        else if (country!==null && country!==''){
-            resultUrl += `&country=${country}`;
+        else if (country_id!==null && country_id!==''){
+            resultUrl += `&country=${country_id}`;
         }
-        else if (worldPart!==null){
+    
+        else if (worldPart!==null && worldPart!=='all'){
             resultUrl += `&world_part=${worldPart}`;
         }
         if (searchQuery!==null && searchQuery!==''){
@@ -292,7 +312,7 @@ export function Catalog(){
                         <input type='radio' name='world_part' value='oc' onClick={()=>setWorldPart('oc')}/> Океания 
                     </form>
                     <div>
-                        <input onMouseOut={()=>setCountryChosen(true)} type='text' placeholder='Страна' id='countryInput' className={styles.countryInput} onChange={(e)=>settingHelpVariants(e.target.value)}/>
+                        <input type='text' placeholder='Страна' id='countryInput' className={styles.countryInput} onChange={(e)=>settingHelpVariants(e.target.value)}/>
                         {countryChosen == false && <div className={styles.helpBar} id="helpBar" >
                             {helpVariants.map((helpVariant)=>{
                                 return <div className={styles.helpVariant} key={helpVariant.id} onClick={()=>setCountryCallback(helpVariant.id, helpVariant.name)}>
