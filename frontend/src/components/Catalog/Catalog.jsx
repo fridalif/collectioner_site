@@ -718,14 +718,14 @@ export function Catalog(){
                         {countryChosen == false && <div className={styles.helpBar} id="helpBar" >
                             {helpVariants.map((helpVariant)=>{
                                 return <div className={styles.helpVariant} key={helpVariant.id} onClick={()=>setCountryCallback(helpVariant.id, helpVariant.name)}>
-                                    {helpVariant.name}
+                                    {helpVariant.name}({helpVariant['items_count']})
                                 </div>
                             })}
                         </div>}
                     </div>
                     <select className={styles.historySelector} id='selectHistoryMoment' onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
                         <option value=''>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
-                        {historyMoments !== null && historyMoments.map((historyMoment)=>{return <option value={historyMoment.id}>{historyMoment.name}</option>})}
+                        {historyMoments !== null && historyMoments.map((historyMoment)=>{return <option value={historyMoment.id}>{historyMoment.name}({historyMoment['items_count']})</option>})}
                     </select>
                 </div>
                 <div className={styles.catalogContentRowSearch}>

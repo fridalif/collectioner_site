@@ -1,5 +1,5 @@
 from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CollectionItem, CustomUser, ItemImage, UserCollection, Title
-from rest_framework.serializers import ModelSerializer, CharField, IntegerField, DateField
+from rest_framework.serializers import ModelSerializer, CharField, IntegerField, DateField, SerializerMethodField
 from django.contrib.auth.models import User
 
 
@@ -55,12 +55,17 @@ class ItemSerializer(ModelSerializer):
 
 class CountrySerializer(ModelSerializer):
     image_url = CharField(source='flag.url')
-    
+    items_count = SerializerMethodField()
+    def get_items_count(self, obj):
+        return len(Item.objects.filter(histrory_moment__country=obj))
     class Meta:
         model = Country
-        fields = ['id', 'name', 'image_url']
+        fields = ['id', 'name', 'image_url','items_count']
 
 class HistoryMomentSerializer(ModelSerializer):
+    items_count = SerializerMethodField()
+    def get_items_count(self, obj):
+        return len(Item.objects.filter(histrory_moment=obj))
     class Meta:
         model = HistroryMoment
         fields = '__all__'
