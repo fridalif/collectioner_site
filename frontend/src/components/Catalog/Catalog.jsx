@@ -345,7 +345,9 @@ export function Catalog(){
         setNominalLe(nominalLeLet);
         
     }
-
+    useEffect(() => {
+        getItems();
+    },[itemsCounterPage])
     useEffect(() => {
         if (showFilters){
             getItems();
