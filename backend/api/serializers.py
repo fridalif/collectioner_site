@@ -1,4 +1,4 @@
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CollectionItem, CustomUser, ItemImage, UserCollection, Title, news
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CollectionItem, CustomUser, ItemImage, UserCollection, Title, News
 from rest_framework.serializers import ModelSerializer, CharField, IntegerField, DateField, SerializerMethodField
 from django.contrib.auth.models import User
 

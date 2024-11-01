@@ -88,6 +88,7 @@ def get_articles(request):
         if not is_int(offset) or int(offset)<0:
             offset = 0
         offset = int(offset)
+        articles = articles.order_by('-id')
         articles = articles[offset:offset+limit]
         return Response({'status':'ok', 'data':TitleSerializer(articles, many=True).data, 'total':len(Titles.objects.all())})
     except Exception as e:
