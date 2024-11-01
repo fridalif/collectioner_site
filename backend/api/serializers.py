@@ -1,4 +1,4 @@
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CollectionItem, CustomUser, ItemImage, UserCollection, Title
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CollectionItem, CustomUser, ItemImage, UserCollection, Title, news
 from rest_framework.serializers import ModelSerializer, CharField, IntegerField, DateField, SerializerMethodField
 from django.contrib.auth.models import User
 
@@ -140,4 +140,9 @@ class ItemImageSerializer(ModelSerializer):
 class TitleSerializer(ModelSerializer):
     class Meta:
         model = Title
+        fields = '__all__'
+
+class NewsSerializer(ModelSerializer):
+    class Meta:
+        model = News
         fields = '__all__'

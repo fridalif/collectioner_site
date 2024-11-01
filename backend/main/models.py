@@ -258,7 +258,8 @@ class CollectionItem(models.Model):
 class Title(models.Model):
     header = models.CharField(max_length=100, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
-
+    link = models.CharField(max_length=100, verbose_name='Ссылка', null=True, blank=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name='Предмет', null=True, blank=True)
     def __str__(self):
         return self.header
     
@@ -266,3 +267,14 @@ class Title(models.Model):
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
         db_table = 'title'
+
+class News(models.Model):
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+    def __str__(self):
+        return self.title.header
+    
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+        db_table = 'news'

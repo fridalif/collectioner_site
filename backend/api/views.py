@@ -6,8 +6,8 @@ from django.db.models import Q
 from rest_framework.decorators import api_view
 from typing import List
 from django.contrib.auth import authenticate, login, logout
-from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage, Collection, CollectionItem, UserCollection, Title
-from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer, CustomUserListSerializer, TitleSerializer
+from main.models import Glue, Color, Stamp, Format, Theme, Press, Emission, Designer, Catalog, Currency, Watermark, Item, Country, HistroryMoment, CustomUser, ItemImage, Collection, CollectionItem, UserCollection, Title, News
+from api.serializers import ItemSerializer, CountrySerializer,HistoryMomentSerializer, GlueSerializer, ColorSerialzier, StampSerializer, FormatSerializer, ThemeSerializer, PressSerialzier, EmissionSerializer, DesignerSerializer, CatalogSerializer, CurrencySerializer, WatermarkSerializer, CustomUserSerializer, ItemListSerializer, ItemImageSerializer, UserCollectionSerializer, CustomUserListSerializer, TitleSerializer, NewsSerializer
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from django.utils.crypto import get_random_string
@@ -51,9 +51,9 @@ def get_titles(request, item_id=None):
     try:
         if item_id is not None:
             try:
-                title = Title.objects.get(id=int(item_id))
-                return Response({'status':'ok', 'data':TitleSerializer(title).data})
-            except Title.DoesNotExist:
+                title = News.objects.get(id=int(item_id))
+                return Response({'status':'ok', 'data':NewsSerializer(title).data})
+            except News.DoesNotExist:
                 return Response({'status':'error', 'message':'Нет названия с таким id'})
             except Exception as e:
                 print(e)
@@ -66,12 +66,33 @@ def get_titles(request, item_id=None):
         if not is_int(offset) or int(offset)<0:
             offset = 0
         offset = int(offset)
-        titles = Title.objects.all().order_by('-id')[offset:offset+limit]
-        return Response({'status':'ok', 'data':TitleSerializer(titles, many=True).data, 'total':len(Title.objects.all())})
+        titles = News.objects.all().order_by('-id')[offset:offset+limit]
+        return Response({'status':'ok', 'data':NewsSerializer(titles, many=True).data, 'total':len(News.objects.all())})
     except Exception as e:
         print(e)
         return Response({'status':'error', 'message':'Неизвестная ошибка'})
-    
+
+@api_view(['GET'])
+def get_articles(request):
+    try:
+        data = request.GET
+        ids_list = data.getlist('item_ids[]')
+        if len(ids_list) == 0:
+            return Response({'status':'ok', 'data':[]})
+        articles = Titles.objects.filter(item__id__in=ids_list)
+        limit = request.GET.get('limit')
+        offset = request.GET.get('offset')
+        if not is_int(limit) or int(limit)<=0:
+            limit = 10
+        limit = int(limit)
+        if not is_int(offset) or int(offset)<0:
+            offset = 0
+        offset = int(offset)
+        articles = articles[offset:offset+limit]
+        return Response({'status':'ok', 'data':TitleSerializer(articles, many=True).data, 'total':len(Titles.objects.all())})
+    except Exception as e:
+        print(e)
+        return Response({'status':'error', 'message':'Неизвестная ошибка'})
 @api_view(['GET'])
 def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set'})
