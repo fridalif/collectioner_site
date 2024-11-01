@@ -76,10 +76,10 @@ def get_titles(request, item_id=None):
 def get_articles(request):
     try:
         data = request.GET
-        ids_list = data.getlist('item_ids[]')
+        ids_list = data.getlist('items_ids[]')
         if len(ids_list) == 0:
             return Response({'status':'ok', 'data':[]})
-        articles = Titles.objects.filter(item__id__in=ids_list)
+        articles = Title.objects.filter(item__id__in=ids_list)
         limit = request.GET.get('limit')
         offset = request.GET.get('offset')
         if not is_int(limit) or int(limit)<=0:
@@ -90,7 +90,8 @@ def get_articles(request):
         offset = int(offset)
         articles = articles.order_by('-id')
         articles = articles[offset:offset+limit]
-        return Response({'status':'ok', 'data':TitleSerializer(articles, many=True).data, 'total':len(Titles.objects.all())})
+        return Response({'status':'ok', 'data':TitleSerializer(articles, many=True).data, 'total':len(Title.objects.all())})
+
     except Exception as e:
         print(e)
         return Response({'status':'error', 'message':'Неизвестная ошибка'})

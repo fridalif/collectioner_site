@@ -269,10 +269,10 @@ class Title(models.Model):
         db_table = 'title'
 
 class News(models.Model):
-    title = models.ForeignKey(Title, on_delete=models.CASCADE, verbose_name='Заголовок')
+    header = models.CharField(max_length=100, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     def __str__(self):
-        return self.title.header
+        return self.header
     
     class Meta:
         verbose_name = 'Новость'

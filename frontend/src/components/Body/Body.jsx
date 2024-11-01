@@ -22,7 +22,8 @@ export function Body({isLoggedIn, mode}){
                 <div className={styles.bodyContent}>
                     <WelcomeMessage />
                     <LastAddedMarks />
-                    <Titles />
+                    <Titles isNews={true}/>
+                    <Titles isNews={false}/>
                 </div>
             }
             { mode =='Login' &&
