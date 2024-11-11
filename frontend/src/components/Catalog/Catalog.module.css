@@ -95,7 +95,8 @@
     justify-content: center;
     display: flex;
     align-items: center;
-    font-size: 18px;
+    text-align: center;
+    font-size: 14px;
     font-family: 'Sofia-Sans';
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; 
 }
@@ -584,10 +585,11 @@
 
 @media screen and (max-width: 1000px){
     .showFiltersButton{
-        width: 50px;
+        width: 70px;
         height: 30px;
         background-color: #463F3A;
         color:white;
+        text-align: center;
         justify-content: center;
         display: flex;
         align-items: center;
@@ -705,7 +707,7 @@
     
     .catalogContentRowSearch{
         height: 50px;
-        margin-left: 50px;
+        margin-left: 1px;
         display: flex;
         gap:20px;
         align-items: flex-end;

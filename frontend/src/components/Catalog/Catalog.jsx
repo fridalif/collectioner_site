@@ -41,6 +41,7 @@ export function Catalog(){
     const [yearLe, setYearsLe] = useState(null);
     const [yearGe, setYearsGe] = useState(null);
     const [category, setCategory] = useState(null);
+    const [showCountries, setShowCountries] = useState(false);
 
     useEffect(() => {
         if (size.width <= 1000){
@@ -80,13 +81,9 @@ export function Catalog(){
     useEffect(()=>{
         setCountry(null);
         setCurrentPage(1);
+        setShowCountries(true)
         document.getElementById('countryInput').value = '';
-        if (worldPart === null) {
-            setCountries(null);
-            getItems();
-            return;
-        }
-        getItems();
+        setItems(null);
         axios.get(serverUrl + '/api/get_countries/?world_part=' + worldPart, { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
@@ -105,7 +102,6 @@ export function Catalog(){
         setCurrentPage(1);
         if (country === null) {
             setHistoryMoments(null);
-            getItems();
             return;
         }
         getItems();
@@ -125,9 +121,13 @@ export function Catalog(){
     },[country])
 
     useEffect(()=>{
+        if (historyMoment === null && country === null) {
+            return
+        }
         getItems();
     },[historyMoment])
     const getItems = ()=> {
+        setShowCountries(false);
         let resultUrl = serverUrl + '/api/get_items/'
         let itemsPerPage = 0
         if (window.innerWidth <= 1000){
@@ -261,8 +261,14 @@ export function Catalog(){
             .catch((err) => console.error(err))
         
     }
-    
+
     useEffect(()=>{
+        if (searchQuery === null && country === null && emission === null && format === null && stamp === null && color === null && 
+            glue === null && press === null && watermark === null && currency === null && theme === null && catalog === null &&
+            nominalGe === null && nominalLe === null && yearGe === null && yearLe === null && category === null
+        ){
+            return
+        }
         getItems();
     },[currentPage])
     
@@ -346,11 +352,23 @@ export function Catalog(){
         
     }
     useEffect(() => {
+        if (searchQuery === null && country === null && emission === null && format === null && stamp === null && color === null && 
+            glue === null && press === null && watermark === null && currency === null && theme === null && catalog === null &&
+            nominalGe === null && nominalLe === null && yearGe === null && yearLe === null && category === null
+        ){
+            return
+        }
         getItems();
     },[itemsCounterPage])
     useEffect(() => {
         if (showFilters){
-            getItems();
+            if (!(searchQuery === null && country === null && emission === null && format === null && stamp === null && color === null && 
+                glue === null && press === null && watermark === null && currency === null && theme === null && catalog === null &&
+                nominalGe === null && nominalLe === null && yearGe === null && yearLe === null && category === null
+            )){
+                getItems();
+            }
+            
             setShowFilters(false);
         }
     }, [category, yearGe, yearLe, emission, format, stamp, color, glue, press, watermark, currency, theme, catalog, nominalGe, nominalLe])
@@ -723,20 +741,16 @@ export function Catalog(){
                             })}
                         </div>}
                     </div>
-                    <select className={styles.historySelector} id='selectHistoryMoment' onChange={()=>setHistoryMoment(document.getElementById('selectHistoryMoment').value)}>
-                        <option value=''>{country === null ? <>Выберите страну</>:<>Исторический этап</>}</option>
-                        {historyMoments !== null && historyMoments.map((historyMoment)=>{return <option value={historyMoment.id}>{historyMoment.name}({historyMoment['items_count']})</option>})}
-                    </select>
                 </div>
                 <div className={styles.catalogContentRowSearch}>
                     <input type="text" value={searchQuery} placeholder="Искать в каталоге..." className={styles.secondHeaderSearchfieldInput} onChange={(e)=>setSearchQuery(e.target.value)}/>
                     <IoMdSearch className={styles.secondHeaderSearchfieldImg} onClick={() => getItems()}/>
                     <div className={styles.showFiltersButton} onClick={()=>setShowFilters(true)}>
-                        Фильтры
+                        Расширенный поиск
                     </div>
                 </div>
                 <div className={styles.catalogContentRow}>
-                    {
+                    { items !== null &&
                         items.map((item,index)=>{
                             if (index<itemsCounterPage){
                             return(
@@ -755,7 +769,7 @@ export function Catalog(){
                     
                 </div>
                 <div className={styles.catalogContentRow}>
-                    {
+                    {items !== null &&
                         items.map((item,index)=>{
                             if (index>=itemsCounterPage && index<itemsCounterPage*2){
                             return(
