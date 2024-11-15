@@ -15,7 +15,7 @@ export function Catalog(){
     const [historyMoment, setHistoryMoment] = useState(null);
     const [filters, setFilters] = useState(null);
     const [countries, setCountries] = useState([]);
-    const [historyMoments, setHistoryMoments] = useState([]);
+    const [historyMoments, setHistoryMoments] = useState(null);
     const size = useWindowSize();
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -42,7 +42,23 @@ export function Catalog(){
     const [yearGe, setYearsGe] = useState(null);
     const [category, setCategory] = useState(null);
     const [showCountries, setShowCountries] = useState(false);
+    const [ filteredCountries, setFilteredCountries ] = useState([]);
+    const [ countriesPerRow, setCountriesPerRow ] = useState(0);
 
+
+    const filterCountries = (searchQuery) => {
+        let result = [];
+        if (searchQuery === '') {
+            setFilteredCountries(countries);
+            return;
+        }
+        countries.forEach(country => {
+            if (country.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+                result.push(country);
+            }
+        });
+        setFilteredCountries(result);
+    }
     useEffect(() => {
         if (size.width <= 1000){
             setItemsCounterPage(Math.floor((size.width-80)/150));
@@ -88,6 +104,8 @@ export function Catalog(){
         .then((response) => {
             if (response.data.status === 'ok') {
                 setCountries(response.data.data);
+                setFilteredCountries(response.data.data);
+                return;
             }
             else {
                 setMessages(response.data.message);
@@ -97,28 +115,31 @@ export function Catalog(){
         .catch((err) => console.error(err))
     },[worldPart])
 
+
     useEffect(()=>{
-        setHistoryMoment(null);
-        setCurrentPage(1);
-        if (country === null) {
-            setHistoryMoments(null);
+        if (countries === null) {
             return;
         }
-        getItems();
-        axios.get(serverUrl + '/api/get_history_moments/?country_id=' + country, { withCredentials: true })
-        .then((response) => {
-            if (response.data.status === 'ok') {
-                console.log(response.data.data);
-                setHistoryMoments(response.data.data);
-                return;
-            }
-            else {
-                setMessages(response.data.message);
-                setMessageCounter(messageCounter + 1);
-            }
-        })
-        .catch((err) => console.error(err))
-    },[country])
+        let res = {}
+        for (let i = 0; i < countries.length; i++){
+            axios.get(serverUrl + '/api/get_history_moments/?country_id=' + countries[i].id, { withCredentials: true })
+            .then((response) => {
+                if (response.data.status === 'ok') {
+                    res[countries[i].name] = [{name: countries[i].name, id: countries[i].id, counter: countries[i].items_count}];                    
+                    res[countries[i].name] = res[countries[i].name].concat(response.data.data);
+                    return;
+                }
+                else {
+                    setMessages(response.data.message);
+                    setMessageCounter(messageCounter + 1);
+                }
+            })
+            .catch((err) => console.error(err))
+        }
+        console.log(res);
+        setHistoryMoments(res);
+    }, [countries])
+
 
     useEffect(()=>{
         if (historyMoment === null && country === null) {
@@ -732,7 +753,7 @@ export function Catalog(){
                         <input type='radio' name='world_part' value='oc' onClick={()=>setWorldPart('oc')}/> Океания 
                     </form>
                     <div>
-                        <input type='text' placeholder='Страна' id='countryInput' className={styles.countryInput} onChange={(e)=>settingHelpVariants(e.target.value)}/>
+                        <input type='text' placeholder='Страна' id='countryInput' className={styles.countryInput} onChange={(e)=>filterCountries(e.target.value)}/>
                         {countryChosen == false && <div className={styles.helpBar} id="helpBar" >
                             {helpVariants.map((helpVariant)=>{
                                 return <div className={styles.helpVariant} key={helpVariant.id} onClick={()=>setCountryCallback(helpVariant.id, helpVariant.name)}>
@@ -749,8 +770,24 @@ export function Catalog(){
                         Расширенный поиск
                     </div>
                 </div>
+                {showCountries && filteredCountries &&
+                    <div className={styles.catalogContentRow}>
+                        {filteredCountries.map((country)=>{
+                            return(
+                                <>
+                                    <img src={country.image_url} width={50} height={50} alt="mark"  />
+                                    
+                                        {country.name}({country.items_count})
+                                    
+                                </>
+                            )
+                        })}
+                    </div>
+                } 
+                    
+                { !showCountries && <>
                 <div className={styles.catalogContentRow}>
-                    { items !== null &&
+                    { items !== null && !showCountries &&
                         items.map((item,index)=>{
                             if (index<itemsCounterPage){
                             return(
@@ -768,6 +805,8 @@ export function Catalog(){
                     }
                     
                 </div>
+                
+                
                 <div className={styles.catalogContentRow}>
                     {items !== null &&
                         items.map((item,index)=>{
@@ -865,7 +904,7 @@ export function Catalog(){
                             <IoIosArrowDroprightCircle />
                         </div>
                     }
-                </div>
+                </div></>}
             </div>
             
         </div>
