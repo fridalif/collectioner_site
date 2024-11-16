@@ -43,7 +43,7 @@ export function Catalog(){
     const [category, setCategory] = useState(null);
     const [showCountries, setShowCountries] = useState(false);
     const [ filteredCountries, setFilteredCountries ] = useState([]);
-    const [ countriesPerRow, setCountriesPerRow ] = useState(0);
+    const [ countriesPerRow, setCountriesPerRow ] = useState(4);
     const [ countriesAndHistoryMoments, setCountriesAndHistoryMoments ] = useState([]);
 
     const filterCountries = (searchQuery) => {
@@ -104,6 +104,7 @@ export function Catalog(){
         axios.get(serverUrl + '/api/get_countries/?world_part=' + worldPart, { withCredentials: true })
         .then((response) => {
             if (response.data.status === 'ok') {
+
                 setCountries(response.data.data);
                 return;
             }
@@ -123,7 +124,7 @@ export function Catalog(){
         let res = [];
         let promises = countries.map((country) => {
             const countryData = {
-                country: { name: country.name, id: country.id, counter: country.items_count },
+                country: { name: country.name, id: country.id, counter: country.items_count, flag_url: country.image_url },
                 history_moment: { name: country.name, id: country.id, counter: country.items_count }
             };
             res.push(countryData);
@@ -132,7 +133,7 @@ export function Catalog(){
                     if (response.data.status === 'ok') {
                         response.data.data.forEach((history_moment) => {
                             res.push({
-                                country: { name: country.name, id: country.id, counter: country.items_count },
+                                country: { name: country.name, id: country.id, counter: country.items_count, flag_url: country.image_url },
                                 history_moment: { name: history_moment.name, id: history_moment.id, counter: history_moment.items_count }
                             });
                         });
@@ -166,7 +167,7 @@ export function Catalog(){
             return
         }
         getItems();
-    },[historyMoment])
+    },[historyMoment,country])
     const getItems = ()=> {
         setShowCountries(false);
         let resultUrl = serverUrl + '/api/get_items/'
@@ -182,21 +183,13 @@ export function Catalog(){
         }
         let offset = (currentPage-1)*itemsPerPage*2;
         let limit = itemsPerPage*2;
-        let country_id = null
-        if (document.getElementById('countryInput').value !== ''){
-            countries.forEach(country => {
-                if (country.name === document.getElementById('countryInput').value){
-                    country_id = country.id
-                    return;
-                }
-            })
-        }
+
         resultUrl += `?offset=${offset}&limit=${limit}`
         if (historyMoment!==null && historyMoment!==''){
             resultUrl += `&history_moment=${historyMoment}`;
         }
-        else if (country_id!==null && country_id!==''){
-            resultUrl += `&country=${country_id}`;
+        else if (country!==null && country!==''){
+            resultUrl += `&country=${country}`;
         }
     
         else if (worldPart!==null && worldPart!=='all'){
@@ -790,24 +783,35 @@ export function Catalog(){
                         Расширенный поиск
                     </div>
                 </div>
-                {showCountries && filteredCountries &&
-                    <div className={styles.catalogContentRow}>
-                        {filteredCountries && filteredCountries.map((iterCountry)=>{
-                            if (iterCountry.country.name == iterCountry.history_moment.name && iterCountry.country.counter == iterCountry.history_moment.counter && iterCountry.country.id == iterCountry.history_moment.id){
-                                return(
-                                    <div>
-                                        {iterCountry.country.name}({iterCountry.country.counter})
-                                    </div>
-                                )
-                            }
-                            return(
-                                <div>
-                                    tab {iterCountry.history_moment.name}({iterCountry.history_moment.counter})
-                                </div>
-                            )
-                        })}
-                    </div>
-                } 
+                {showCountries && filteredCountries && filteredCountries.map((iterCountry, index)=>{
+                        if (index % countriesPerRow != 0) {
+                            return
+                        }
+                        let resArray = []
+                        for (let i = index; (i < index + countriesPerRow) && (i<filteredCountries.length); i++){
+                            resArray.push(filteredCountries[i])
+                        }
+                        return(
+                            <div className={styles.catalogContentRowFilter}>
+                                {resArray.map((iterItem)=>{
+                                    if (iterItem.country.name == iterItem.history_moment.name && iterItem.country.counter == iterItem.history_moment.counter && iterItem.country.id == iterItem.history_moment.id){
+                                        return(
+                                            <div className={styles.countrySelecting} onClick={()=>setCountry(iterItem.country.id)}>
+                                                <img src={iterItem.country.flag_url} className={styles.countryFlagImage}/>{iterItem.country.name}({iterItem.country.counter})
+                                            </div>
+                                        )
+                                    }
+                                    return(
+                                        <div className={styles.countrySelecting} onClick={()=>setHistoryMoment(iterItem.history_moment.id)}>
+                                            <img src={iterItem.country.flag_url} className={styles.countryFlagImage}/> {iterItem.history_moment.name}({iterItem.history_moment.counter})
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        ) 
+                    })
+                }
+                
                     
                 { !showCountries && <>
                 <div className={styles.catalogContentRow}>
