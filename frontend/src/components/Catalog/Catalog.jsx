@@ -44,19 +44,20 @@ export function Catalog(){
     const [showCountries, setShowCountries] = useState(false);
     const [ filteredCountries, setFilteredCountries ] = useState([]);
     const [ countriesPerRow, setCountriesPerRow ] = useState(0);
-
+    const [ countriesAndHistoryMoments, setCountriesAndHistoryMoments ] = useState([]);
 
     const filterCountries = (searchQuery) => {
         let result = [];
-        if (searchQuery === '') {
-            setFilteredCountries(countries);
+        if (searchQuery === '' || searchQuery === null || searchQuery === undefined) {
+            console.log(countriesAndHistoryMoments)
+            setFilteredCountries(countriesAndHistoryMoments);
             return;
         }
-        countries.forEach(country => {
-            if (country.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-                result.push(country);
+        countriesAndHistoryMoments.forEach(countryAndHistoryMoment => {
+            if (countryAndHistoryMoment.country.name.toLowerCase().includes(searchQuery.toLowerCase()) || countryAndHistoryMoment.history_moment.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+                result.push(countryAndHistoryMoment);
             }
-        });
+        })
         setFilteredCountries(result);
     }
     useEffect(() => {
@@ -104,7 +105,6 @@ export function Catalog(){
         .then((response) => {
             if (response.data.status === 'ok') {
                 setCountries(response.data.data);
-                setFilteredCountries(response.data.data);
                 return;
             }
             else {
@@ -116,30 +116,50 @@ export function Catalog(){
     },[worldPart])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         if (countries === null) {
             return;
         }
-        let res = {}
-        for (let i = 0; i < countries.length; i++){
-            axios.get(serverUrl + '/api/get_history_moments/?country_id=' + countries[i].id, { withCredentials: true })
-            .then((response) => {
-                if (response.data.status === 'ok') {
-                    res[countries[i].name] = [{name: countries[i].name, id: countries[i].id, counter: countries[i].items_count}];                    
-                    res[countries[i].name] = res[countries[i].name].concat(response.data.data);
-                    return;
-                }
-                else {
-                    setMessages(response.data.message);
-                    setMessageCounter(messageCounter + 1);
-                }
-            })
-            .catch((err) => console.error(err))
-        }
-        console.log(res);
-        setHistoryMoments(res);
-    }, [countries])
+        let res = [];
+        let promises = countries.map((country) => {
+            const countryData = {
+                country: { name: country.name, id: country.id, counter: country.items_count },
+                history_moment: { name: country.name, id: country.id, counter: country.items_count }
+            };
+            res.push(countryData);
+            return axios.get(serverUrl + '/api/get_history_moments/?country_id=' + country.id, { withCredentials: true })
+                .then((response) => {
+                    if (response.data.status === 'ok') {
+                        response.data.data.forEach((history_moment) => {
+                            res.push({
+                                country: { name: country.name, id: country.id, counter: country.items_count },
+                                history_moment: { name: history_moment.name, id: history_moment.id, counter: history_moment.items_count }
+                            });
+                        });
+                    } else {
+                        setMessages(response.data.message);
+                        setMessageCounter(prev => prev + 1); // Изменение состояния с использованием функции
+                    }
+                    return countryData; // Возвращаем данные о стране
+                })
+                .catch((err) => console.error(err));
+        });
+    
+        Promise.all(promises).then(() => {
+            // Сортируем после завершения всех запросов
+            res.sort((a, b) => a.country.name.localeCompare(b.country.name));
+            setCountriesAndHistoryMoments(res);
+            
+        });
+    
+    }, [countries]);
 
+    useEffect(()=>{
+        if (countriesAndHistoryMoments === null) {
+            return;
+        }
+        filterCountries(document.getElementById('countryInput').value);
+    },[countriesAndHistoryMoments])
 
     useEffect(()=>{
         if (historyMoment === null && country === null) {
@@ -772,14 +792,18 @@ export function Catalog(){
                 </div>
                 {showCountries && filteredCountries &&
                     <div className={styles.catalogContentRow}>
-                        {filteredCountries.map((country)=>{
+                        {filteredCountries && filteredCountries.map((iterCountry)=>{
+                            if (iterCountry.country.name == iterCountry.history_moment.name && iterCountry.country.counter == iterCountry.history_moment.counter && iterCountry.country.id == iterCountry.history_moment.id){
+                                return(
+                                    <div>
+                                        {iterCountry.country.name}({iterCountry.country.counter})
+                                    </div>
+                                )
+                            }
                             return(
-                                <>
-                                    <img src={country.image_url} width={50} height={50} alt="mark"  />
-                                    
-                                        {country.name}({country.items_count})
-                                    
-                                </>
+                                <div>
+                                    tab {iterCountry.history_moment.name}({iterCountry.history_moment.counter})
+                                </div>
                             )
                         })}
                     </div>
