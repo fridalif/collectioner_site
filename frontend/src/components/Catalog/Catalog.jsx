@@ -61,6 +61,7 @@ export function Catalog(){
         setFilteredCountries(result);
     }
     useEffect(() => {
+        setCountriesPerRow(Math.floor((size.width-80)/300))
         if (size.width <= 1000){
             setItemsCounterPage(Math.floor((size.width-80)/150));
         }
@@ -765,15 +766,8 @@ export function Catalog(){
                         <input type='radio' name='world_part' value='af' onClick={()=>setWorldPart('af')}/> Африка
                         <input type='radio' name='world_part' value='oc' onClick={()=>setWorldPart('oc')}/> Океания 
                     </form>
-                    <div>
-                        <input type='text' placeholder='Страна' id='countryInput' className={styles.countryInput} onChange={(e)=>filterCountries(e.target.value)}/>
-                        {countryChosen == false && <div className={styles.helpBar} id="helpBar" >
-                            {helpVariants.map((helpVariant)=>{
-                                return <div className={styles.helpVariant} key={helpVariant.id} onClick={()=>setCountryCallback(helpVariant.id, helpVariant.name)}>
-                                    {helpVariant.name}({helpVariant['items_count']})
-                                </div>
-                            })}
-                        </div>}
+                    <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                        <input type='text' placeholder='Страна' id='countryInput' className={styles.countryInput} onChange={(e)=>filterCountries(e.target.value)}/> {!showCountries && <ImCross width={20} height={20} className={styles.crossIco} onClick={()=>{setShowCountries(true); document.getElementById('countryInput').value = ''; setItems(null);setCountry(null);setHistoryMoment(null);filterCountries("")}}/>}
                     </div>
                 </div>
                 <div className={styles.catalogContentRowSearch}>
@@ -796,13 +790,13 @@ export function Catalog(){
                                 {resArray.map((iterItem)=>{
                                     if (iterItem.country.name == iterItem.history_moment.name && iterItem.country.counter == iterItem.history_moment.counter && iterItem.country.id == iterItem.history_moment.id){
                                         return(
-                                            <div className={styles.countrySelecting} onClick={()=>setCountry(iterItem.country.id)}>
+                                            <div className={styles.countrySelecting} onClick={()=>{setCountry(iterItem.country.id);document.getElementById('countryInput').value = iterItem.country.name}}>
                                                 <img src={iterItem.country.flag_url} className={styles.countryFlagImage}/>{iterItem.country.name}({iterItem.country.counter})
                                             </div>
                                         )
                                     }
                                     return(
-                                        <div className={styles.countrySelecting} onClick={()=>setHistoryMoment(iterItem.history_moment.id)}>
+                                        <div className={styles.countrySelecting} onClick={()=>{setHistoryMoment(iterItem.history_moment.id);document.getElementById('countryInput').value = iterItem.history_moment.name}}>
                                             <img src={iterItem.country.flag_url} className={styles.countryFlagImage}/> {iterItem.history_moment.name}({iterItem.history_moment.counter})
                                         </div>
                                     )
